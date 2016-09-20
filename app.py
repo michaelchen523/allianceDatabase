@@ -12,7 +12,7 @@ app.config.update(
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title = 'Alliance')
 
 if __name__ == "__main__":
     app.run()
