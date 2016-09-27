@@ -3,3 +3,6 @@ from flask import render_template
 @app.route('/')
 def index():
     return render_template('index.html', title = 'Alliance')
+
+def login()
+    return render_template('login.html', title='login')
