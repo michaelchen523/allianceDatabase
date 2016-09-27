@@ -2,3 +2,13 @@
 h3 {
     text-align: center;
 }
+
+.login-div {
+    text-align: center;
+    display: block
+    margin: auto
+}
+
+.login-page ul {
+    list-style-type: none;
+}
