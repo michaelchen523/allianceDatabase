@@ -4,5 +4,6 @@ from flask import render_template
 def index():
     return render_template('index.html', title = 'Alliance')
 
-def login()
+@app.route('/login')
+def login():
     return render_template('login.html', title='login')
