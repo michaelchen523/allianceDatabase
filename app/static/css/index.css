@@ -6,9 +6,19 @@ h3 {
 .login-div {
     text-align: center;
     display: block
-    margin: auto
+    margin: 0 auto
+    horizontal-align: center;
 }
 
 .login-page ul {
     list-style-type: none;
+}
+
+.login-page ul li {
+    width= 500px;
+}
+
+.login-page img {
+    width=100px;
+    height=100px;
 }
