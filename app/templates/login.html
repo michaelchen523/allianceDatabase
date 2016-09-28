@@ -3,9 +3,9 @@
 {%block content %}
     <title>Welcome</title>
     <div class="login-div jumbotron pagination-centered">
-        <form class="login-page span12">
+        <form class="login-page vertical-center container">
             <ul>
-                <li><img class = 'img-thumbnail' width="100" height="100" src="{{url_for('static', filename='images/randompic.jpg')}}"/></li>
+                <li><img class = 'img-thumbnail' width="200" height="200" src="{{url_for('static', filename='images/randompic.jpg')}}"/></li>
                 <li><input type="text" name = "username" placeholder="Username" required></li>
                 <li><input type="password" name="password" placeholder="Password" required></li>
                 <li><button class="login button" type="submit">Login</button></li></li>
