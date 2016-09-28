@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome!</title>
-    <link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename = './lib/css/bootstrap.min.css') }}" >
-    <link rel="stylesheet" type="text/css" href= "{{ url_for('static', filename = './css/index.css') }}" >
-</head>
-<body>
+{% extends 'layout.html' %}
+
+{%block content %}
     <title>Welcome</title>
-    <div class="login-div jumbotron">
-        <form class="login-page">
+    <div class="login-div jumbotron pagination-centered">
+        <form class="login-page span12">
             <ul>
-                <li><img src="../images/randompic.jpg" alt="random pic"></li>
+                <li><img class = 'img-thumbnail' width="100" height="100" src="{{url_for('static', filename='images/randompic.jpg')}}"/></li>
                 <li><input type="text" name = "username" placeholder="Username" required></li>
                 <li><input type="password" name="password" placeholder="Password" required></li>
                 <li><button class="login button" type="submit">Login</button></li></li>
             </ul>
         </form>
     </div>
-</body>
-<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
 </html>
