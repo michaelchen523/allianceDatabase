@@ -21,10 +21,18 @@
     <!-- Mobile Specific -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
   <body {% block class %} {%endblock %}>
     {% block content %}
     {% endblock %}
   </body>
-  
+
 </html>
