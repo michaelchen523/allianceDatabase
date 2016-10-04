@@ -5,9 +5,32 @@ h3 {
 
 .login-div {
     text-align: center;
-    display: block
-    margin: 0 auto
+    display: block;
+    margin: 0 auto;
     horizontal-align: center;
+}
+
+.home-header {
+    margin-bottom:50px;
+}
+
+.blk {
+    border-style: solid;
+    border-width:5px;
+    border-color: #999999;
+}
+
+.resource {
+    background-image: url(../images/randompic-fade.jpg);
+    background-position: right;
+    height: 300px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #999999;
+}
+
+.resource a {
+    color: #333333;
 }
 
 
