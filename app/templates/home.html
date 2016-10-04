@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{%block content %}
+
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Alliance for Survivor Care</a>
+        </div>
+        <div class="nav navbar-nav dropdown">
+                <button class="nav-item navbar-inner btn btn-default btn-sm dropdown-toggle"
+                        data-toggle="dropdown" style="margin-top:10px; margin-left:10px;" type="button">Find Resource by Category
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Category 1</a></li>
+                    <li><a href="#">Category 2</a></li>
+                    <li><a href="#">Category 3</a></li>
+                </ul>
+        </div>
+        <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="projects.html">Organizations</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+{% endblock %}
+
+</html>
