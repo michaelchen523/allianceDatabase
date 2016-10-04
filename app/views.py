@@ -1,10 +1,7 @@
 from app import app
-<<<<<<< HEAD
-from flask import render_template
-=======
 from flask import render_template, request, url_for, redirect, flash
 from .models import User
->>>>>>> 5145d29b4f5f72836b37389cc543f8f479731068
+
 
 @app.route('/')
 def index():
