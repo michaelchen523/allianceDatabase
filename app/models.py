@@ -40,7 +40,8 @@ class Resources(db.Model):
     __table_args__ = (db.UniqueConstraint('Name', 'Address_State',
                                        'Address_City', 'Address_Zip',
                                        'Address_Street', 'Address_Number',
-                                       name = 'Unique_Address'))
+                                       name = 'Unique_Address'),
+                      )
 
     def __init__(self, AdminName, Name, Username, Address_State, Address_City,
                  Address_Zip, Address_Street, Address_Number, Description, ID):
@@ -81,7 +82,7 @@ class Org_Favorites(db.Model):
         return '<User_Favorites %>' % self.Organization
 
 class Number(db.Model):
-    PhoneNumber = db.Column(db.Integer, primary_key = True, autoincriment = False)
+    PhoneNumber = db.Column(db.Integer, primary_key = True, autoincrement = False)
     Type = db.Column(db.String(20))
     Name = db.Column(db.String(20), db.ForeignKey('Resource.Name'), primary_key = True)
 
@@ -106,4 +107,4 @@ class Reviews(db.Model):
         self.Description = Description
 
     def __repr__(self):
-        return  '<Reviews %>' % self.Username
+        return  '<Reviews %>' % self.Usernameu
