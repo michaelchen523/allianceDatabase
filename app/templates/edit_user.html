@@ -5,7 +5,7 @@
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Alliance for Survivor Care</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Alliance for Survivor Care</a>
         </div>
         <div class="nav navbar-nav">
             <div class="dropdown">
@@ -32,9 +32,9 @@
         </div>
         <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Organizations</a></li>
-                <li class="nav-item active"><a class="nav-link" href="#">Profile</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
             </ul>
         </div>
     </div>
@@ -49,12 +49,12 @@
             blah blah blah blah blah blah blah blah blah blah]</p>
         <h2>Resources</h2>
         <ul class="list-unstyled">
-            <li><a href="#"><h3>Resource 1</h3></a></li>
-            <li><a href="#"><h3>Resource 2</h3></a></li>
-            <li><a href="#"><h3>Resource 3</h3></a></li>
+            <li><a href="#"><h4>Resource 1</h4></a></li>
+            <li><a href="#"><h4>Resource 2</h4></a></li>
+            <li><a href="#"><h4>Resource 3</h4></a></li>
         </ul>
         <row>
-            <button class="btn-default btn-sm">Add Resource</button>
+            <button class="btn-default btn-sm" style="margin-top:10px">Add Resource</button>
         </row>
 
     </div>
