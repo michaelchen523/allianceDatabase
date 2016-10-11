@@ -1,6 +1,5 @@
 from app import app
 from flask import render_template, request, url_for, redirect, flash
-from .models import User
 
 
 
@@ -14,7 +13,6 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        registered_user = User.query.filter_by(username=username,password=password).first()
         if registered_user is None:
             flash('Username or Password is invalid', 'error')
             return redirect(url_for('login'))
@@ -28,9 +26,3 @@ def home():
 @app.route('/edit_user')
 def edit_user():
     return render_template('edit_user.html', title = 'profile')
-
-
-
-
-
-
