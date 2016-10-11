@@ -3,6 +3,7 @@ from flask import render_template, request, url_for, redirect, flash
 from .models import User
 
 
+
 @app.route('/')
 def index():
     return render_template('index.html', title = 'Alliance')
@@ -23,6 +24,13 @@ def login():
 @app.route('/home')
 def home():
     return render_template('home.html', title='home')
+
+@app.route('/edit_user')
+def edit_user():
+    return render_template('edit_user.html', title = 'profile')
+
+
+
 
 
 
