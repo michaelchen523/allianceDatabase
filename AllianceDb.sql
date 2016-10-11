@@ -20,9 +20,9 @@ CREATE TABLE `User`(
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `User` WRITE;
-/*!40000 ALTER TABLE `Capitals` DISABLE KEYS */;
-INSERT INTO `User` VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved', 'IDK');
-/*!40000 ALTER TABLE `Capitals` ENABLE KEYS */;
+
+INSERT INTO `User` VALUES (`SonikaF`,`sfinch@hotmail.com`, `i<3Dogs`, `Sonika`, `Beloved`, `IDK`);
+
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Resource`;
@@ -74,13 +74,30 @@ CREATE TABLE `Number`
  FOREIGN KEY (`Name`) REFERENCES `Resource` (`Name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `Gender`
 
-DROP TABLE IF EXISTS `Food`;
+CREATE TABLE `Gender`
+  (`Gender` VARCHAR(20),
+    PRIMARY KEY(`Gender`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Food`
+LOCK TABLES `Gender` WRITE;
+INSERT INTO `Gender` VALUES (`Male`, `Female`, `All`);
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `Housing`;
+
+CREATE TABLE `Housing`
   (`ID` MEDIUMINT NOT NULL,
-  `Avg_Cost` INT,
-  PRIMARY KEY (`ID`),
+  `Capacity` INT,
+  `Address_State` VARCHAR(2) NOT NULL,
+  `Address_City` VARCHAR(20) NOT NULL,
+  `Address_Zip` INT NOT NULL,
+  `Address_Street` VARCHAR(20) NOT NULL,
+  `Address_Number` INT NOT NULL,
+  `Gender` VARCHAR(20),
+  `Age` INT,
+  `Houseing_Type` VARCHAR(20),
   FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
