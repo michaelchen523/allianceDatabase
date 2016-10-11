@@ -19,6 +19,11 @@ CREATE TABLE `User`(
  FOREIGN KEY (`Organization`) REFERENCES `Organization` (`Name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `User` WRITE;
+/*!40000 ALTER TABLE `Capitals` DISABLE KEYS */;
+INSERT INTO `User` VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved', 'IDK');
+/*!40000 ALTER TABLE `Capitals` ENABLE KEYS */;
+UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Resource`;
 
