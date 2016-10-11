@@ -2,3 +2,46 @@
 h3 {
     text-align: center;
 }
+
+.login-div {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    horizontal-align: center;
+}
+
+.home-header {
+    margin-bottom:50px;
+}
+
+.blk {
+    border-style: solid;
+    border-width:5px;
+    border-color: #EEEEEE;
+}
+
+.resource {
+    background-image: url(../images/randompic-fade.jpg);
+    background-position: 500px 300px;
+    height: 300px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #EEEEEE;
+
+}
+
+.resource a {
+    color: #333333;
+}
+
+.open .dropdown-menu {
+    display:block;
+}
+
+
+
+
+                                                                                                                                                                                                                                                                          float: none;
+                                                                                                                                                                                                                                                                       margin-left: auto;
+                                                                                                                                                                                                                                                                          margin-right: auto;
+                                                                                                                                                                                                                                                                     }
