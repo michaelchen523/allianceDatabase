@@ -61,30 +61,30 @@
         <div class="form-group row">
             <ul class="list-unstyled">
                 <li>
-                    <row>
-                        <a class="col-md-4 text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a class="col-md-3 text-center" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
-                        <a class="col-md-3 text-center" href="#"><h4>Delete</h4></a>
-                    </row>
+                    <div class="col-md-10 row">
+                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
+                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
+                        <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
+                    </div>
                 </li>
                 <li>
-                    <row>
-                        <a class="col-md-4 text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a class="col-md-3 text-center" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
-                        <a class="col-md-3 text-center" href="#"><h4>Delete</h4></a>
-                    </row>
+                    <div class="col-md-10 row">
+                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
+                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
+                        <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
+                    </div>
                 </li>
                 <li>
-                    <row>
-                        <a class="col-md-4 text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a class="col-md-3 text-center" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
-                        <a class="col-md-3 text-center" href="#"><h4>Delete</h4></a>
-                    </row>
+                    <div class="col-md-10 row">
+                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
+                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
+                        <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
+                    </div>
                 </li>
                 <li>
-                    <row>
-                        <a class="col-md-4 text-center" href="{{ url_for('edit_add_resource') }}"><h4>+ Add Resource</h4></a>
-                    </row>
+                    <div class="col-md-10 row">
+                        <a class="col-md-4" href="{{ url_for('edit_add_resource') }}"><h5>+ Add Resource</h5></a>
+                    </div>
                 </li>
 
             </ul>
@@ -95,7 +95,7 @@
     </form>
     <div class="col-md-4 container profile-div">
         <div class="edit-pic center-block">
-            <a href="#"><label>Edit</label></a>
+            <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
         </div>
     </div>
 </div>
