@@ -6,7 +6,7 @@ CREATE TABLE `Organization`
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `Organization` WRITE;
-INSERT INTO `Organization` VALUES (`Beloved`);
+INSERT INTO `Organization` VALUES ('Beloved');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `User`;
@@ -17,13 +17,13 @@ CREATE TABLE `User`(
  `Password` VARCHAR(25) NOT NULL,
  `Name` VARCHAR(20) NOT NULL,
  `Organization` VARCHAR(20) NOT NULL,
- `Admin` INT NOT NULL,
+ `Admin` VARCHAR(20) NOT NULL,
  PRIMARY KEY (`Username`),
  FOREIGN KEY (`Organization`) REFERENCES `Organization` (`Name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `User` WRITE;
-INSERT INTO `User` VALUES (`SonikaF`,`sfinch@hotmail.com`, `i<3Dogs`, `Sonika`, `Beloved`, `IDK`);
+INSERT INTO `User` VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved', '1');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Resource`;
@@ -83,7 +83,7 @@ CREATE TABLE `Gender`
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `Gender` WRITE;
-INSERT INTO `Gender` VALUES (`Male`, `Female`, `All`);
+INSERT INTO `Gender` VALUES ('Male', 'Female', 'All');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Housing`;
