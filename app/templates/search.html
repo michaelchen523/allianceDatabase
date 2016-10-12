@@ -14,37 +14,39 @@
                         type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    <li class="dropdown-item"><a href="#">Housing</a></li>
-                    <li class="dropdown-item"><a href="#">Medical</a></li>
-                    <li class="dropdown-item"><a href="#">Mental Health</a></li>
-                    <li class="dropdown-item"><a href="#">Job Readiness</a></li>
-                    <li class="dropdown-item"><a href="#">Legal</a></li>
-                    <li class="dropdown-item"><a href="#">Employment</a></li>
-                    <li class="dropdown-item"><a href="#">Transportation</a></li>
-                    <li class="dropdown-item"><a href="#">Professional Mentors</a></li>
-                    <li class="dropdown-item"><a href="#">Childcare</a></li>
-                    <li class="dropdown-item"><a href="#">Vehicle</a></li>
-                    <li class="dropdown-item"><a href="#">Life Skills</a></li>
-                    <li class="dropdown-item"><a href="#">Survivor Networks</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Housing</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Medical</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Mental Health</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Job Readiness</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Legal</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Employment</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Transportation</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Professional Mentors</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Childcare</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Vehicle</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Life Skills</a></li>
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Survivor Networks</a></li>
 
                 </ul>
             </div>
         </div>
         <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Organizations</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('organizations') }}">Organizations</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container-fluid">
-    <div class="row home-header">
-        <h1 class="text-center">Search Results</h1>
-    </div>
+
     <div class="jumbotron row">
+        <div class="row home-header">
+            <h1 class="text-center">Search Results</h1>
+        </div>
         <div class="jumbotron col-sm-8">
+
             <div class="dropdown">
                 <button class="btn btn-default btn-lg btn-secondary dropdown-toggle"
                         data-toggle="dropdown" style="margin-top:10px; margin-left:10px;"
@@ -124,30 +126,35 @@
                     <li>
                         <div class="resource">
                             <h2><a href="#">Resource</a></h2>
+                            <h4>Rating</h4>
                             <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
                         </div>
                     </li>
                     <li>
                         <div class="resource">
                             <h2><a href="#">Resource</a></h2>
+                            <h4>Rating</h4>
                             <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
                         </div>
                     </li>
                     <li>
                         <div class="resource">
                             <h2><a href="#">Resource</a></h2>
+                            <h4>Rating</h4>
                             <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
                         </div>
                     </li>
                     <li>
                         <div class="resource">
                             <h2><a href="#">Resource</a></h2>
+                            <h4>Rating</h4>
                             <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
                         </div>
                     </li>
                     <li>
                         <div class="resource">
                             <h2><a href="#">Resource</a></h2>
+                            <h4>Rating</h4>
                             <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
                         </div>
                     </li>

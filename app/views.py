@@ -31,3 +31,15 @@ def edit_user():
 def search():
     return render_template('search.html', title='search')
 
+@app.route('/resource_detail')
+def resource_detail():
+    return render_template('resource_detail.html', title='Resource Details')
+
+@app.route('/organizations')
+def organizations():
+    return render_template('organizations.html', title='Organizations')
+
+@app.route('/user_detail')
+def user_detail():
+    return render_template('user_detail.html', title='User Details')
+
