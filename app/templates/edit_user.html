@@ -41,30 +41,63 @@
 </nav>
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <div class="col-md-8 container text-center">
+    <form class="col-md-8 container vertical-center">
+        <label for="orgName"><h3>Name: </h3></label>
+        <div class="form-group row">
+            <input  class = "input-lg col-md-10" id = "orgName" type="text" name = "orgName" placeholder="Organization Name">
+        </div>
+        <label for="orgPhone">Phone Number: </label>
+        <div class="form-group row">
+            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="(000)000-0000">
+        </div>
 
-        <h1>Organization</h1>
-        <h4>000-000-0000</h4>
-        <p class="word-wrap">Organization Description [... ... ... ... ... ... ... ... ..
-            ... ... ... ... ... ... ... ... ... .. .. ... ... ... ... ... ...
-            ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..
-            ... ... ... ... ...]</p>
-        <h2>Resources</h2>
-        <ul class="list-unstyled">
-            <li><a href="{{ url_for('resource_detail') }}"><h4>Resource 1</h4></a></li>
-            <li><a href="{{ url_for('resource_detail') }}"><h4>Resource 2</h4></a></li>
-            <li><a href="{{ url_for('resource_detail') }}"><h4>Resource 3</h4></a></li>
-        </ul>
-        <row>
+        <label for="orgDescription">Description: </label>
+        <div class="form-group row">
+            <textarea class = "col-md-10" id="orgDescription" rows = "5" name = "orgDescription" placeholder="Enter Description"></textarea>
+        </div>
+        <div class="form-group row">
+            <h2>Resources</h2>
+        </div>
+        <div class="form-group row">
+            <ul class="list-unstyled">
+                <li>
+                    <row>
+                        <a class="col-md-4" href="{{ url_for('resource_detail') }}"><h4>Resource 1</h4></a>
+                        <a class="col-md-3" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
+                        <a class="col-md-3" href="#"><h4>Delete</h4></a>
+                    </row>
+                </li>
+                <li>
+                    <row>
+                        <a class="col-md-4" href="{{ url_for('resource_detail') }}"><h4>Resource 1</h4></a>
+                        <a class="col-md-3" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
+                        <a class="col-md-3" href="#"><h4>Delete</h4></a>
+                    </row>
+                </li>
+                <li>
+                    <row>
+                        <a class="col-md-4" href="{{ url_for('resource_detail') }}"><h4>Resource 1</h4></a>
+                        <a class="col-md-3" href="{{ url_for('edit_add_resource') }}"><h4>Edit</h4></a>
+                        <a class="col-md-3" href="#"><h4>Delete</h4></a>
+                    </row>
+                </li>
+
+            </ul>
+        </div>
+        <div class="form-group row">
             <button class="btn-default btn-sm" name = "addResource" style="margin-top:10px">Add Resource</button>
-        </row>
-
-    </div>
+        </div>
+        <div class="form-group row">
+            <button class="btn btn-default col-md-4" name="resourceSubmit" type="submit">Submit</button>
+        </div>
+    </form>
     <div class="col-md-4 container profile-div">
         <div class="edit-pic center-block">
             <a href="#"><label>Edit</label></a>
         </div>
     </div>
+</div>
+
 
 </div>
 

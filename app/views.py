@@ -43,3 +43,7 @@ def organizations():
 def user_detail():
     return render_template('user_detail.html', title='User Details')
 
+@app.route('/edit_add_resource')
+def edit_add_resource():
+    return render_template('edit_add_resource.html', title = "Edit Resource")
+
