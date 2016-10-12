@@ -1,5 +1,6 @@
-from app import app
+from app import app, mysql
 from flask import render_template, request, url_for, redirect, flash
+
 
 
 @app.route('/')
@@ -8,15 +9,26 @@ def index():
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    error = None
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if registered_user is None:
-            flash('Username or Password is invalid', 'error')
-            return redirect(url_for('login'))
 
-    return render_template('login.html', title='login', error=error)
+        conn = mysql.connection
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT Username FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
+
+        data = cursor.fetchall()
+
+        if len(data) > 0:
+            return render_template("home.html")
+
+        return render_template("login.html")
+
+
+
+
+    return render_template('login.html', title='login')
 
 @app.route('/home')
 def home():
