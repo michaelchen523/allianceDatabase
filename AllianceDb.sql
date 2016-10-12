@@ -5,6 +5,9 @@ CREATE TABLE `Organization`
   PRIMARY KEY (`Name`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `Organization` WRITE;
+INSERT INTO `Organization` VALUES (`Beloved`);
+UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `User`;
 
@@ -20,9 +23,7 @@ CREATE TABLE `User`(
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `User` WRITE;
-
 INSERT INTO `User` VALUES (`SonikaF`,`sfinch@hotmail.com`, `i<3Dogs`, `Sonika`, `Beloved`, `IDK`);
-
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Resource`;
