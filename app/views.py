@@ -26,3 +26,8 @@ def home():
 @app.route('/edit_user')
 def edit_user():
     return render_template('edit_user.html', title = 'profile')
+
+@app.route('/search')
+def search():
+    return render_template('search.html', title='search')
+

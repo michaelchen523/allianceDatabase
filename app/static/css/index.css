@@ -20,7 +20,7 @@ h3 {
     border-color: #EEEEEE;
 }
 
-.resource {
+.category {
     background-image: url(../images/randompic-fade.jpg);
     background-position: 500px 300px;
     height: 300px;
@@ -30,8 +30,12 @@ h3 {
 
 }
 
-.resource a {
+.category a {
     color: #333333;
+}
+
+.resource {
+    margin-bottom: 20px;
 }
 
 .open .dropdown-menu {
@@ -62,6 +66,11 @@ h3 {
 .profile-div:hover .edit-pic {
     display: inline;
 }
+
+.container {
+    display:flex;
+}
+
 
 
 

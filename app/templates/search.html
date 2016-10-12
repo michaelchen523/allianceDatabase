@@ -2,6 +2,175 @@
 
 {%block content %}
 
+<nav class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Alliance for Survivor Care</a>
+        </div>
+        <div class="nav navbar-nav">
+            <div class="dropdown">
+                <button class="nav-item navbar-inner btn btn-default btn-sm btn-secondary dropdown-toggle"
+                        data-toggle="dropdown" style="margin-top:10px; margin-left:10px;" id="dropdownMenuButton"
+                        type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
+                    <li class="dropdown-item"><a href="#">Housing</a></li>
+                    <li class="dropdown-item"><a href="#">Medical</a></li>
+                    <li class="dropdown-item"><a href="#">Mental Health</a></li>
+                    <li class="dropdown-item"><a href="#">Job Readiness</a></li>
+                    <li class="dropdown-item"><a href="#">Legal</a></li>
+                    <li class="dropdown-item"><a href="#">Employment</a></li>
+                    <li class="dropdown-item"><a href="#">Transportation</a></li>
+                    <li class="dropdown-item"><a href="#">Professional Mentors</a></li>
+                    <li class="dropdown-item"><a href="#">Childcare</a></li>
+                    <li class="dropdown-item"><a href="#">Vehicle</a></li>
+                    <li class="dropdown-item"><a href="#">Life Skills</a></li>
+                    <li class="dropdown-item"><a href="#">Survivor Networks</a></li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Organizations</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row home-header">
+        <h1 class="text-center">Search Results</h1>
+    </div>
+    <div class="jumbotron row">
+        <div class="jumbotron col-sm-8">
+            <div class="dropdown">
+                <button class="btn btn-default btn-lg btn-secondary dropdown-toggle"
+                        data-toggle="dropdown" style="margin-top:10px; margin-left:10px;"
+                        type="button" aria-haspopup="true" aria-expanded="false">Filter
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu list-inline container col-xs-4" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
+                    <li class="dropdown-item">
+                        <div class="center-block">
+                            <ul class="list-unstyled list-inline">
+                                <row class="text-center">
+                                    <li class="dropdown-header">
+                                        <h5>Categories</h5>
+                                    </li>
+                                </row>
+                                <li><input type="checkbox" value="">Housing</input></li>
+                                <li><input type="checkbox" value="">Medical</input></li>
+                                <li><input type="checkbox" value="">Mental Health</input></li>
+                                <li><input type="checkbox" value="">Job Readiness</input></li>
+                                <li><input type="checkbox" value="">Legal</input></li>
+                                <li><input type="checkbox" value="">Employment</input></li>
+                                <li><input type="checkbox" value="">Transportation</input></li>
+                                <li><input type="checkbox" value="">Professional Mentors</input></li>
+                                <li><input type="checkbox" value="">Childcare</input></li>
+                                <li><input type="checkbox" value="">Vehicle</input></li>
+                                <li><input type="checkbox" value="">Life Skills</input></li>
+                                <li><input type="checkbox" value="">Survivor Networks</input></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="dropdown-item">
+                        <div class="center-block">
+                            <ul class="list-unstyled list-inline">
+                                <row class="text-center">
+                                    <li>
+                                        <h5>Requirements</h5>
+                                    </li>
+                                </row>
+                                <li><input type="checkbox" value="">Takes Non-Citizens</input></li>
+                                <li><input type="checkbox" value="">ID</input></li>
+                                <li><input type="checkbox" value="">Social Security</input></li>
+                                <li><input type="checkbox" value="">Birth Certificate</input></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="dropdown-item">
+                        <div class="center-block">
+                            <ul class="list-unstyled list-inline">
+                                <row class="text-center">
+                                    <li>
+                                        <h5>Location</h5>
+                                    </li>
+                                </row>
+                                <li><input type="checkbox" value="">Midtown</input></li>
+                                <li><input type="checkbox" value="">Downtown</input></li>
+                                <li><input type="checkbox" value="">Buckhead</input></li>
+                                <li><input type="checkbox" value="">Decatur</input></li>
+                                <li><input type="checkbox" value="">Sandy Springs</input></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="dropdown-item">
+                        <div class="center-block">
+                            <row class="text-center btn-toolbar">
+                                <button name="dropdownButton" class="btn-sm btn-primary col-sm-12 col-sm-offset-7" href="#">Go</button>
+                            </row>
+                        </div>
+                    </li>
+
+
+
+                </ul>
+            </div>
+            <div class="blk content">
+                <ol style="font-size:2em">
+                    <li>
+                        <div class="resource">
+                            <h2><a href="#">Resource</a></h2>
+                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="resource">
+                            <h2><a href="#">Resource</a></h2>
+                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="resource">
+                            <h2><a href="#">Resource</a></h2>
+                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="resource">
+                            <h2><a href="#">Resource</a></h2>
+                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="resource">
+                            <h2><a href="#">Resource</a></h2>
+                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
+                        </div>
+                    </li>
+
+
+                </ol>
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div style="margin-top:100px;">
+                <h3 style="text-center">Google Maps</h3>
+                <div class="googlemaps">
+                    <img width="300" src = "{{url_for('static', filename='images/googlemaps.jpg')}}" style="margin-left:25px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
 
 
 {% endblock %}
