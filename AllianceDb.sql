@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS `Organization`;
 
 CREATE TABLE `Organization`
  (`Name` VARCHAR(20),
-  PRIMARY KEY (`Name`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `Organization` WRITE;
@@ -72,18 +71,30 @@ CREATE TABLE `Number`
   (`PhoneNumber` INT NOT NULL,
   `Name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`PhoneNumber`, `Name`),
- FOREIGN KEY (`Name`) REFERENCES `Resource` (`Name`)
+  FOREIGN KEY (`Name`) REFERENCES `Resource` (`Name`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `Gender`
 
+
+
+/*
+Housing
+ */
 CREATE TABLE `Gender`
   (`Gender` VARCHAR(20),
-    PRIMARY KEY(`Gender`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `Gender` WRITE;
-INSERT INTO `Gender` VALUES ('Male', 'Female', 'All');
+INSERT INTO `Gender` VALUES ('Male'), ('Female'), ('All');
+UNLOCK TABLES;
+
+CREATE TABLE `Houseing_Type`
+  (`Type` VARCHAR(20),
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `Houseing_Type` WRITE;
+INSERT INTO `Houseing_Type` VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Housing`;
@@ -99,42 +110,76 @@ CREATE TABLE `Housing`
   `Gender` VARCHAR(20),
   `Age` INT,
   `Houseing_Type` VARCHAR(20),
-  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`)
+  `Children` TINYINT(1),
+  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`),
+  FOREIGN KEY (`Gender`) REFERENCES `Gender` (`Gender`),
+  FOREIGN KEY (`Houseing_Type`) REFERENCES `Houseing_Type` (`Type`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `Medical`;
 
-CREATE TABLE `Medical`
+/*
+Documentation
+ */
+DROP TABLE IF EXISTS `Doc_Type`
+
+CREATE TABLE `Doc_Type`
+  (`Type` VARCHAR(20)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `Doc_Type` WRITE;
+INSERT INTO `Doc_Type` VALUES ('ID'), ('SS'), 
+('Birth Certificate'), ('Driver''s License'), ('Other');
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `Documentation`
+
+CREATE TABLE `Documentation`
   (`ID` MEDIUMINT NOT NULL,
-  `Insurance` VARCHAR(20),
-  PRIMARY KEY (`ID`),
-  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `Religious`;
-
-CREATE TABLE `Religious`
-  (`ID` MEDIUMINT NOT NULL,
-  `Denomonation` VARCHAR(20),
-  PRIMARY KEY (`ID`),
-  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `Shelter`;
-
-CREATE TABLE Shelter
-  (`ID` MEDIUMINT NOT NULL,
-  `Capacity` INT,
-  PRIMARY KEY (`ID`),
-  FOREIGN KEY (`ID`) REFERENCES `Resource` (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+   `Type` VARCHAR(20) NOT NULL,
+    `Hours` time,
+  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`),
+  FOREIGN KEY (`Type`) REFERENCES `Doc_Type` (`Type`)
+  )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `Reviews`;
 
+
+
+
+/*
+Medical
+ */
+DROP TABLE IF EXISTS `Med_Type`
+
+CREATE TABLE `Med_Type`
+  (`Type` VARCHAR(20)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `Med_Type` WRITE;
+INSERT INTO `Med_Type` VALUES ('Dental'), ('Medical'), 
+('Gynecologist'), ('Abortion Clinic'), ('STD'), ('Pediatrician'),
+('Pharmacy'), ('Other');
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `Medical`
+
+CREATE TABLE `Medical`
+  ( `Type` VARCHAR(20),
+    `Insurance` VARCHAR(500),
+    `Hours` time,
+    `ID` MEDIUMINT NOT NULL,
+  FOREIGN KEY (`ID`) REFERENCES `Resource` (`ID`),
+  FOREIGN KEY (`Type`) REFERENCES `Med_Type` (`Type`))
+
+
+
+
+/*
+Reviews
+ */
 CREATE TABLE Reviews
   (`ID` MEDIUMINT NOT NULL,
    `Username` VARCHAR(20) NOT NULL,
