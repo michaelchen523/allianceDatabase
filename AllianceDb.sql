@@ -3,11 +3,9 @@ DROP TABLE IF EXISTS Organization;
 CREATE TABLE Organization
  (Name VARCHAR(20),
   PRIMARY KEY (Name)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  );
 
-LOCK TABLES Organization WRITE;
 INSERT INTO Organization VALUES ('Beloved');
-UNLOCK TABLES;
 
 
 DROP TABLE IF EXISTS User;
@@ -21,11 +19,10 @@ CREATE TABLE User(
  Admin VARCHAR(20) NOT NULL,
  PRIMARY KEY (Username),
  FOREIGN KEY (Organization) REFERENCES Organization (Name)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ );
 
-LOCK TABLES User WRITE;
 INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved', '1');
-UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS Resource;
 
@@ -43,7 +40,7 @@ CREATE TABLE Resource
   PRIMARY KEY (ID),
  FOREIGN KEY (Username) REFERENCES User (Username),
  CONSTRAINT Duplicate_Resource UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ );
 
 
 DROP TABLE IF EXISTS User_Favorites;
@@ -54,7 +51,7 @@ CREATE TABLE User_Favorites (
   PRIMARY KEY (Username, ID),
   FOREIGN KEY (Username) REFERENCES User (Username),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  );
 
 
 DROP TABLE IF EXISTS Org_Favorites;
@@ -74,9 +71,7 @@ CREATE TABLE Number
   Name VARCHAR(20) NOT NULL,
   PRIMARY KEY (PhoneNumber, Name),
   FOREIGN KEY (Name) REFERENCES Resource (Name)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Gender
+ );
 
 
 
@@ -89,11 +84,10 @@ DROP TABLE IF EXISTS Gender;
 CREATE TABLE Gender
   (Gender VARCHAR(20),
     PRIMARY KEY (Gender)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );
 
-LOCK TABLES Gender WRITE;
 INSERT INTO Gender VALUES ('Male'), ('Female'), ('All'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Houseing_Type;
@@ -101,11 +95,10 @@ DROP TABLE IF EXISTS Houseing_Type;
 CREATE TABLE Houseing_Type
   (Type VARCHAR(20),
     PRIMARY KEY (Type)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );
 
-LOCK TABLES Houseing_Type WRITE;
 INSERT INTO Houseing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter'), ('Other');
-UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS Housing;
 
@@ -121,10 +114,11 @@ CREATE TABLE Housing
   Age INT,
   Houseing_Type VARCHAR(20),
   Children TINYINT(1),
+  Non_Cit TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender),
   FOREIGN KEY (Houseing_Type) REFERENCES Houseing_Type (Type)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  );
 
 
 
@@ -136,12 +130,11 @@ DROP TABLE IF EXISTS Doc_Type;
 CREATE TABLE Doc_Type
   (Type VARCHAR(20),
     PRIMARY KEY (Type)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );
 
-LOCK TABLES Doc_Type WRITE;
 INSERT INTO Doc_Type VALUES ('ID'), ('SS'), 
 ('Birth Certificate'), ('Driver''s License'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Documentation;
@@ -151,9 +144,10 @@ CREATE TABLE Documentation
    Type VARCHAR(20) NOT NULL,
     StartTime time,
     EndTime time,
+    Non_Cit TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Doc_Type (Type)
-  )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  ) ;
 
 
 
@@ -166,13 +160,12 @@ DROP TABLE IF EXISTS Med_Type;
 CREATE TABLE Med_Type
   (Type VARCHAR(20),
     PRIMARY KEY (Type)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    );
 
-LOCK TABLES Med_Type WRITE;
 INSERT INTO Med_Type VALUES ('Dental'), ('Medical'), 
 ('Gynecologist'), ('Abortion Clinic'), ('STD'), ('Pediatrician'),
 ('Pharmacy'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Medical;
@@ -181,10 +174,11 @@ CREATE TABLE Medical
   ( Type VARCHAR(20),
     Insurance VARCHAR(500),
     Hours time,
+    Non_Cit TINYINT(1),
     ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Med_Type (Type)
-  )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  ) ;
 
 
 
@@ -197,11 +191,10 @@ DROP TABLE IF EXISTS Mental_Type;
 CREATE TABLE Mental_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  );
 
-LOCK TABLES Mental_Type WRITE;
 INSERT INTO Mental_Type VALUES ('Counseling'), ('Psych Evals'), ('Counseling Hotline'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Mental_Health;
@@ -209,10 +202,11 @@ DROP TABLE IF EXISTS Mental_Health;
 CREATE TABLE Mental_Health
 ( Type VARCHAR(20),
   Insurance VARCHAR(500),
+  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Mental_Type (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -225,21 +219,22 @@ DROP TABLE IF EXISTS Leg_Type;
 CREATE TABLE Leg_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Leg_Type WRITE;
+
 INSERT INTO Leg_Type VALUES ('Custody'), ('Divorce'), ('Contract'), ('Police'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal
 ( Type VARCHAR(20),
+  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Leg_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -251,20 +246,21 @@ DROP TABLE IF EXISTS Res_Type;
 CREATE TABLE Res_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Res_Type WRITE;
-INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Other');
-UNLOCK TABLES;
+
+INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Resume Building') ('Other');
+
 
 DROP TABLE IF EXISTS Resume_Building
 
 CREATE TABLE Resume_Building
 ( Type VARCHAR(20),
+  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Res_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -277,22 +273,21 @@ DROP TABLE IF EXISTS Emp_Type;
 CREATE TABLE Emp_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Emp_Type WRITE;
 INSERT INTO Emp_Type VALUES ('Food'), ('Retail'), ('Office'), ('Factory'), ('Service'), ('Other');
-UNLOCK TABLES;
+
+
 
 DROP TABLE IF EXISTS Skills;
 
 CREATE TABLE Skills
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Skills WRITE;
 INSERT INTO Skills VALUES ('Typing'), ('People Skills'), ('Reading'), ('Writing'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Employment;
@@ -302,11 +297,12 @@ CREATE TABLE Employment
   Salary INT,
   Skills VARCHAR(20),
   Childcare TINYINT(1),
+  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Emp_Type (Type),
   FOREIGN Key (Skills) REFERENCES Skills (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -318,11 +314,10 @@ DROP TABLE IF EXISTS Trans_Type;
 CREATE TABLE Trans_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Trans_Type WRITE;
 INSERT INTO Trans_Type VALUES ('Taxi'), ('Subway'), ('Bus'), ('Plane'), ('Train'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Transportation;
@@ -336,9 +331,10 @@ CREATE TABLE Transportation
   Address_Street VARCHAR(20) NOT NULL,
   Address_Number INT NOT NULL,
   ID MEDIUMINT NOT NULL,
+  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Trans_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -350,11 +346,10 @@ DROP TABLE IF EXISTS Mentor_Type;
 CREATE TABLE Mentor_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Mentor_Type WRITE;
 INSERT INTO Mentor_Type VALUES ('Life Coach'), ('Professional'), ('Personal'), ('Other');
-UNLOCK TABLES;
+
 
 
 DROP TABLE IF EXISTS Prof_Mentors;
@@ -363,9 +358,10 @@ CREATE TABLE Prof_Mentors
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
+  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Mentor_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 
@@ -386,8 +382,9 @@ CREATE TABLE Childcare
   Address_Street VARCHAR(20) NOT NULL,
   Address_Number INT NOT NULL,
   ID MEDIUMINT NOT NULL,
+  Non_Cit TINYINT(1),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
 
 /*
@@ -398,11 +395,9 @@ DROP TABLE IF EXISTS Vehicle_Type;
 CREATE TABLE Vehicle_Type
 ( Type VARCHAR(20),
   PRIMARY KEY (Type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
 
-LOCK TABLES Vehicle_Type WRITE;
-INSERT INTO Vehicle_Type VALUES ('Donations'), ('Rent'), ('Buy'), ('Classes'), ('Insurance'), ('Register') ('Other');
-UNLOCK TABLES;
+INSERT INTO Vehicle_Type VALUES ('Donations'), ('Rent'), ('Buy'), ('Classes'), ('Insurance'), ('Register'), ('Other');
 
 
 DROP TABLE IF EXISTS Vehicle;
@@ -411,9 +406,45 @@ CREATE TABLE Vehicle
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
+  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Vehicle_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+);
+
+
+
+
+/*
+Life Skills
+ */
+DROP TABLE IF EXISTS Skill_Type;
+
+CREATE TABLE Skill_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type)
+);
+
+INSERT INTO Skill_Type VALUES ('Finances'), ('Resume'), ('Education'), ('Health'), ('Parenting'), ('Cooking'), ('Faith') ('Other');
+
+
+DROP TABLE IF EXISTS Life_Skills;
+
+CREATE TABLE Life_Skills
+( Type VARCHAR(20),
+  Cost INT,
+  Address_State VARCHAR(2) NOT NULL,
+  Address_City VARCHAR(20) NOT NULL,
+  Address_Zip INT NOT NULL,
+  Address_Street VARCHAR(20) NOT NULL,
+  Address_Number INT NOT NULL,
+  ID MEDIUMINT NOT NULL,
+  Non_Cit TINYINT(1),
+  FOREIGN KEY (Type) REFERENCES Skill_Type (Type),
+  FOREIGN Key (ID) REFERENCES Resource (ID)
+);
+
+
+
 
 
 
@@ -431,6 +462,6 @@ CREATE TABLE Reviews
    PRIMARY KEY (ID, Username),
    FOREIGN KEY (ID) REFERENCES Resource (ID),
    FOREIGN KEY (Username) REFERENCES User (Username)
-   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   );
 
 
