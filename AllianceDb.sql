@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS Organization;
 
 CREATE TABLE Organization
- (Name VARCHAR(20)
+ (Name VARCHAR(20),
+  PRIMARY KEY (Name)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES Organization WRITE;
