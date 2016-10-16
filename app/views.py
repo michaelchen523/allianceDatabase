@@ -1,11 +1,12 @@
 from app import app, mysql
-from flask import render_template, request, url_for, redirect, flash
-
-
+from flask import render_template, request, url_for, redirect, flash, session
 
 @app.route('/')
 def index():
-    return render_template('index.html', title = 'Alliance')
+    if not session.get('logged_in'):
+        return redirect('login')
+    else:
+        return render_template('home.html', title = 'Alliance')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -21,14 +22,10 @@ def login():
         data = cursor.fetchall()
 
         if len(data) > 0:
+            session['logged_in'] = True
             return render_template("home.html")
 
-        return render_template("login.html")
-
-
-
-
-    return render_template('login.html', title='login')
+    return render_template("login.html")
 
 @app.route('/home')
 def home():
@@ -57,4 +54,3 @@ def user_detail():
 @app.route('/edit_add_resource')
 def edit_add_resource():
     return render_template('edit_add_resource.html', title = "Edit Resource")
-
