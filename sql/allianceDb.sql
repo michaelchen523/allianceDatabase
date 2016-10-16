@@ -1,3 +1,9 @@
+DROP DATABASE IF EXISTS alliance;
+
+CREATE DATABASE alliance;
+
+use alliance;
+
 DROP TABLE IF EXISTS Organization;
 
 CREATE TABLE Organization
@@ -8,6 +14,7 @@ CREATE TABLE Organization
 LOCK TABLES Organization WRITE;
 INSERT INTO Organization VALUES ('Beloved');
 UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS User;
 
@@ -60,9 +67,8 @@ CREATE TABLE User_Favorites (
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES User_Favorites WRITE;
-INSERT INTO User_Favorites VALUES ('MichaelC', 3);
+INSERT INTO User_Favorites VALUES ('MichaelC', 1);
 UNLOCK TABLES;
-
 
 DROP TABLE IF EXISTS Org_Favorites;
 
@@ -71,13 +77,11 @@ CREATE TABLE Org_Favorites
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Organization, ID),
   FOREIGN KEY (Organization) REFERENCES Organization (Name),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  FOREIGN KEY (ID) REFERENCES Resource(ID));
 
 LOCK TABLES Org_Favorites WRITE;
-INSERT INTO Org_Favorites VALUES ('Beloved', 3);
+INSERT INTO Org_Favorites VALUES ('Beloved', 1);
 UNLOCK TABLES;
-
 
 DROP TABLE IF EXISTS Number;
 
@@ -85,18 +89,40 @@ CREATE TABLE Number
   (PhoneNumber INT NOT NULL,
   Name VARCHAR(20) NOT NULL,
   PRIMARY KEY (PhoneNumber, Name),
- FOREIGN KEY (Name) REFERENCES Resource (Name)
+  FOREIGN KEY (Name) REFERENCES Resource (Name)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Gender
+LOCK TABLES Number WRITE;
+INSERT INTO Number VALUES ('4905558', 'Phi Sig');
+UNLOCK TABLES;
+
+
+
+/*
+Housing
+ */
+
+DROP TABLE IF EXISTS Gender;
 
 CREATE TABLE Gender
   (Gender VARCHAR(20),
-    PRIMARY KEY(Gender)
+    PRIMARY KEY (Gender)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES Gender WRITE;
-INSERT INTO Gender VALUES ('Male', 'Female', 'All');
+INSERT INTO Gender VALUES ('Male'), ('Female'), ('All');
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS Houseing_Type;
+
+CREATE TABLE Houseing_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES Houseing_Type WRITE;
+INSERT INTO Houseing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS Housing;
@@ -112,39 +138,80 @@ CREATE TABLE Housing
   Gender VARCHAR(20),
   Age INT,
   Houseing_Type VARCHAR(20),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  Children TINYINT(1),
+  FOREIGN KEY (ID) REFERENCES Resource (ID),
+  FOREIGN KEY (Gender) REFERENCES Gender (Gender),
+  FOREIGN KEY (Houseing_Type) REFERENCES Houseing_Type (Type)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES Housing WRITE;
+INSERT INTO Housing VALUES (1, 100, 'GA', 'Atlanta', 30332, 'Ponce', 123, 'Male', 18, 'Rent', 0);
+UNLOCK TABLES;
+
+
+/*
+Documentation
+ */
+DROP TABLE IF EXISTS Doc_Type;
+
+CREATE TABLE Doc_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES Doc_Type WRITE;
+INSERT INTO Doc_Type VALUES ('ID'), ('SS'),
+('Birth Certificate'), ('Driver''s License'), ('Other');
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS Documentation;
+
+CREATE TABLE Documentation
+  (ID MEDIUMINT NOT NULL,
+   Type VARCHAR(20) NOT NULL,
+    Hours time,
+  FOREIGN KEY (ID) REFERENCES Resource (ID),
+  FOREIGN KEY (Type) REFERENCES Doc_Type (Type)
+  )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+/*
+Medical
+ */
+DROP TABLE IF EXISTS Med_Type;
+
+CREATE TABLE Med_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES Med_Type WRITE;
+INSERT INTO Med_Type VALUES ('Dental'), ('Medical'),
+('Gynecologist'), ('Abortion Clinic'), ('STD'), ('Pediatrician'),
+('Pharmacy'), ('Other');
+UNLOCK TABLES;
 
 
 DROP TABLE IF EXISTS Medical;
 
 CREATE TABLE Medical
-  (ID MEDIUMINT NOT NULL,
-  Insurance VARCHAR(20),
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  ( Type VARCHAR(20),
+    Insurance VARCHAR(500),
+    Hours time,
+    ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID),
+  FOREIGN KEY (Type) REFERENCES Med_Type (Type)
+  )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS Religious;
-
-CREATE TABLE Religious
-  (ID MEDIUMINT NOT NULL,
-  Denomonation VARCHAR(20),
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS Shelter;
-
-CREATE TABLE Shelter
-  (ID MEDIUMINT NOT NULL,
-  Capacity INT,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+/*
+Reviews
+ */
 
 DROP TABLE IF EXISTS Reviews;
 
