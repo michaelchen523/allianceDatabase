@@ -35,12 +35,35 @@ CREATE TABLE Resource
   Address_Zip INT NOT NULL,
   Address_Street VARCHAR(20) NOT NULL,
   Address_Number INT NOT NULL,
+  Non_Citizen TINYINT(1),
   Description VARCHAR(600),
   ID MEDIUMINT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (ID),
  FOREIGN KEY (Username) REFERENCES User (Username),
- CONSTRAINT Duplicate_Resource UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
+ CONSTRAINT Duplicate_Resource 
+ UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
+
+
+DROP TABLE IF EXISTS Category_Names;
+
+CREATE TABLE Category_Names
+( Name VARCHAR(20),
+  PRIMARY KEY (Name));
+
+INSERT INTO Category_Names VALUES ('Housing'), ('Documentation'), ('Medical'),
+ ('Mental Health'), ('Legal'), ('Resume Building'), ('Employment'), ('Transportation'),
+  ('Professional Mentors'), ('Childcare'), ('Vehicle'), ('Life Skills'), ('Education'), ('Networks');
+
+
+DROP TABLE IF EXISTS Categories;
+
+CREATE TABLE Categories
+( ID MEDIUMINT NOT NULL, 
+  Name VARCHAR(20),
+  PRIMARY KEY (ID, Name),
+  FOREIGN KEY (Name) REFERENCES Category_Names(Name),
+  FOREIGN KEY (ID) REFERENCES Resource (ID));
 
 
 DROP TABLE IF EXISTS User_Favorites;
@@ -105,16 +128,10 @@ DROP TABLE IF EXISTS Housing;
 CREATE TABLE Housing
   (ID MEDIUMINT NOT NULL,
   Capacity INT,
-  Address_State VARCHAR(2) NOT NULL,
-  Address_City VARCHAR(20) NOT NULL,
-  Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(20) NOT NULL,
-  Address_Number INT NOT NULL,
   Gender VARCHAR(20),
   Age INT,
   Houseing_Type VARCHAR(20),
   Children TINYINT(1),
-  Non_Cit TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender),
   FOREIGN KEY (Houseing_Type) REFERENCES Houseing_Type (Type)
@@ -144,8 +161,7 @@ CREATE TABLE Documentation
    Type VARCHAR(20) NOT NULL,
     StartTime time,
     EndTime time,
-    Non_Cit TINYINT(1),
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
+    FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Doc_Type (Type)
   ) ;
 
@@ -174,8 +190,7 @@ CREATE TABLE Medical
   ( Type VARCHAR(20),
     Insurance VARCHAR(500),
     Hours time,
-    Non_Cit TINYINT(1),
-    ID MEDIUMINT NOT NULL,
+      ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Med_Type (Type)
   ) ;
@@ -202,7 +217,6 @@ DROP TABLE IF EXISTS Mental_Health;
 CREATE TABLE Mental_Health
 ( Type VARCHAR(20),
   Insurance VARCHAR(500),
-  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Mental_Type (Type)
@@ -230,7 +244,6 @@ DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal
 ( Type VARCHAR(20),
-  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Leg_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
@@ -252,11 +265,10 @@ CREATE TABLE Res_Type
 INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Resume Building') ('Other');
 
 
-DROP TABLE IF EXISTS Resume_Building
+DROP TABLE IF EXISTS Resume_Building;
 
 CREATE TABLE Resume_Building
 ( Type VARCHAR(20),
-  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Res_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
@@ -297,7 +309,6 @@ CREATE TABLE Employment
   Salary INT,
   Skills VARCHAR(20),
   Childcare TINYINT(1),
-  Non_Cit TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Emp_Type (Type),
   FOREIGN Key (Skills) REFERENCES Skills (Type),
@@ -325,13 +336,7 @@ DROP TABLE IF EXISTS Transportation;
 CREATE TABLE Transportation
 ( Type VARCHAR(20),
   Cost INT,
-  Address_State VARCHAR(2) NOT NULL,
-  Address_City VARCHAR(20) NOT NULL,
-  Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(20) NOT NULL,
-  Address_Number INT NOT NULL,
   ID MEDIUMINT NOT NULL,
-  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Trans_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
@@ -358,7 +363,6 @@ CREATE TABLE Prof_Mentors
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
-  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Mentor_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
@@ -376,13 +380,7 @@ CREATE TABLE Childcare
   StartTime time,
   EndTime time,
   Capacity INT,
-  Address_State VARCHAR(2) NOT NULL,
-  Address_City VARCHAR(20) NOT NULL,
-  Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(20) NOT NULL,
-  Address_Number INT NOT NULL,
   ID MEDIUMINT NOT NULL,
-  Non_Cit TINYINT(1),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
 
@@ -406,7 +404,6 @@ CREATE TABLE Vehicle
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
-  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Vehicle_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
@@ -432,20 +429,73 @@ DROP TABLE IF EXISTS Life_Skills;
 CREATE TABLE Life_Skills
 ( Type VARCHAR(20),
   Cost INT,
-  Address_State VARCHAR(2) NOT NULL,
-  Address_City VARCHAR(20) NOT NULL,
-  Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(20) NOT NULL,
-  Address_Number INT NOT NULL,
   ID MEDIUMINT NOT NULL,
-  Non_Cit TINYINT(1),
   FOREIGN KEY (Type) REFERENCES Skill_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
 
 
+/*
+Education
+ */
+DROP TABLE IF EXISTS Education_Type;
+
+CREATE TABLE Education_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type));
+
+INSERT INTO Education_Type VALUES ('GED'),
+ ('Scholarships'), ('College'), ('Certifications'), ('Workshops'), ('Other');
 
 
+DROP TABLE IF EXISTS Education;
+
+CREATE TABLE Education
+( Cost INT,
+  Type VARCHAR(20),
+  Prerequisites VARCHAR(400),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Education_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
+
+
+/*
+Networks
+ */
+DROP TABLE IF EXISTS Net_Mem;
+
+CREATE TABLE Net_Mem
+( Type VARCHAR(20),
+  PRIMARY KEY (Type));
+
+INSERT INTO Net_Mem VALUES ('Survivors'),
+ ('Parents of Survivors'),
+  ('Family of Survivors'), ('Volunteers'), ('Other'); 
+
+
+DROP TABLE IF EXISTS Net_Sub;
+
+CREATE TABLE Net_Sub
+( Subject VARCHAR(20),
+  PRIMARY KEY (Subject));
+
+INSERT INTO Net_Sub VALUES ('Partner'),
+ ('Sex Trafficking'), ('Prostitution');
+
+
+DROP TABLE IF EXISTS Networks;
+
+CREATE TABLE Networks
+( Catered_To VARCHAR(20),
+  Gender TINYINT(1),
+  Age INT,
+  Subject VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID),
+  FOREIGN KEY (Catered_To) REFERENCES Net_Mem (Type),
+  FOREIGN KEY (Subject) REFERENCES Net_Sub (Subject)
+  );
 
 
 /*
