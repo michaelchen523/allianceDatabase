@@ -23,7 +23,7 @@ def login():
 
         if len(data) > 0:
             session['logged_in'] = True
-            return render_template("home.html")
+            return render_template("home.html", title='home', user = username);
 
     return render_template("login.html")
 
