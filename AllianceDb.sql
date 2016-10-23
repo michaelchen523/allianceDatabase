@@ -27,8 +27,7 @@ INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'B
 DROP TABLE IF EXISTS Resource;
 
 CREATE TABLE Resource
- (AdminName VARCHAR(20)  NOT NULL,
-  Name VARCHAR(20) NOT NULL,
+ (Name VARCHAR(20) NOT NULL,
   Username VARCHAR(20) NOT NULL,
   Address_State VARCHAR(2) NOT NULL,
   Address_City VARCHAR(20) NOT NULL,
@@ -49,12 +48,13 @@ DROP TABLE IF EXISTS Category_Names;
 
 CREATE TABLE Category_Names
 ( Name VARCHAR(20),
+  Description VARCHAR(500),
   PRIMARY KEY (Name));
-
+/*
 INSERT INTO Category_Names VALUES ('Housing'), ('Documentation'), ('Medical'),
  ('Mental Health'), ('Legal'), ('Resume Building'), ('Employment'), ('Transportation'),
   ('Professional Mentors'), ('Childcare'), ('Vehicle'), ('Life Skills'), ('Education'), ('Networks');
-
+*/
 
 DROP TABLE IF EXISTS Categories;
 
@@ -90,10 +90,10 @@ CREATE TABLE Org_Favorites
 DROP TABLE IF EXISTS Number;
 
 CREATE TABLE Number
-  (PhoneNumber INT NOT NULL,
-  Name VARCHAR(20) NOT NULL,
+  (PhoneNumber VARCHAR(15) NOT NULL,
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (PhoneNumber, Name),
-  FOREIGN KEY (Name) REFERENCES Resource (Name)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
  );
 
 
@@ -158,11 +158,11 @@ DROP TABLE IF EXISTS Documentation;
 
 CREATE TABLE Documentation
   (ID MEDIUMINT NOT NULL,
-   Type VARCHAR(20) NOT NULL,
+   Doc_Type VARCHAR(20) NOT NULL,
     StartTime time,
     EndTime time,
     FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Type) REFERENCES Doc_Type (Type)
+  FOREIGN KEY (Doc_Type) REFERENCES Doc_Type (Type)
   ) ;
 
 
@@ -243,9 +243,9 @@ INSERT INTO Leg_Type VALUES ('Custody'), ('Divorce'), ('Contract'), ('Police'), 
 DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal
-( Type VARCHAR(20),
+( Leg_Type VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Leg_Type (Type),
+  FOREIGN KEY (Leg_Type) REFERENCES Leg_Type (Type),
   FOREIGN Key (ID) REFERENCES Resource (ID)
 );
 
@@ -507,8 +507,8 @@ DROP TABLE IF EXISTS Reviews;
 CREATE TABLE Reviews
   (ID MEDIUMINT NOT NULL,
    Username VARCHAR(20) NOT NULL,
-   Score INT NOT NULL,
-   Description VARCHAR(600),
+   Rating INT NOT NULL,
+   Testimonial VARCHAR(600),
    PRIMARY KEY (ID, Username),
    FOREIGN KEY (ID) REFERENCES Resource (ID),
    FOREIGN KEY (Username) REFERENCES User (Username)
