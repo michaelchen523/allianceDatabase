@@ -62,10 +62,12 @@ def edit_user():
         '''cursor.execute("UPDATE Users SET Organization = '" + orgName + "', Phone = '" + orgPhone +
                        "', Description = '" + orgDescription + "' WHERE User = '" + user + "';")'''
 
-    return render_template('edit_user.html', title = 'edit profile', user = user, categories = categories, userdata = userdata, userresource = userresource)
+    return render_template('edit_user.html', title = 'edit profile', user = user,
+                           categories = categories, userdata = userdata, userresource = userresource)
 
 @app.route('/search')
 def search():
+    searchcategory = None
     user = session.get('user')
     categories = session.get('categories')
     if 'searchcategory' in request.args:
@@ -73,18 +75,20 @@ def search():
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM RESOURCE WHERE Category = '" + searchcategory + "';")
-    return render_template('search.html', title='search', user = user, categories = categories, searchcategory = searchcategory)
+    return render_template('search.html', title='search', user = user,
+                           categories = categories, searchcategory = searchcategory)
 
 @app.route('/resource_detail')
 def resource_detail():
     user = session.get('user')
-    '''resource = request.args['resourcename']
+    resourcename = request.args['resourcename']
     conn = mysql.connection
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM RESOURCE WHERE Name = '" + resource + "';")'''
+    cursor.execute("SELECT * FROM RESOURCE WHERE Name = '" + resourcename + "';")
+    resource = cursor.fetchall()
     categories = session.get('categories')
     return render_template('resource_detail.html', title='resource details',
-                           user = user, categories = categories)
+                           user = user, categories = categories, resource = resource)
 
 @app.route('/organizations')
 def organizations():

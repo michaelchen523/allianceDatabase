@@ -14,18 +14,9 @@
                         type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Housing</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Medical</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Mental Health</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Job Readiness</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Legal</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Employment</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Transportation</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Professional Mentors</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Childcare</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Vehicle</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Life Skills</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Survivor Networks</a></li>
+                    {% for category in categories %}
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
+                    {% endfor %}
 
                 </ul>
             </div>
@@ -43,13 +34,12 @@
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
     <div class="col-md-8 container text-center">
 
-        <h1>Resource</h1>
+        <h1>{{ resource[0][1] }}</h1>
         <h2>Rating</h2>
-        <h4>000-000-0000</h4><h4>Atlanta, GA</h4>
-        <p class="word-wrap">Resource Description [... ... ... ... ... ... ... ... ..
-            ... ... ... ... ... ... ... ... ... .. .. ... ... ... ... ... ...
-            ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ..
-            ... ... ... ... ...]</p>
+        <h4>000-000-0000</h4>
+        <h4>{{ resource[0][7] }} {{ resource[0][6] }}</h4>
+        <h4>{{ resource[0][4] }}, {{resource[0][3] }}</h4>
+        <p class="word-wrap">{{ resource[0][8] }}</p>
 
     </div>
     <div class="col-md-4 container profile-div">
