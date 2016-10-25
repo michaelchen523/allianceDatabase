@@ -43,6 +43,10 @@ CREATE TABLE Resource
  UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
 
+INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', '30308', 'Spring St.', 9, 1, 'women'' shelter', 1);
+
+INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
+VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
 
 DROP TABLE IF EXISTS Category_Names;
 
@@ -113,14 +117,14 @@ INSERT INTO Gender VALUES ('Male'), ('Female'), ('All'), ('Other');
 
 
 
-DROP TABLE IF EXISTS Houseing_Type;
+DROP TABLE IF EXISTS Housing_Type;
 
-CREATE TABLE Houseing_Type
+CREATE TABLE Housing_Type
   (Type VARCHAR(20),
     PRIMARY KEY (Type)
     );
 
-INSERT INTO Houseing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter'), ('Other');
+INSERT INTO Housing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter'), ('Other');
 
 
 DROP TABLE IF EXISTS Housing;
@@ -129,15 +133,16 @@ CREATE TABLE Housing
   (ID MEDIUMINT NOT NULL,
   Capacity INT,
   Gender VARCHAR(20),
-  Age INT,
+  AgeMax INT,
+  AgeMin INT,
   Houseing_Type VARCHAR(20),
   Children TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender),
-  FOREIGN KEY (Houseing_Type) REFERENCES Houseing_Type (Type)
+  FOREIGN KEY (Housing_Type) REFERENCES Housing_Type (Type)
   );
 
-
+INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0)
 
 /*
 Documentation
