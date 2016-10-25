@@ -113,6 +113,14 @@ def user_detail():
 
 @app.route('/edit_add_resource')
 def edit_add_resource():
+    resource = None
     user = session.get('user')
+    if 'resource' in request.args:
+        resourceName = request.args['resource']
+        conn = mysql.connection
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
+        resource = cursor.fetchall()
     categories = session.get('categories')
-    return render_template('edit_add_resource.html', title = "Edit Resource", user = user, categories = categories)
+    return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
+                           categories = categories, resource = resource)
