@@ -1,5 +1,4 @@
 *.pyc
 *.xml
-.idea/
-workspace.xml
-*.iml
+/.idea
+.DS_Store
