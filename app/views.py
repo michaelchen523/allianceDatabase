@@ -71,13 +71,18 @@ def search():
     searchcategory = None
     user = session.get('user')
     categories = session.get('categories')
+    conn = mysql.connection
     if 'searchcategory' in request.args:
         searchcategory = request.args['searchcategory']
-        conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM RESOURCE WHERE Category = '" + searchcategory + "';")
+        resources = cursor.fetchall()
+    else:
+        cursor2 = conn.cursor()
+        cursor2.execute("SELECT * FROM RESOURCE;")
+        resources = cursor2.fetchall()
     return render_template('search.html', title='search', user = user,
-                           categories = categories, searchcategory = searchcategory)
+                           categories = categories, searchcategory = searchcategory, resources = resources)
 
 @app.route('/resource_detail')
 def resource_detail():

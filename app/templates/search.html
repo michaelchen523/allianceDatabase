@@ -96,49 +96,18 @@
             </ul>
         </div>
         <div class="jumbotron col-sm-8">
-
-
             <div class="blk content">
                 <ol style="font-size:2em">
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-
-
+                    {% for resource in resources %}
+                        <li>
+                            <div class="resource">
+                                <h2><a href="{{ url_for('resource_detail', resourcename = resource[1]) }}">{{ resource[1] }}</a></h2>
+                                <h4>Rating</h4>
+                                <p>{{ resource[8] }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
                 </ol>
-
             </div>
         </div>
         <div class="col-sm-4">
