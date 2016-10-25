@@ -105,15 +105,20 @@ def organizations():
 def user_detail():
     user = session.get('user')
     categories = session.get('categories')
-    detailorg = False
-    if 'detailorg' in request.args:
-        detailorg = request.args['detailorg']
-        conn = mysql.connection
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
-        orgdata = cursor.fetchall
+    detailorg = request.args['detailorg']
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
+    orgdata = cursor.fetchall()
+    cursor2 = conn.cursor()
+    cursor2.execute("SELECT Username FROM User WHERE Organization = '" + detailorg + "';")
+    name = cursor2.fetchall()
+    name = name[0][0]
+    cursor3 = conn.cursor()
+    cursor3.execute("SELECT Name FROM Resource WHERE Username = '" + name + "';")
+    resources = cursor3.fetchall()
     return render_template('user_detail.html', title='User Details', user = user,
-                           orgdata = orgdata, detailorg = detailorg, categories = categories)
+                           orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)
 
 @app.route('/edit_add_resource')
 def edit_add_resource():
