@@ -59,9 +59,9 @@ def edit_user():
         orgPhone = request.form['orgPhone']
         orgDescription = request.form['orgDescription']
 
-        '''cursor.execute("UPDATE Users SET Organization = '" + orgName + "', Phone = '" + orgPhone +
-                       "', Description = '" + orgDescription + "' WHERE User = '" + user + "';")
-            return redirect(url_for('edit_user'))'''
+        cursor.execute("UPDATE Users SET Organization = '" + orgName + "', Phone = '" + orgPhone +
+                       "', Description = '" + orgDescription + "' WHERE Username = '" + user + "';")
+        return redirect(url_for('edit_user'))
 
     return render_template('edit_user.html', title = 'edit profile', user = user,
                            categories = categories, userdata = userdata, userresource = userresource)
@@ -75,11 +75,11 @@ def search():
     if 'searchcategory' in request.args:
         searchcategory = request.args['searchcategory']
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM RESOURCE WHERE Category = '" + searchcategory + "';")
+        cursor.execute("SELECT ResourceName FROM Category WHERE CategoryName = '" + searchcategory + "';")
         resources = cursor.fetchall()
     else:
         cursor2 = conn.cursor()
-        cursor2.execute("SELECT * FROM RESOURCE;")
+        cursor2.execute("SELECT * FROM Resource;")
         resources = cursor2.fetchall()
     return render_template('search.html', title='search', user = user,
                            categories = categories, searchcategory = searchcategory, resources = resources)
@@ -144,7 +144,7 @@ def edit_add_resource():
         resourceState = request.form['resourceState']
         resourceZip = request.form['resourceZip']
         resourceDescription = request.form['resourceDescription']
-        '''if resource != None:
+        if resource != None:
             cursor2 = conn.cursor()
             cursor2.execute("UPDATE Resource SET Name = '" + resourceName + "', Address_State = '" + resourceState
                              + "', Address_City = '" + resourceCity + "', Address_Zip = '" + resourceZip + "', Address_Street = '"
@@ -156,7 +156,7 @@ def edit_add_resource():
             cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
                             resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
                             + ", " + resourceStreet + ", " + resourceDescription + ");")
-            return redirect(url_for('edit_user'))'''
+            return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
                            categories = categories, resource = resource)
