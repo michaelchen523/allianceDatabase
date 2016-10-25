@@ -14,19 +14,9 @@
                         type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Housing</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Medical</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Mental Health</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Job Readiness</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Legal</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Employment</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Transportation</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Professional Mentors</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Childcare</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Vehicle</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Life Skills</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Survivor Networks</a></li>
-
+                    {% for category in categories %}
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -45,65 +35,15 @@
     <div class="blk content">
 
         <ol style="font-size:2em">
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-            <li>
-                <div class="organization">
-                    <h2><a href="{{ url_for('user_detail') }}">Organization</a></h2>
-                    <h4>000-000-0000</h4>
-                    <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
-                </div>
-            </li>
-
-
-
+            {% for org in orgdata %}
+                <li>
+                    <div class="organization">
+                        <h2><a href="{{url_for('user_detail', detailorg = org[0]) }}">{{ org[0] }}</a></h2>
+                        <h4>000-000-0000</h4>
+                        <p>Description of Organization [... ........ ...... ...... ....... ..........]</p>
+                    </div>
+                </li>
+            {% endfor %}
         </ol>
 
     </div>
