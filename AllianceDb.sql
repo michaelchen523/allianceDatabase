@@ -1,3 +1,13 @@
+/*
+  Delete and recreate the database, set the current database to AllianceDb
+*/
+
+DROP DATABASE IF EXISTS AllianceDb;
+CREATE DATABASE AllianceDb;
+USE AllianceDb;
+
+SELECT 'BEGINNING OF SCRIPT'; # Select statements are placed throughout the script and act as a sort of print statement
+
 DROP TABLE IF EXISTS Organization;
 
 CREATE TABLE Organization
@@ -16,7 +26,7 @@ CREATE TABLE User(
  Password VARCHAR(25) NOT NULL,
  Name VARCHAR(20) NOT NULL,
  Organization VARCHAR(20) NOT NULL,
- Admin VARCHAR(20) NOT NULL,
+ Admin VARCHAR(20) NOT NULL, # why is this not a tinyint?
  PRIMARY KEY (Username),
  FOREIGN KEY (Organization) REFERENCES Organization (Name)
  );
@@ -28,24 +38,25 @@ DROP TABLE IF EXISTS Resource;
 
 CREATE TABLE Resource
  (Name VARCHAR(20) NOT NULL,
-  Username VARCHAR(20) NOT NULL,
+  Creator_Username VARCHAR(20) NOT NULL, # changed this from 'Username' to reduce possible confusion
   Address_State VARCHAR(2) NOT NULL,
   Address_City VARCHAR(20) NOT NULL,
   Address_Zip INT NOT NULL,
   Address_Street VARCHAR(20) NOT NULL,
   Address_Number INT NOT NULL,
   Non_Citizen TINYINT(1),
+  Eligibility VARCHAR(600), # after looking at the initial resources to add, it looks like we should have an eligibility attribute
   Description VARCHAR(600),
   ID MEDIUMINT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (ID),
- FOREIGN KEY (Username) REFERENCES User (Username),
+ FOREIGN KEY (Creator_Username) REFERENCES User (Username),
  CONSTRAINT Duplicate_Resource 
  UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
 
-INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', '30308', 'Spring St.', 9, 1, 'women'' shelter', 1);
+INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', '30308', 'Spring St.', 9, 1, 'women', 'shelter', 1);
 
-INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
 VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
 
 DROP TABLE IF EXISTS Category_Names;
@@ -91,20 +102,22 @@ CREATE TABLE Org_Favorites
   FOREIGN KEY (ID) REFERENCES Resource(ID));
 
 
-DROP TABLE IF EXISTS Number;
+DROP TABLE IF EXISTS Phone_Numbers; # changed this because 'Number' seems to be a restricted word
 
-CREATE TABLE Number
-  (PhoneNumber VARCHAR(15) NOT NULL,
+CREATE TABLE Phone_Numbers
+  (Phone_Number VARCHAR(15) NOT NULL, # why is this a varchar and not an int? changed from 'PhoneNumber' for format consistency
   ID MEDIUMINT NOT NULL,
-  PRIMARY KEY (PhoneNumber, Name),
+  PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
  );
 
-
+SELECT 'Housing';
 
 /*
 Housing
  */
+
+# for gender, do we want it to be a multivaried attribute with its own table or is it more like an enum?
 
 DROP TABLE IF EXISTS Gender;
 
@@ -135,14 +148,16 @@ CREATE TABLE Housing
   Gender VARCHAR(20),
   AgeMax INT,
   AgeMin INT,
-  Houseing_Type VARCHAR(20),
+  Housing_Type VARCHAR(20),
   Children TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender),
   FOREIGN KEY (Housing_Type) REFERENCES Housing_Type (Type)
   );
 
-INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0)
+INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
+
+SELECT 'Documentation';
 
 /*
 Documentation
@@ -164,14 +179,14 @@ DROP TABLE IF EXISTS Documentation;
 CREATE TABLE Documentation
   (ID MEDIUMINT NOT NULL,
    Doc_Type VARCHAR(20) NOT NULL,
-    StartTime time,
-    EndTime time,
+    StartTime TIME,
+    EndTime TIME,
     FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Doc_Type) REFERENCES Doc_Type (Type)
   ) ;
 
 
-
+SELECT 'Medical';
 
 /*
 Medical
@@ -194,14 +209,13 @@ DROP TABLE IF EXISTS Medical;
 CREATE TABLE Medical
   ( Type VARCHAR(20),
     Insurance VARCHAR(500),
-    Hours time,
-      ID MEDIUMINT NOT NULL,
+    Hours TIME,
+    ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Med_Type (Type)
   ) ;
 
-
-
+SELECT 'Mental Health';
 
 /*
 Mental Health
@@ -221,14 +235,13 @@ DROP TABLE IF EXISTS Mental_Health;
 
 CREATE TABLE Mental_Health
 ( Type VARCHAR(20),
-  Insurance VARCHAR(500),
+  Insurance VARCHAR(500), # could insurance be a mulitvaried attribute that separates various insurance providers?
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Type) REFERENCES Mental_Type (Type)
 );
 
-
-
+SELECT 'Legal';
 
 /*
 Legal
@@ -251,10 +264,10 @@ CREATE TABLE Legal
 ( Leg_Type VARCHAR(20),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Leg_Type) REFERENCES Leg_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
+SELECT 'Resume Building';
 
 /*
 Resume Building
@@ -267,7 +280,7 @@ CREATE TABLE Res_Type
 );
 
 
-INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Resume Building') ('Other');
+INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Resume Building'), ('Other');
 
 
 DROP TABLE IF EXISTS Resume_Building;
@@ -276,10 +289,10 @@ CREATE TABLE Resume_Building
 ( Type VARCHAR(20),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Res_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
+SELECT 'Employment';
 
 /*
 Employment
@@ -316,11 +329,11 @@ CREATE TABLE Employment
   Childcare TINYINT(1),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Emp_Type (Type),
-  FOREIGN Key (Skills) REFERENCES Skills (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (Skills) REFERENCES Skills (Type),
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
+SELECT 'Transportation';
 
 /*
 Transportation
@@ -343,10 +356,10 @@ CREATE TABLE Transportation
   Cost INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Trans_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
+SELECT 'Professional Mentors';
 
 /*
 Professional Mentors
@@ -369,10 +382,10 @@ CREATE TABLE Prof_Mentors
   Cost INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Mentor_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
+SELECT 'Childcare';
 
 /*
 Childcare
@@ -386,9 +399,10 @@ CREATE TABLE Childcare
   EndTime time,
   Capacity INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
+SELECT 'Vehicle';
 
 /*
 Vehicle
@@ -410,11 +424,10 @@ CREATE TABLE Vehicle
   Cost INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Vehicle_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-
-
+SELECT 'Life Skills';
 
 /*
 Life Skills
@@ -426,7 +439,7 @@ CREATE TABLE Skill_Type
   PRIMARY KEY (Type)
 );
 
-INSERT INTO Skill_Type VALUES ('Finances'), ('Resume'), ('Education'), ('Health'), ('Parenting'), ('Cooking'), ('Faith') ('Other');
+INSERT INTO Skill_Type VALUES ('Finances'), ('Resume'), ('Education'), ('Health'), ('Parenting'), ('Cooking'), ('Faith'), ('Other');
 
 
 DROP TABLE IF EXISTS Life_Skills;
@@ -436,9 +449,10 @@ CREATE TABLE Life_Skills
   Cost INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Type) REFERENCES Skill_Type (Type),
-  FOREIGN Key (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
+SELECT 'Education';
 
 /*
 Education
@@ -464,6 +478,7 @@ CREATE TABLE Education
   FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
 
+SELECT 'Networks';
 
 /*
 Networks
@@ -502,6 +517,7 @@ CREATE TABLE Networks
   FOREIGN KEY (Subject) REFERENCES Net_Sub (Subject)
   );
 
+SELECT 'Reviews';
 
 /*
 Reviews
