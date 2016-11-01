@@ -14,18 +14,9 @@
                         type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Housing</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Medical</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Mental Health</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Job Readiness</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Legal</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Employment</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Transportation</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Professional Mentors</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Childcare</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Vehicle</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Life Skills</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Survivor Networks</a></li>
+                    {% for category in categories %}
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
+                    {% endfor %}
 
                 </ul>
             </div>
@@ -41,10 +32,14 @@
 </nav>
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <form class="col-md-8 container vertical-center">
-        <label for="orgName"><h3>Name: </h3></label>
+    <form class="col-md-8 container vertical-center" method="post">
+        <label for="orgName"><h3>Organization Name: </h3></label>
         <div class="form-group row">
-            <input  class = "input-lg col-md-10" id = "orgName" type="text" name = "orgName" placeholder="Organization Name">
+            <input  class = "input-lg col-md-10" id = "orgName" type="text" name = "orgName"
+                    { % if user % }
+                        value = "{{ userdata[0][4] }}"
+                    { % else % }
+                        placeholder="Organization Name">
         </div>
         <label for="orgPhone">Phone Number: </label>
         <div class="form-group row">
@@ -54,33 +49,22 @@
         <label for="orgDescription">Description: </label>
         <div class="form-group row">
             <textarea class = "col-md-10" id="orgDescription" rows = "5" name = "orgDescription" placeholder="Enter Description"></textarea>
+
         </div>
         <div class="form-group row">
             <h2>Resources</h2>
         </div>
         <div class="form-group row">
             <ul class="list-unstyled">
+                {% for resource in userresource %}
                 <li>
                     <div class="col-md-10 row">
-                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
+                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail', resourcename = resource[0]) }}"><h4>{{ resource[0] }}</h4></a>
+                        <a href="{{ url_for('edit_add_resource', resource = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
                         <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
                     </div>
                 </li>
-                <li>
-                    <div class="col-md-10 row">
-                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-                        <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
-                    </div>
-                </li>
-                <li>
-                    <div class="col-md-10 row">
-                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail') }}"><h4>Resource</h4></a>
-                        <a href="{{ url_for('edit_add_resource') }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-                        <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
-                    </div>
-                </li>
+                {% endfor %}
                 <li>
                     <div class="col-md-10 row">
                         <a class="col-md-4" href="{{ url_for('edit_add_resource') }}"><h5>+ Add Resource</h5></a>

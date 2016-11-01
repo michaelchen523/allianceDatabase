@@ -14,18 +14,9 @@
                         type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Housing</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Medical</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Mental Health</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Job Readiness</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Legal</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Employment</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Transportation</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Professional Mentors</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Childcare</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Vehicle</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Life Skills</a></li>
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">Survivor Networks</a></li>
+                    {% for category in categories %}
+                    <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
+                    {% endfor %}
 
                 </ul>
             </div>
@@ -58,18 +49,9 @@
                                     <h5>Categories</h5>
                                 </li>
                             </row>
-                            <li><input type="checkbox" value="">Housing</input></li>
-                            <li><input type="checkbox" value="">Medical</input></li>
-                            <li><input type="checkbox" value="">Mental Health</input></li>
-                            <li><input type="checkbox" value="">Job Readiness</input></li>
-                            <li><input type="checkbox" value="">Legal</input></li>
-                            <li><input type="checkbox" value="">Employment</input></li>
-                            <li><input type="checkbox" value="">Transportation</input></li>
-                            <li><input type="checkbox" value="">Professional Mentors</input></li>
-                            <li><input type="checkbox" value="">Childcare</input></li>
-                            <li><input type="checkbox" value="">Vehicle</input></li>
-                            <li><input type="checkbox" value="">Life Skills</input></li>
-                            <li><input type="checkbox" value="">Survivor Networks</input></li>
+                            {% for category in categories %}
+                                <li><input type="checkbox" value = "">{{ category[0] }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </li>
@@ -114,49 +96,18 @@
             </ul>
         </div>
         <div class="jumbotron col-sm-8">
-
-
             <div class="blk content">
                 <ol style="font-size:2em">
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="resource">
-                            <h2><a href="{{ url_for('resource_detail') }}">Resource</a></h2>
-                            <h4>Rating</h4>
-                            <p>Description of Resource [... ........ ...... ...... ....... ..........]</p>
-                        </div>
-                    </li>
-
-
+                    {% for resource in resources %}
+                        <li>
+                            <div class="resource">
+                                <h2><a href="{{ url_for('resource_detail', resourcename = resource[1]) }}">{{ resource[1] }}</a></h2>
+                                <h4>Rating</h4>
+                                <p>{{ resource[8] }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
                 </ol>
-
             </div>
         </div>
         <div class="col-sm-4">
