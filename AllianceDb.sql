@@ -54,7 +54,16 @@ CREATE TABLE Resource
  UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
 
-INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', '30308', 'Spring St.', 9, 1, 'women', 'shelter', 1);
+INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_State, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES 
+('Atlanta Dream Center, Inc.', 'SonikaF', 'GA', 'Atlanta', 30308, 'Angier Ave, NE', 635, 'live in the areas they serve', 'Provides after school 
+  program including tutoring and one-on-one mentoring',2), ('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 'W. Peachtree St, NE',
+  1105, 'In all of Georgia', 'Provides resources and information to new mothers with a low-birth weight baby', 3), ('Wellspring Living:
+  Empowering Living Academy', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Women 18-31 years old, no
+  violent criminal charges, medically stable, no substance abuse, access to transportation, willingness to live a drug and alcohol 
+  free lifestyle, no history of sexual offending behavior, committed to empowered living curriculum and schedule', '9 week program (9am-3:40pm,
+  5 days a week) that provides GED preparation, life skills classes, health and fitness classes, career readiness training, opportunities for
+  jobs, and individual and group therapy', 4), 
 
 INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
 VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
@@ -110,6 +119,7 @@ CREATE TABLE Phone_Numbers
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
  );
+INSERT INTO Phone_Numbers VALUES (404-817-3502, 2),
 
 SELECT 'Housing';
 
