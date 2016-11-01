@@ -13,7 +13,8 @@ function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 4,
                   center: atlanta
-                });
+        });
+
 
 //        {% for resource in resources %}
 //            var resourceloc = "{{resource[6]}} {{resource[5]}}, {{resource[3]}}, {{resource[2]}} {{resource[4]}}";
