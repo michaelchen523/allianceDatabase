@@ -10,6 +10,11 @@ h3 {
     horizontal-align: center;
 }
 
+#map {
+    height: 400px;
+    width: 100%;
+}
+
 .home-header {
     margin-bottom:50px;
 }
@@ -70,6 +75,9 @@ h3 {
 .container {
     display:flex;
 }
+
+
+
 
 
 

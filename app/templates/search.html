@@ -101,9 +101,9 @@
                     {% for resource in resources %}
                         <li>
                             <div class="resource">
-                                <h2><a href="{{ url_for('resource_detail', resourcename = resource[1]) }}">{{ resource[1] }}</a></h2>
+                                <h2><a href="{{ url_for('resource_detail', resourcename = resource[0]) }}">{{ resource[0] }}</a></h2>
                                 <h4>Rating</h4>
-                                <p>{{ resource[8] }}</p>
+                                <p>{{ resource[9] }}</p>
                             </div>
                         </li>
                     {% endfor %}
@@ -112,10 +112,7 @@
         </div>
         <div class="col-sm-4">
             <div style="margin-top:50px;">
-                <h3 style="text-center">Google Maps</h3>
-                <div class="googlemaps">
-                    <img width="300" src = "{{url_for('static', filename='images/googlemaps.jpg')}}" style="margin-left:25px;">
-                </div>
+                <div id="map"></div>
             </div>
         </div>
     </div>
@@ -124,6 +121,9 @@
 
 
 
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVCNy3UI9ujhTLUUz8qle6BnUpQP1k2pw&callback=initMap">
+</script>
 
 
 {% endblock %}
