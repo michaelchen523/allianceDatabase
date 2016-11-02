@@ -26,12 +26,11 @@ CREATE TABLE User(
  Password VARCHAR(25) NOT NULL,
  Name VARCHAR(20) NOT NULL,
  Organization VARCHAR(20) NOT NULL,
- Admin VARCHAR(20) NOT NULL, # why is this not a tinyint?
  PRIMARY KEY (Username),
  FOREIGN KEY (Organization) REFERENCES Organization (Name)
  );
 
-INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved', '1');
+INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved');
 
 
 DROP TABLE IF EXISTS Resource;
@@ -53,7 +52,7 @@ CREATE TABLE Resource
  CONSTRAINT Duplicate_Resource 
  UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
-
+/*
 INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
 INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES 
 ('Atlanta Dream Center, Inc.', 'SonikaF', 'GA', 'Atlanta', 30308, 'Angier Ave, NE', 635, 'live in the areas they serve', 'Provides after school 
@@ -96,7 +95,7 @@ INSERT INTO Resource (Name, ('Atlanta-Fulton Public Library System', 'SonikaF', 
 
 INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
 VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
-
+*/
 DROP TABLE IF EXISTS Category_Names;
 
 CREATE TABLE Category_Names
@@ -148,13 +147,50 @@ CREATE TABLE Phone_Numbers
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
  );
-INSERT INTO Phone_Numbers VALUES (404-817-3502, 2),
+#INSERT INTO Phone_Numbers VALUES ('404-817-3502', 2);
 
-SELECT 'Housing';
+/*
+Supplies
+ */
+SELECT 'Supplies';
+
+DROP TABLE IF EXISTS Supp_Type;
+
+CREATE TABLE Supp_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    );
+
+INSERT INTO Supp_Type VALUES ('Clothing'), ('Children''s Things'), 
+('Hygienic Supplies'), ('Laundry'), ('Food'), ('Medical'),
+('Food Stamps'), ('Financial Aid '), ('Other');
+
+
+DROP TABLE IF EXISTS Supplies;
+
+CREATE TABLE Supplies
+  ( CostMax INT,
+    CostMin INT,
+    ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
+
+
+DROP TABLE IF EXISTS Supp_Type_Multi;
+
+CREATE TABLE Supp_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Supp_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Supplies (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
 
 /*
 Housing
  */
+SELECT 'Housing';
 
 # for gender, do we want it to be a multivaried attribute with its own table or is it more like an enum?
 
@@ -167,8 +203,6 @@ CREATE TABLE Gender
 
 INSERT INTO Gender VALUES ('Male'), ('Female'), ('All'), ('Other');
 
-
-
 DROP TABLE IF EXISTS Housing_Type;
 
 CREATE TABLE Housing_Type
@@ -177,6 +211,16 @@ CREATE TABLE Housing_Type
     );
 
 INSERT INTO Housing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter'), ('Other');
+
+DROP TABLE IF EXISTS Serve_Type;
+
+CREATE TABLE Serve_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    );
+
+INSERT INTO Serve_Type VALUES ('Exploited'), ('Addiction'), ('Battered'),
+ ('Homeless'), ('Temporary/ Emergency'), ('Religious'), ('Families'), ('Children'), ('Other');
 
 
 DROP TABLE IF EXISTS Housing;
@@ -187,49 +231,39 @@ CREATE TABLE Housing
   Gender VARCHAR(20),
   AgeMax INT,
   AgeMin INT,
-  Housing_Type VARCHAR(20),
   Children TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Gender) REFERENCES Gender (Gender),
-  FOREIGN KEY (Housing_Type) REFERENCES Housing_Type (Type)
+  FOREIGN KEY (Gender) REFERENCES Gender (Gender)
   );
 
-INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
+#INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
 
-SELECT 'Documentation';
+DROP TABLE IF EXISTS Housing_Multi;
 
-/*
-Documentation
- */
-DROP TABLE IF EXISTS Doc_Type;
+CREATE TABLE Housing_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Housing_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Housing (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
-CREATE TABLE Doc_Type
-  (Type VARCHAR(20),
-    PRIMARY KEY (Type)
-    );
+DROP TABLE IF EXISTS Housing_Serve_Multi;
 
-INSERT INTO Doc_Type VALUES ('ID'), ('SS'), 
-('Birth Certificate'), ('Driver''s License'), ('Other');
-
-
-
-DROP TABLE IF EXISTS Documentation;
-
-CREATE TABLE Documentation
-  (ID MEDIUMINT NOT NULL,
-   Doc_Type VARCHAR(20) NOT NULL,
-    StartTime TIME,
-    EndTime TIME,
-    FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Doc_Type) REFERENCES Doc_Type (Type)
-  ) ;
-
-
-SELECT 'Medical';
+CREATE TABLE Housing_Serve_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Serve_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Housing (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
 /*
 Medical
  */
+
+SELECT 'Medical';
+
 DROP TABLE IF EXISTS Med_Type;
 
 CREATE TABLE Med_Type
@@ -237,28 +271,36 @@ CREATE TABLE Med_Type
     PRIMARY KEY (Type)
     );
 
-INSERT INTO Med_Type VALUES ('Dental'), ('Medical'), 
-('Gynecologist'), ('Abortion Clinic'), ('STD'), ('Pediatrician'),
-('Pharmacy'), ('Other');
 
+INSERT INTO Med_Type VALUES ('Dental'), ('Medical'), 
+('Gynecologist'), ('Abortion Clinic'), ('STI/ HIV'), ('Pediatrician'),
+('Pharmacy'), ('Check-Up'), ('Immunization'), ('Residential'), ('Addiction'), ('Vision'), ('Other');
 
 
 DROP TABLE IF EXISTS Medical;
 
 CREATE TABLE Medical
-  ( Type VARCHAR(20),
-    Insurance VARCHAR(500),
-    Hours TIME,
+  ( Insurance VARCHAR(500),
     ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Type) REFERENCES Med_Type (Type)
-  ) ;
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
 
-SELECT 'Mental Health';
+DROP TABLE IF EXISTS Med_Type_Multi;
+
+CREATE TABLE Med_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Med_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Medical (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
 
 /*
 Mental Health
  */
+SELECT 'Mental Health';
+
 DROP TABLE IF EXISTS Mental_Type;
 
 CREATE TABLE Mental_Type
@@ -266,25 +308,36 @@ CREATE TABLE Mental_Type
   PRIMARY KEY (Type)
   );
 
-INSERT INTO Mental_Type VALUES ('Counseling'), ('Psych Evals'), ('Counseling Hotline'), ('Other');
-
+INSERT INTO Mental_Type VALUES ('Counseling'), ('Case Management'),
+ ('Substance Abuse'), ('Psych Evals'), ('Counseling Hotline'), ('Other');
 
 
 DROP TABLE IF EXISTS Mental_Health;
 
 CREATE TABLE Mental_Health
-( Type VARCHAR(20),
-  Insurance VARCHAR(500), # could insurance be a mulitvaried attribute that separates various insurance providers?
+( Insurance VARCHAR(500), # could insurance be a mulitvaried attribute that separates various insurance providers?
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Type) REFERENCES Mental_Type (Type)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Legal';
+
+DROP TABLE IF EXISTS Metal_Type_Multi;
+
+CREATE TABLE Metal_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Mental_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Mental_Health (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
 
 /*
 Legal
  */
+
+SELECT 'Legal';
+
 DROP TABLE IF EXISTS Leg_Type;
 
 CREATE TABLE Leg_Type
@@ -292,50 +345,32 @@ CREATE TABLE Leg_Type
   PRIMARY KEY (Type)
 );
 
-
-INSERT INTO Leg_Type VALUES ('Custody'), ('Divorce'), ('Contract'), ('Police'), ('Other');
-
+INSERT INTO Leg_Type VALUES ('Custody'), ('Divorce'), ('Contract'),
+ ('Police'), ('Advocacy'), ('Case Management'), ('Other');
 
 
 DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal
-( Leg_Type VARCHAR(20),
-  ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Leg_Type) REFERENCES Leg_Type (Type),
+( ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Resume Building';
+DROP TABLE IF EXISTS Leg_Type_Multi;
 
-/*
-Resume Building
-*/
-DROP TABLE IF EXISTS Res_Type;
-
-CREATE TABLE Res_Type
-( Type VARCHAR(20),
-  PRIMARY KEY (Type)
-);
-
-
-INSERT INTO Res_Type VALUES ('School'), ('Workshops'), ('GED'), ('Certifications'), ('Resume Building'), ('Other');
-
-
-DROP TABLE IF EXISTS Resume_Building;
-
-CREATE TABLE Resume_Building
+CREATE TABLE Leg_Type_Multi
 ( Type VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Res_Type (Type),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
-);
+  FOREIGN KEY (Type) REFERENCES Leg_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Legal (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
-SELECT 'Employment';
 
 /*
 Employment
  */
+SELECT 'Employment';
 
 DROP TABLE IF EXISTS Emp_Type;
 
@@ -345,7 +380,6 @@ CREATE TABLE Emp_Type
 );
 
 INSERT INTO Emp_Type VALUES ('Food'), ('Retail'), ('Office'), ('Factory'), ('Service'), ('Other');
-
 
 
 DROP TABLE IF EXISTS Skills;
@@ -358,25 +392,42 @@ CREATE TABLE Skills
 INSERT INTO Skills VALUES ('Typing'), ('People Skills'), ('Reading'), ('Writing'), ('Other');
 
 
-
 DROP TABLE IF EXISTS Employment;
 
 CREATE TABLE Employment
-( Type VARCHAR(20),
-  Salary INT,
-  Skills VARCHAR(20),
+( SalaryMax INT,
+  SalaryMin INT,
   Childcare TINYINT(1),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Emp_Type (Type),
-  FOREIGN KEY (Skills) REFERENCES Skills (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Transportation';
+DROP TABLE IF EXISTS Emp_Type_Multi;
+
+CREATE TABLE Emp_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Emp_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Employment (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
+DROP TABLE IF EXISTS Skils_Multi;
+
+CREATE TABLE Skils_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Skills (Type),
+  FOREIGN KEY (ID) REFERENCES Employment (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
 /*
 Transportation
  */
+SELECT 'Transportation';
+
+
 DROP TABLE IF EXISTS Trans_Type;
 
 CREATE TABLE Trans_Type
@@ -386,23 +437,30 @@ CREATE TABLE Trans_Type
 
 INSERT INTO Trans_Type VALUES ('Taxi'), ('Subway'), ('Bus'), ('Plane'), ('Train'), ('Other');
 
-
-
 DROP TABLE IF EXISTS Transportation;
 
 CREATE TABLE Transportation
-( Type VARCHAR(20),
-  Cost INT,
+( Cost INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Trans_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Professional Mentors';
+DROP TABLE IF EXISTS Trans_Multi;
+
+CREATE TABLE Trans_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Trans_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Transportation (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
 
 /*
 Professional Mentors
  */
+SELECT 'Mentors';
+
 DROP TABLE IF EXISTS Mentor_Type;
 
 CREATE TABLE Mentor_Type
@@ -413,39 +471,104 @@ CREATE TABLE Mentor_Type
 INSERT INTO Mentor_Type VALUES ('Life Coach'), ('Professional'), ('Personal'), ('Other');
 
 
+DROP TABLE IF EXISTS Mentors;
 
-DROP TABLE IF EXISTS Prof_Mentors;
-
-CREATE TABLE Prof_Mentors
-( Type VARCHAR(20),
-  Cost INT,
+CREATE TABLE Mentors
+( CostMax INT,
+  CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Mentor_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Childcare';
+DROP TABLE IF EXISTS Mentor_Multi;
+
+CREATE TABLE Mentor_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Mentor_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Mentors (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
+
+/*
+For_Children
+ */
+
+SELECT 'For_Children';
+
+DROP TABLE IF EXISTS For_Child_Type;
+
+CREATE TABLE For_Child_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type)
+);
+
+INSERT INTO For_Child_Type VALUES ('Sexual Abuse'), ('Physical Abuse'),
+ ('Therapy'), ('Forensic Evaluations'), ('Interviewing'), ('Other');
+
+
+DROP TABLE IF EXISTS For_Children;
+
+CREATE TABLE For_Children
+( AgeMax INT,
+  AgeMin INT,
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+);
+
+DROP TABLE IF EXISTS For_Child_Multi;
+
+CREATE TABLE For_Child_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES For_Child_Type (Type),
+  FOREIGN KEY (ID) REFERENCES For_Children (ID),
+  PRIMARY KEY (ID, Type)
+  );
+
 
 /*
 Childcare
  */
+
+SELECT 'Childcare';
+
+DROP TABLE IF EXISTS Childcare_Type;
+
+CREATE TABLE Childcare_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type)
+);
+
+INSERT INTO Childcare_Type VALUES ('Mentoring'), ('Tutoring'), ('Day Care'), ('Information'), ('Other');
+
 DROP TABLE IF EXISTS Childcare;
 
 CREATE TABLE Childcare
 ( Age INT,
   Cost INT,
-  StartTime time,
-  EndTime time,
   Capacity INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID)
 );
 
-SELECT 'Vehicle';
+DROP TABLE IF EXISTS Child_Type_Multi;
+
+CREATE TABLE Child_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Childcare_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Childcare (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
 /*
 Vehicle
  */
+SELECT 'Vehicle';
+
+
 DROP TABLE IF EXISTS Vehicle_Type;
 
 CREATE TABLE Vehicle_Type
@@ -462,8 +585,17 @@ CREATE TABLE Vehicle
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Vehicle_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
+);
+
+DROP TABLE IF EXISTS Vehicle_Type_Multi;
+CREATE TABLE Vehicle_Type_Multi
+(
+  ID MEDIUMINT NOT NULL,
+  Type VARCHAR(20),
+  PRIMARY KEY (ID, Type),
+  FOREIGN KEY (ID) REFERENCES Vehicle(ID),
+  FOREIGN KEY (Type) REFERENCES Vehicle_Type(Type)
 );
 
 SELECT 'Life Skills';
@@ -471,6 +603,7 @@ SELECT 'Life Skills';
 /*
 Life Skills
  */
+
 DROP TABLE IF EXISTS Skill_Type;
 
 CREATE TABLE Skill_Type
@@ -478,7 +611,7 @@ CREATE TABLE Skill_Type
   PRIMARY KEY (Type)
 );
 
-INSERT INTO Skill_Type VALUES ('Finances'), ('Resume'), ('Education'), ('Health'), ('Parenting'), ('Cooking'), ('Faith'), ('Other');
+INSERT INTO Skill_Type VALUES ('Finances'), ('Resume'), ('Education'), ('Health'), ('Parenting'), ('Cooking'), ('Faith'), ('Home Ownership'), ('Other');
 
 
 DROP TABLE IF EXISTS Life_Skills;
@@ -487,8 +620,17 @@ CREATE TABLE Life_Skills
 ( Type VARCHAR(20),
   Cost INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Skill_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
+);
+
+DROP TABLE IF EXISTS Life_Skill_Type_Multi;
+CREATE TABLE Life_Skill_Type_Multi
+(
+  ID MEDIUMINT NOT NULL,
+  Type VARCHAR(20),
+  PRIMARY KEY (ID, Type),
+  FOREIGN KEY (ID) REFERENCES Life_Skills(ID),
+  FOREIGN KEY (Type) REFERENCES Skill_Type(Type)
 );
 
 SELECT 'Education';
@@ -503,7 +645,7 @@ CREATE TABLE Education_Type
   PRIMARY KEY (Type));
 
 INSERT INTO Education_Type VALUES ('GED'),
- ('Scholarships'), ('College'), ('Certifications'), ('Workshops'), ('Other');
+ ('Scholarships'), ('College'), ('Certifications'), ('Workshops'), ('Computer Skills'), ('Other');
 
 
 DROP TABLE IF EXISTS Education;
@@ -513,9 +655,18 @@ CREATE TABLE Education
   Type VARCHAR(20),
   Prerequisites VARCHAR(400),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type) REFERENCES Education_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
+
+DROP TABLE IF EXISTS Education_Type_Multi;
+CREATE TABLE Education_Type_Multi
+(
+  ID MEDIUMINT NOT NULL,
+  Type VARCHAR(20),
+  PRIMARY KEY (ID, Type),
+  FOREIGN KEY (ID) REFERENCES Education(ID),
+  FOREIGN KEY (Type) REFERENCES Education_Type(Type)
+);
 
 SELECT 'Networks';
 
@@ -546,21 +697,57 @@ INSERT INTO Net_Sub VALUES ('Partner'),
 DROP TABLE IF EXISTS Networks;
 
 CREATE TABLE Networks
-( Catered_To VARCHAR(20),
-  Gender TINYINT(1),
+( Gender TINYINT(1),
   Age INT,
-  Subject VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Catered_To) REFERENCES Net_Mem (Type),
-  FOREIGN KEY (Subject) REFERENCES Net_Sub (Subject)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
 
-SELECT 'Reviews';
+DROP TABLE IF EXISTS Net_Mem_Multi;
+CREATE TABLE Net_Mem_Multi
+(
+  Network MEDIUMINT NOT NULL,
+  Member_Type VARCHAR(20),
+  PRIMARY KEY (Network, Member_Type),
+  FOREIGN KEY (Network) REFERENCES Networks(ID),
+  FOREIGN KEY (Member_Type) REFERENCES Net_Mem(Type)
+);
+
+
+/*
+Job Readiness
+*/
+
+SELECT 'Job_Readiness';
+
+DROP TABLE IF EXISTS Job_Readiness;
+CREATE TABLE Job_Readiness
+( ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
+
+DROP TABLE IF EXISTS Job_Readiness_Type;
+CREATE TABLE Job_Readiness_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type));
+
+INSERT INTO Job_Readiness_Type VALUES ('Training'), ('Counseling');
+
+DROP TABLE IF EXISTS Job_Readiness_Type_Multi;
+CREATE TABLE Job_Readiness_Type_Multi
+(
+  ID MEDIUMINT NOT NULL,
+  Type VARCHAR(20),
+  PRIMARY KEY (ID, Type),
+  FOREIGN KEY (ID) REFERENCES Job_Readiness(ID),
+  FOREIGN KEY (Type) REFERENCES Job_Readiness_Type(Type)
+);
 
 /*
 Reviews
  */
+
+SELECT 'Reviews';
 
 DROP TABLE IF EXISTS Reviews;
 
