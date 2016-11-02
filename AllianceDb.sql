@@ -55,7 +55,7 @@ CREATE TABLE Resource
  );
 
 INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
-INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_State, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES 
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Street, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES 
 ('Atlanta Dream Center, Inc.', 'SonikaF', 'GA', 'Atlanta', 30308, 'Angier Ave, NE', 635, 'live in the areas they serve', 'Provides after school 
   program including tutoring and one-on-one mentoring',2), ('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 'W. Peachtree St, NE',
   1105, 'In all of Georgia', 'Provides resources and information to new mothers with a low-birth weight baby', 3), ('Wellspring Living:
@@ -64,6 +64,9 @@ INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Addre
   free lifestyle, no history of sexual offending behavior, committed to empowered living curriculum and schedule', '9 week program (9am-3:40pm,
   5 days a week) that provides GED preparation, life skills classes, health and fitness classes, career readiness training, opportunities for
   jobs, and individual and group therapy', 4), 
+
+INSERT INTO Resource (Name, ('Atlanta-Fulton Public Library System', 'SonikaF', 'GA', 'Atlanta', 30303, 
+  'Margaret Mitchell Square, NW', 1, 'Valid state ID' )
 
 INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
 VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
