@@ -657,6 +657,36 @@ CREATE TABLE Net_Mem_Multi
   FOREIGN KEY (Member_Type) REFERENCES Net_Mem(Type)
 );
 
+
+/*
+Job Readiness
+*/
+
+SELECT 'Job_Readiness';
+
+DROP TABLE IF EXISTS Job_Readiness;
+CREATE TABLE Job_Readiness
+( ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
+
+DROP TABLE IF EXISTS Job_Readiness_Type;
+CREATE TABLE Job_Readiness_Type
+( Type VARCHAR(20),
+  PRIMARY KEY (Type));
+
+INSERT INTO Job_Readiness_Type VALUES ('Training'), ('Counseling');
+
+DROP TABLE IF EXISTS Job_Readiness_Type_Multi;
+CREATE TABLE Job_Readiness_Type_Multi
+(
+  ID MEDIUMINT NOT NULL,
+  Type VARCHAR(20),
+  PRIMARY KEY (ID, Type),
+  FOREIGN KEY (ID) REFERENCES Job_Readiness(ID),
+  FOREIGN KEY (Type) REFERENCES Job_Readiness_Type(Type)
+);
+
 /*
 Reviews
  */
