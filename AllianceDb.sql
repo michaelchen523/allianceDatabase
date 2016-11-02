@@ -126,7 +126,39 @@ CREATE TABLE Phone_Numbers
 /*
 Supplies
  */
-#SELECT 'Supplies'
+SELECT 'Supplies';
+
+DROP TABLE IF EXISTS Supp_Type;
+
+CREATE TABLE Supp_Type
+  (Type VARCHAR(20),
+    PRIMARY KEY (Type)
+    );
+
+INSERT INTO Supp_Type VALUES ('Clothing'), ('Children''s Things'), 
+('Hygienic Supplies'), ('Laundry'), ('Food'), ('Medical'),
+('Food Stamps'), ('Financial Aid '), ('Other');
+
+
+DROP TABLE IF EXISTS Supplies;
+
+CREATE TABLE Supplies
+  ( CostMax INT,
+    CostMin INT,
+    ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  );
+
+
+DROP TABLE IF EXISTS Supp_Type_Multi;
+
+CREATE TABLE Supp_Type_Multi
+( Type VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
+  FOREIGN KEY (Type) REFERENCES Supp_Type (Type),
+  FOREIGN KEY (ID) REFERENCES Supplies (ID),
+  PRIMARY KEY (ID, Type)
+  );
 
 
 /*
@@ -163,8 +195,6 @@ CREATE TABLE Serve_Type
 
 INSERT INTO Serve_Type VALUES ('Exploited'), ('Addiction'), ('Battered'),
  ('Homeless'), ('Temporary/ Emergency'), ('Religious'), ('Families'), ('Children'), ('Other');
-
-
 
 
 DROP TABLE IF EXISTS Housing;
@@ -449,7 +479,7 @@ CREATE TABLE For_Child_Type
 );
 
 INSERT INTO For_Child_Type VALUES ('Sexual Abuse'), ('Physical Abuse'),
- ('Therapy'), ('Forensic Evaluations'), ('Interviewing') ('Other');
+ ('Therapy'), ('Forensic Evaluations'), ('Interviewing'), ('Other');
 
 
 DROP TABLE IF EXISTS For_Children;
