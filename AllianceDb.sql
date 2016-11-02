@@ -477,7 +477,7 @@ CREATE TABLE Education_Type
   PRIMARY KEY (Type));
 
 INSERT INTO Education_Type VALUES ('GED'),
- ('Scholarships'), ('College'), ('Certifications'), ('Workshops'), ('Other');
+ ('Scholarships'), ('College'), ('Certifications'), ('Workshops'), ('Computer Skills'), ('Other');
 
 
 DROP TABLE IF EXISTS Education;
@@ -490,6 +490,8 @@ CREATE TABLE Education
   FOREIGN KEY (Type) REFERENCES Education_Type (Type),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
+
+CREATE TABLE Education
 
 SELECT 'Networks';
 
