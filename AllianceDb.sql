@@ -165,6 +165,8 @@ INSERT INTO Serve_Type VALUES ('Exploited'), ('Addiction'), ('Battered'),
  ('Homeless'), ('Temporary/ Emergency'), ('Religious'), ('Families'), ('Children'), ('Other');
 
 
+
+
 DROP TABLE IF EXISTS Housing;
 
 CREATE TABLE Housing
@@ -173,12 +175,12 @@ CREATE TABLE Housing
   Gender VARCHAR(20),
   AgeMax INT,
   AgeMin INT,
+  Children TINYINT(1),
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender)
   );
 
 #INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
-
 
 DROP TABLE IF EXISTS Housing_Multi;
 
@@ -200,27 +202,6 @@ CREATE TABLE Housing_Serve_Multi
   PRIMARY KEY (ID, Type)
   );
 
-
-<<<<<<< HEAD
-=======
-DROP TABLE IF EXISTS Housing;
-
-CREATE TABLE Housing
-  (ID MEDIUMINT NOT NULL,
-  Capacity INT,
-  Gender VARCHAR(20),
-  AgeMax INT,
-  AgeMin INT,
-  Children TINYINT(1),
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Gender) REFERENCES Gender (Gender)
-  );
-
-INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
-
-
-
->>>>>>> 9133b3bffef62be0dac154c5574f22f91f6411f3
 /*
 Medical
  */
