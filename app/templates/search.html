@@ -2,34 +2,6 @@
 
 {%block content %}
 
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Alliance for Survivor Care</a>
-        </div>
-        <div class="nav navbar-nav">
-            <div class="dropdown">
-                <button class="nav-item navbar-inner btn btn-default btn-sm btn-secondary dropdown-toggle"
-                        data-toggle="dropdown" style="margin-top:10px; margin-left:10px;" id="dropdownMenuButton"
-                        type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    {% for category in categories %}
-                    <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
-                    {% endfor %}
-
-                </ul>
-            </div>
-        </div>
-        <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('organizations') }}">Organizations</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <div class="container-fluid">
     <div class="jumbotron row">
         <div class="row home-header">

@@ -6,7 +6,7 @@ def index():
     if not session.get('logged_in'):
         return redirect('login')
     else:
-        return render_template('home.html', title = 'Alliance')
+        return redirect('home')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -17,31 +17,37 @@ def login():
         conn = mysql.connection
         cursor = conn.cursor()
 
-        cursor.execute("SELECT Username FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
+        cursor.execute("SELECT Username, Name FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
 
         data = cursor.fetchall()
-
         if len(data) > 0:
             session['logged_in'] = True
             session['user'] = username
-            session['categories'] = [["Housing", "Housing Description"], ["Medical", "Medical Description"], ["Mental Health", "Mental Health Description"],
-                                     ["Job Readiness", "Job Readiness Description"], ["Legal", "Legal Description"], ["Employment", "Employment Description"],
-                                     ["Transportation", "Transportation Description"], ["Professional Mentors", "Professional Mentors Description"],
-                                     ["Childcare", "Childcare Description"], ["Vehicle", "Vehicle Description"], ["Life Skills", "Life Skills Description"]
-                                        , ["Survivor Network", "Survivor Network Description"]]
-            '''conn = mysql.connection
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Categories;")
-            session['categories'] = cursor.fetchall()'''
+            session['name'] = data[0][1]
+
+            cursor2 = conn.cursor()
+            cursor2.execute("SELECT * FROM Category_Names;")
+            session['categories'] = cursor2.fetchall()
+            print session['categories']
 
             return redirect(url_for('home'))
     return render_template("login.html")
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect('login')
+
+
 @app.route('/home')
 def home():
     user = session.get('user')
+    name = session.get('name')
+    print name
     categories = session.get('categories')
-    return render_template('home.html', title='home', user = user, categories = categories)
+    print categories
+    return render_template('home.html', title='home', user=user,
+                            categories=categories, name=name)
 
 @app.route('/edit_user', methods = ['GET', 'POST'])
 def edit_user():
@@ -52,7 +58,7 @@ def edit_user():
     cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
     userdata = cursor.fetchall()
     cursor2 = conn.cursor()
-    cursor2.execute("SELECT Name FROM RESOURCE WHERE Username='" + user + "';")
+    cursor2.execute("SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
     userresource = cursor2.fetchall()
     if request.method == 'POST':
         orgName = request.form['orgName']
