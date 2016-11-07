@@ -28,7 +28,6 @@ def login():
             cursor2 = conn.cursor()
             cursor2.execute("SELECT * FROM Category_Names;")
             session['categories'] = cursor2.fetchall()
-            print session['categories']
 
             return redirect(url_for('home'))
     return render_template("login.html")
@@ -43,9 +42,9 @@ def logout():
 def home():
     user = session.get('user')
     name = session.get('name')
-    print name
+
     categories = session.get('categories')
-    print categories
+
     return render_template('home.html', title='home', user=user,
                             categories=categories, name=name)
 
@@ -72,23 +71,50 @@ def edit_user():
     return render_template('edit_user.html', title = 'edit profile', user = user,
                            categories = categories, userdata = userdata, userresource = userresource)
 
-@app.route('/search')
-def search():
-    searchcategory = None
+@app.route('/search/<ctgry>/', methods=["GET"])
+def search(ctgry):
     user = session.get('user')
     categories = session.get('categories')
+
     conn = mysql.connection
-    if 'searchcategory' in request.args:
-        searchcategory = request.args['searchcategory']
-        cursor = conn.cursor()
-        cursor.execute("SELECT ResourceName FROM Category WHERE CategoryName = '" + searchcategory + "';")
-        resources = cursor.fetchall()
-    else:
-        cursor2 = conn.cursor()
-        cursor2.execute("SELECT * FROM Resource;")
-        resources = cursor2.fetchall()
-    return render_template('search.html', title='search', user = user,
-                           categories = categories, searchcategory = searchcategory, resources = resources)
+    cursor = conn.cursor()
+    # cursor.execute("""
+    #     SELECT * FROM Categories
+    #     WHERE Name = %s;
+    # """, (ctgry,))
+
+    cursor.execute("""
+    SELECT rev.rating,
+           resource.name,
+           resource.description
+    FROM (
+            SELECT res.Name AS name,
+                   res.Description AS description,
+                   res.ID AS ID
+            FROM Resource AS res
+            JOIN (
+                    SELECT *
+                    FROM Categories
+                    WHERE Name = %s
+                ) category
+            ON  category.ID = res.ID
+        ) resource
+    JOIN (
+            SELECT ID, AVG(Rating) AS rating
+            FROM Reviews
+            GROUP BY ID
+        ) rev
+
+    ON rev.ID = resource.ID
+
+    ORDER BY rev.rating;
+    """, (ctgry, ))
+
+    resources = cursor.fetchall()
+    print len(resources)
+    print resources
+
+    return render_template('search.html', resources=resources, categories=categories)
 
 @app.route('/resource_detail')
 def resource_detail():

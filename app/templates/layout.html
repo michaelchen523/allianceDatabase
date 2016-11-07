@@ -35,7 +35,9 @@
                       <span class="caret"></span></button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
                       {% for category in categories %}
-                          <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
+                          <li class="dropdown-item">
+                            <a href="{{ url_for('search', ctgry = category[0]) }}">{{ category[0] }}</a>
+                          </li>
                       {% endfor %}
                   </ul>
               </div>
