@@ -36,7 +36,7 @@ INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'B
 DROP TABLE IF EXISTS Resource;
 
 CREATE TABLE Resource
- (Name VARCHAR(20) NOT NULL,
+ (Name VARCHAR(60) NOT NULL,
   Creator_Username VARCHAR(20) NOT NULL, # changed this from 'Username' to reduce possible confusion
   Address_State VARCHAR(2) NOT NULL,
   Address_City VARCHAR(20) NOT NULL,
@@ -49,35 +49,41 @@ CREATE TABLE Resource
   ID MEDIUMINT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (ID),
  FOREIGN KEY (Creator_Username) REFERENCES User (Username),
- CONSTRAINT Duplicate_Resource 
+ CONSTRAINT Duplicate_Resource
  UNIQUE (Name, Address_State, Address_City, Address_Zip, Address_Street, Address_Number)
  );
 
 INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
-INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES 
-('Atlanta Dream Center, Inc.', 'SonikaF', 'GA', 'Atlanta', 30308, 'Angier Ave, NE', 635, 'live in the areas they serve', 'Provides after school 
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Eligibility, Description, ID MEDIUMINT) VALUES
+('Atlanta Dream Center, Inc.', 'SonikaF', 'GA', 'Atlanta', 30308, 'Angier Ave, NE', 635, 'live in the areas they serve', 'Provides after school
   program including tutoring and one-on-one mentoring',2), ('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 'W. Peachtree St, NE',
-  1105, 'In all of Georgia', 'Provides resources and information to new mothers with a low-birth weight baby', 3), ('Wellspring Living:
-  Empowering Living Academy', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Women 18-31 years old, no
-  violent criminal charges, medically stable, no substance abuse, access to transportation, willingness to live a drug and alcohol 
+  1105, 'In all of Georgia', 'Provides resources and information to new mothers with a low-birth weight baby', 3),
+
+('Wellspring Living: Empowering Living Academy', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Women 18-31 years old, no
+  violent criminal charges, medically stable, no substance abuse, access to transportation, willingness to live a drug and alcohol
   free lifestyle, no history of sexual offending behavior, committed to empowered living curriculum and schedule', '9 week program (9am-3:40pm,
   5 days a week) that provides GED preparation, life skills classes, health and fitness classes, career readiness training, opportunities for
-  jobs, and individual and group therapy', 4), ('Fulton Atlanta Community Action Authority: Academy 4 Life', 'SonikaF', 'GA', 'Atlanta', 30324
-  'Chantilly Dr, NE', 1690, 'Must register or complete an online application', 'Provides support with life and career skills, provide educational, 
-  social, and economic opportunities, topics include: money management, computer skills, entreprenurial help, GED preparation, life enhancement, construction 
-  skills training, and job preparedness', 5), ('Salvation Army Kroc Center: Family Literacy Program', 'SonikaF','GA', 'Atlanta', 30310, 'Dewey St, SW', 967,
+  jobs, and individual and group therapy', 4),
+
+('Fulton Atlanta Community Action Authority: Academy 4 Life', 'SonikaF', 'GA', 'Atlanta', 30324, 'Chantilly Dr, NE', 1690, 'Must register or complete an online application', 'Provides support with life and career skills, provide educational,
+  social, and economic opportunities, topics include: money management, computer skills, entreprenurial help, GED preparation, life enhancement, construction
+  skills training, and job preparedness', 5),
+
+('Salvation Army Kroc Center: Family Literacy Program', 'SonikaF','GA', 'Atlanta', 30310, 'Dewey St, SW', 967,
   'Complete application and admissions testing', 'Provides GED preparation Monday to Friday from 5-8pm and provides dinner and childcare', 6),
-   ('Out of Darkness/Soloman"s House', 'SonikaF', 'GA', 'Atlanta', 00000, 'NA', 00, 'At least 18 years old and has been commercially sexually exploited and want 
+   
+('Out of Darkness/Soloman"s House', 'SonikaF', 'GA', 'Atlanta', 00000, 'NA', 00, 'At least 18 years old and has been commercially sexually exploited and want
     to join a 12-15 month program', 'Helps those who are survivors of sex trafficking by rescuing women, placing them in a safe house and given medical care, mentoring
-    and placing her into a 12 month restoration program', 10), ('Wellspring Living: Assessment Center', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331',
-    860, 'Women 18-30 years old', 'Provides short-term residential care for survivors of sexual exploitation and sexual abuse and education about options', 11), ('Wellspring Living:
-    Wellspring Living for Girls', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Girls 12-17 years old', 'Provides housing and support for survivors of 
+    and placing her into a 12 month restoration program', 10),
+
+('Wellspring Living: Assessment Center', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Women 18-30 years old', 'Provides short-term residential care for survivors of sexual exploitation and sexual abuse and education about options', 11),
+
+ ('Wellspring Living:Wellspring Living for Girls', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'Girls 12-17 years old', 'Provides housing and support for survivors of
     Domestic Minor Sex Trafficking with a focus on trauma therapy, education, life skills, and confidence', 12), ('Atlanta Mission: My Sister"s House', 'SonikaF', 'GA',
     'Atlanta', 303118, 'Howell Mill Rd', 921, 'Over the age of 18 years old unless accompanied by a legal guardian, agree to all guidelines and program activities, be fully detoxified
     and have at least 72 hours since last drug or alcohol use, able to exercise proper personal hygiene and self-care, and complete an application', 'Provides overnight shelter for women
-    and child including food, counselors, referrals to job training programs, assistance in obtaining housing, medical and legal resources, and a childcare facilitiy with a behavioral 
-    specialist and social workers', 13), ('Partnership Against Domestic Violence/PADV', 'SonikaF', 'GA', 'Atlanta', 30317, 'PO Box', 170225, 'Must coplete phone call process, no age limit,
-    female only, but children are welcome', 'Provides 24-hour crisis line, emergency safe housing, parenting services, supportive housing program, legal advocacy, community support groups 
+    and child including food, counselors, referrals to job training programs, assistance in obtaining housing, medical and legal resources, and a childcare facilitiy with a behavioral
+    specialist and social workers', 13), ('Partnership Against Domestic Violence/PADV', 'SonikaF', 'GA', 'Atlanta', 30317, 'PO Box', 170225, 'Must complete phone call process, no age limit, female only, but children are welcome', 'Provides 24-hour crisis line, emergency safe housing, parenting services, supportive housing program, legal advocacy, community support groups 
     for women, and public benefits assistance', 14), ('Atlanta Mission: Fuqua Hall', 'SonikaF', 'GA', 'Atlanta', 30313, 'Mills Street', 156, 'Over the age of 18 years old unless accompanied by
     a legal guardian, agree to all guidelines and program activities, be fully detoxified and have at least 72 hours since last drug or alcohol use, able to exercise proper personal hygiene
     and self-care, and complete an application', 'Emergency shelter, temporary shelter, and residential recovery', 17), ('Action Ministries', 'SonikaF', 'GA', 'Atlanta', 30308, 'Ponce de Leon Avenue',
@@ -113,8 +119,9 @@ INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Addre
     'Must be a resident in the area', 'Provides baby, children, general, professional, and plus size clothing and financial assistance for gas, electric, mortgage, rent, and water services payment', 66), ('Fulton Atlanta Community Action Authority: Financial Assistance', 'SonikaF', 'GA', 'Atlanta', 30324, 'Chantilly Dr, NE', 1690, 
     'Must attend the financial planning classes (on Saturdays) and counseling before considered', 'Provides financial assistance', 67); 
 
+
 INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Description, ID MEDIUMINT) VALUES
-('Atlanta Mission: Atlanta Day Shelter for Women and Children', 'SonikaF', 'GA', 'Atlanta', 30318, 'Ethel St', 655, 'Provides job readiness programs, education 
+('Atlanta Mission: Atlanta Day Shelter for Women and Children', 'SonikaF', 'GA', 'Atlanta', 30318, 'Ethel St', 655, 'Provides job readiness programs, education
   stipends, medical care, computer training, early education and teen programs, critical needs services, and mental health counseling', 7), ('Urban League of Greater Altanta:
   Education and Job Skills Training', 'GA', 'Atlanta', 30303, 'Peachtree St, NW #300', 229, 'GED Prep/Academic Upgrade: self-paced instruction in reading, math, science, and social 
   studies; Microsoft Office Certification: a 16 week course designed to provide basic computer skills and certify participants as Microsoft Office Specialists; Connect to Work: 
@@ -159,9 +166,9 @@ INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Addre
     community of human trafficking by creating a platform for survivor-led advocacy, peer-to-peer mentorship and empowerment that embraces all survivors, regardless of gender, age, nationality, or type of trafficking experience', 62), ('Beulah Baptist Church', 'SonikaF', 'GA', 'Atlanta', 30314, 'Griffin St, NW', 167, 'Open 11am-1pm and provides clothing 
     and professional clothing to individuals in the area', 65), ('Salvation Army', 'SonikaF', 'GA', 'Atlanta', 30340, 'Central Ave', 3771, 'Provides assistance with food, clothing, rent/mortgage, utilities, school supplies, and furniture to families and individuals in a financial crisis', 68);
 
+-- INSERT INTO Resource (Name, ('Atlanta-Fulton Public Library System', 'SonikaF', 'GA', 'Atlanta', 30303,
+--   'Margaret Mitchell Square, NW', 1, 'Valid state ID' )
 
-INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number) 
-VALUES ('madeup', 'SonikaF', 'NA', 'NA', 0, 'NA', 0 );
 
 DROP TABLE IF EXISTS Category_Names;
 
@@ -178,7 +185,7 @@ INSERT INTO Category_Names VALUES ('Housing'), ('Documentation'), ('Medical'),
 DROP TABLE IF EXISTS Categories;
 
 CREATE TABLE Categories
-( ID MEDIUMINT NOT NULL, 
+( ID MEDIUMINT NOT NULL,
   Name VARCHAR(20),
   PRIMARY KEY (ID, Name),
   FOREIGN KEY (Name) REFERENCES Category_Names(Name),
@@ -228,7 +235,7 @@ CREATE TABLE Supp_Type
     PRIMARY KEY (Type)
     );
 
-INSERT INTO Supp_Type VALUES ('Clothing'), ('Children''s Things'), 
+INSERT INTO Supp_Type VALUES ('Clothing'), ('Children''s Things'),
 ('Hygienic Supplies'), ('Laundry'), ('Food'), ('Medical'),
 ('Food Stamps'), ('Financial Aid '), ('Other');
 
@@ -339,7 +346,7 @@ CREATE TABLE Med_Type
     );
 
 
-INSERT INTO Med_Type VALUES ('Dental'), ('Medical'), 
+INSERT INTO Med_Type VALUES ('Dental'), ('Medical'),
 ('Gynecologist'), ('Abortion Clinic'), ('STI/ HIV'), ('Pediatrician'),
 ('Pharmacy'), ('Check-Up'), ('Immunization'), ('Residential'), ('Addiction'), ('Vision'), ('Other');
 
@@ -748,7 +755,7 @@ CREATE TABLE Net_Mem
 
 INSERT INTO Net_Mem VALUES ('Survivors'),
  ('Parents of Survivors'),
-  ('Family of Survivors'), ('Volunteers'), ('Other'); 
+  ('Family of Survivors'), ('Volunteers'), ('Other');
 
 
 DROP TABLE IF EXISTS Net_Sub;
@@ -827,5 +834,3 @@ CREATE TABLE Reviews
    FOREIGN KEY (ID) REFERENCES Resource (ID),
    FOREIGN KEY (Username) REFERENCES User (Username)
    );
-
-
