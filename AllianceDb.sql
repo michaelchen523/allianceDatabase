@@ -102,11 +102,11 @@ CREATE TABLE Category_Names
 ( Name VARCHAR(20),
   Description VARCHAR(500),
   PRIMARY KEY (Name));
-
-INSERT INTO Category_Names VALUES ('Housing', 'Housing Description'), ('Documentation', 'Documentation Description'), ('Medical'),
+/*
+INSERT INTO Category_Names VALUES ('Housing'), ('Documentation'), ('Medical'),
  ('Mental Health'), ('Legal'), ('Resume Building'), ('Employment'), ('Transportation'),
   ('Professional Mentors'), ('Childcare'), ('Vehicle'), ('Life Skills'), ('Education'), ('Networks');
-
+*/
 
 DROP TABLE IF EXISTS Categories;
 
@@ -116,6 +116,7 @@ CREATE TABLE Categories
   PRIMARY KEY (ID, Name),
   FOREIGN KEY (Name) REFERENCES Category_Names(Name),
   FOREIGN KEY (ID) REFERENCES Resource (ID));
+
 
 DROP TABLE IF EXISTS User_Favorites;
 
