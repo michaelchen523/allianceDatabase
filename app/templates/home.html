@@ -1,79 +1,25 @@
 {% extends 'layout.html' %}
 
+{% block welcome %}
+<h2 class="nav navbar-nav navbar-brand" style="color:#ddd; margin-left:150px;">Welcome, {{ name }}!</h2>
+{% endblock %}
+
 {%block content %}
 
-<nav class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('home')}}">Alliance for Survivor Care</a>
-        </div>
-        <div class="nav navbar-nav">
-            <div class="dropdown">
-                <button class="nav-item navbar-inner btn btn-default btn-sm btn-secondary dropdown-toggle"
-                        data-toggle="dropdown" style="margin-top:10px; margin-left:10px;" id="dropdownMenuButton"
-                        type="button" aria-haspopup="true" aria-expanded="false">Find Resource by Category
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left:10px;">
-                    {% for category in categories %}
-                        <li class="dropdown-item"><a href="{{ url_for('search') }}">{{ category[0] }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
-            <h2 class="nav navbar-nav navbar-brand" style="color:#ddd; margin-left:150px;">Welcome, {{ user }}!</h2>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('organizations') }}">Organizations</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <div class="jumbotron">
     <div class="row home-header">
         <h1 class="text-center">Top Categories</h1>
     </div>
-        <div class="blk container content">
-            <div class="row">
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[0][0] }}</a></h2>
-                    <p>Description of {{ categories[0][0] }} [..... ............ ....... ........ ........]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[1][0] }}</a></h2>
-                    <p>Description of {{ categories[1][0] }} [.... ...... ........ ...... ........ ........]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[2][0] }}</a></h2>
-                    <p>Description of {{ categories[2][0] }} [........ ...... .......... ..... ...... .....]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[3][0] }}</a></h2>
-                    <p>Description of {{ categories[3][0] }} [.... .... ...... ........ ....... ..... ......]</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[4][0] }}</a></h2>
-                    <p>Description of {{ categories[4][0] }} [... ........ ...... ...... ....... ..........]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[5][0] }}</a></h2>
-                    <p>Description of {{ categories[5][0] }} [.... ...... ....... ....... ....... .........]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[6][0] }}</a></h2>
-                    <p>Description of {{ categories[6][0] }} [.... ...... ...... ...... ...... ........ ....]</p>
-                </div>
-                <div class="category col-sm-3 text-center">
-                    <h2><a href="{{ url_for('search') }}">{{ categories[7][0] }}</a></h2>
-                    <p>Description of {{ categories[7][0] }} [..... ........ ...... ........ ....... ......]</p>
-                </div>
 
+    <div class='blk container content'>
+      <div class='row'>
+        {% for category in categories %}
+            <div class="category col-sm-3 text-center">
+                <h2><a href="{{ url_for('search') }}">{{ category[0] }}</a></h2>
+                  <p>{{ category[1] }}</p>
             </div>
-    </div>
-
+        {% endfor %}
+      </div>
 </div>
 
 <!--filters
