@@ -98,7 +98,7 @@ CREATE TABLE Org_Favorites
 DROP TABLE IF EXISTS Phone_Numbers; # changed this because 'Number' seems to be a restricted word
 
 CREATE TABLE Phone_Numbers
-  (Phone_Number VARCHAR(15) NOT NULL, # why is this a varchar and not an int? changed from 'PhoneNumber' for format consistency
+  (Phone_Number VARCHAR(25) NOT NULL, # why is this a varchar and not an int? changed from 'PhoneNumber' for format consistency
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
