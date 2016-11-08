@@ -74,8 +74,8 @@
                         <li>
                             <div class="resource">
                                 <h2><a href="{{ url_for('resource_detail', resourcename = resource[1]) }}">{{ resource[1] }}</a></h2>
-                                <h4>Rating</h4>
-                                <p>{{ resource[8] }}</p>
+                                <h4>Rating: {{ resource[0] }}</h4>
+                                <p> Description: {{resource[2] }}</p>
                             </div>
                         </li>
                     {% endfor %}
