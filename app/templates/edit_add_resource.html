@@ -8,7 +8,7 @@
         <div class="form-group row">
             <input  class = "input-lg col-md-10" id = "resourceName" type="text" name = "resourceName"
                     {% if resource %}
-                        value = "{{ resource[0][1] }}">
+                        value = "{{ resource[0][0] }}">
                     {% else %}
                         placeholder = "Resource Name">
                     {% endif %}
@@ -21,7 +21,7 @@
         <div class="form-group row">
             <input id="resourceStreet" class="col-md-10" type="text" name = "resourceStreet"
                    {%if resource %}
-                        value = "{{ resource[0][7] }} {{ resource[0][6] }}">
+                        value = "{{ resource[0][6] }} {{ resource[0][5] }}">
                    {% else %}
                         placeholder="123 E. EnterStreet St.">
                     {% endif %}
@@ -49,7 +49,7 @@
         <div class="form-group row">
             <textarea class = "col-md-10" id="resourceDescription" rows = "5" name = "resourceDescription"
                       {% if resource %}
-                        >{{ resource[0][8] }}
+                        >{{ resource[0][11] }}
                       {% else %}
                         placeholder="Enter Description">
                       {% endif %}

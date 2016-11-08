@@ -27,6 +27,7 @@ def login():
 
             cursor2 = conn.cursor()
             cursor2.execute("SELECT * FROM Category_Names;")
+
             session['categories'] = cursor2.fetchall()
             print session['categories']
 
@@ -127,7 +128,7 @@ def user_detail():
     name = cursor2.fetchall()
     name = name[0][0]
     cursor3 = conn.cursor()
-    cursor3.execute("SELECT Name FROM Resource WHERE Username = '" + name + "';")
+    cursor3.execute("SELECT Name FROM Resource WHERE Creator_Username = '" + name + "';")
     resources = cursor3.fetchall()
     return render_template('user_detail.html', title='User Details', user = user,
                            orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)

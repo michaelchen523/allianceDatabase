@@ -3,6 +3,11 @@ h3 {
     text-align: center;
 }
 
+#map {
+   height: 400px;
+   width: 100%;
+}
+
 .login-div {
     text-align: center;
     display: block;
@@ -71,10 +76,7 @@ h3 {
     display:flex;
 }
 
-#map {
-        height: 400px;
-        width: 100%;
-       }
+
 
 
 
