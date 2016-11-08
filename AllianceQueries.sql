@@ -64,6 +64,13 @@ exchange Housing for each table name
 WHERE  TABLE_NAME = 'Housing' 
         AND COLUMN_NAME != 'ID';
 
+/*
+Acess phone number
+ */
+
+SELECT Phone_Number
+FROM Phone_Numbers
+WHERE ID = #input resource ID
 
 
 /*
@@ -86,6 +93,8 @@ FROM (
                     SELECT ID
                     FROM Housing
                     WHERE Gender = 'Female'
+
+
                     ) house
                 JOIN (
                     SELECT ID
