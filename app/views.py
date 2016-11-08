@@ -79,6 +79,7 @@ def edit_user():
 
 @app.route('/search/<ctgry>/', methods=["GET"])
 def search(ctgry):
+    print ctgry
     if not session.get('logged_in'):
         return redirect('login')
     else:
@@ -104,7 +105,7 @@ def search(ctgry):
                     ) category
                 ON  category.ID = res.ID
             ) resource
-        JOIN (
+        LEFT JOIN (
                 SELECT ID, AVG(Rating) AS rating
                 FROM Reviews
                 GROUP BY ID
@@ -112,11 +113,10 @@ def search(ctgry):
 
         ON rev.ID = resource.ID
 
-        ORDER BY rev.rating;
+        ORDER BY rev.rating DESC;
         """, (ctgry, ))
 
         resources = cursor.fetchall()
-        print len(resources)
         print resources
 
         return render_template('search.html', resources=resources, categories=categories)
