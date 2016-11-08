@@ -85,16 +85,50 @@
         <div class="col-sm-4">
             <div style="margin-top:50px;">
                 <h3 style="text-center">Google Maps</h3>
-                <div class="googlemaps">
-                    <img width="300" src = "{{url_for('static', filename='images/googlemaps.jpg')}}" style="margin-left:25px;">
-                </div>
+                <div id="map" ></div>
             </div>
         </div>
     </div>
+    <script>
+    function initMap() {
+        var atlanta = {lat: 34, lng: -84};
+        var bounds = new google.maps.LatLngBounds();
+        var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 4,
+                  center: atlanta
+        });
+
+        var addresses = [{% for resource in resources %} "{{resource[6]}} {{resource[5]}}, {{resource[3]}}, {{resource[2]}} {{resource[4]}}", {% endfor %}]
+
+
+        for (x = 0; x < addresses.length; x++) {
+             var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode( { 'address': addresses[x]}, makeCallback(x, bounds));
+        }
+        map.fitBounds(bounds);
+
+        function makeCallback(addressIndex, bounds) {
+        var geocodeCallBack = function(results, status) {
+            var i = addressIndex;
+            if (status == google.maps.GeocoderStatus.OK) {
+                    var latitude = results[0].geometry.location.lat();
+                    var longitude = results[0].geometry.location.lng();
+                    var marker = new google.maps.Marker({
+                    position: {lat: latitude, lng: longitude}, map: map, label: (i+1).toString()});
+                    bounds.extend(marker.position);
+               }
+
+            }
+            return geocodeCallBack;
+        }
+    }
+    </script>
 
 </div>
 
-
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVCNy3UI9ujhTLUUz8qle6BnUpQP1k2pw&callback=initMap">
+</script>
 
 
 
@@ -102,4 +136,3 @@
 
 </html>
 
-<!--API Key:  AIzaSyDVCNy3UI9ujhTLUUz8qle6BnUpQP1k2pw -->
