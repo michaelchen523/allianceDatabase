@@ -17,6 +17,9 @@ implementation:
  */
 
 
+
+#Housing
+
 SELECT rev.rating,
        resource.name,
        resource.description
@@ -35,7 +38,7 @@ FROM (
             ) category
         ON  category.ID = res.ID
     ) resource
-JOIN (
+LEFT JOIN (
         SELECT ID, AVG(Rating) AS rating
         FROM Reviews
         GROUP BY ID
@@ -43,7 +46,7 @@ JOIN (
 
 ON rev.ID = resource.ID
 
-ORDER BY rev.rating;
+ORDER BY rev.rating DESC;
 
 
 
@@ -78,14 +81,18 @@ FROM (
         SELECT res.Name AS name, res.Description AS description, category.ID AS ID
         FROM Resource AS res
         JOIN (
-
-        	/*
-        	This is where the filtering selection would go
-        	 */
-        	
-                SELECT ID
-                FROM Housing
-                WHERE Gender = 'Female'
+                SELECT type.ID AS ID
+                FROM (
+                    SELECT ID
+                    FROM Housing
+                    WHERE Gender = 'Female'
+                    ) house
+                JOIN (
+                    SELECT ID
+                    FROM Housing_Type_Multi
+                    WHERE Type = 'Shelter'
+                    ) type
+                ON house.ID = type.ID
             ) category
         ON res.ID = category.ID
     ) filter
@@ -96,5 +103,9 @@ JOIN (
     ) rev
 ON filter.ID = rev.ID
 ORDER BY rev.avg_rating;
+
+
+
+
 
 
