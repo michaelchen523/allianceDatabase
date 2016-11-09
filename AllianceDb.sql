@@ -8,15 +8,6 @@ USE AllianceDb;
 
 SELECT 'BEGINNING OF SCRIPT'; # Select statements are placed throughout the script and act as a sort of print statement
 
-DROP TABLE IF EXISTS Organization;
-
-CREATE TABLE Organization(
-  Name VARCHAR(20),
-  Description VARCHAR(600),
-  PRIMARY KEY (Name)
-  );
-
-INSERT INTO Organization VALUES ('Beloved');
 
 
 DROP TABLE IF EXISTS User;
@@ -25,13 +16,11 @@ CREATE TABLE User(
  Username VARCHAR(20)  NOT NULL,
  Email VARCHAR(30) NOT NULL,
  Password VARCHAR(25) NOT NULL,
- Name VARCHAR(20) NOT NULL,
- Organization VARCHAR(20) NOT NULL,
- PRIMARY KEY (Username),
- FOREIGN KEY (Organization) REFERENCES Organization (Name)
+ OrgName VARCHAR(20) NOT NULL,
+ PRIMARY KEY (Username)
  );
 
-INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Sonika', 'Beloved');
+INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Beloved');
 
 
 DROP TABLE IF EXISTS Resource;
@@ -84,16 +73,6 @@ CREATE TABLE User_Favorites (
   FOREIGN KEY (Username) REFERENCES User (Username),
   FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
-
-
-DROP TABLE IF EXISTS Org_Favorites;
-
-CREATE TABLE Org_Favorites
- (Organization VARCHAR(20)  NOT NULL,
-  ID MEDIUMINT NOT NULL,
-  PRIMARY KEY (Organization, ID),
-  FOREIGN KEY (Organization) REFERENCES Organization (Name),
-  FOREIGN KEY (ID) REFERENCES Resource(ID));
 
 
 DROP TABLE IF EXISTS Phone_Numbers; # changed this because 'Number' seems to be a restricted word

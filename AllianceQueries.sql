@@ -88,24 +88,32 @@ FROM (
         SELECT res.Name AS name, res.Description AS description, category.ID AS ID
         FROM Resource AS res
         JOIN (
-                SELECT type.ID AS ID
+                SELECT house.ID AS ID
                 FROM (
                     SELECT ID
                     FROM Housing
-                    WHERE Gender = 'Female'
-
+                    WHERE Gender = 'Female' # AND blah blah for more filtering
 
                     ) house
-                JOIN (
-                    SELECT ID
-                    FROM Housing_Type_Multi
-                    WHERE Type = 'Shelter'
-                    ) type
-                ON house.ID = type.ID
+                LEFT JOIN (
+                    SELECT subCat.ID AS ID #might need to fix
+                    FROM (
+                            SELECT ID
+                            FROM Housing_Type_Multi
+                            WHERE Type = 'Shelter' #alter here to specify
+                        ) type
+                    OUTER JOIN (
+                        SELECT ID
+                        FROM Housing_Serve_Multi
+                        WHERE Type = 'Homeless' #alter here to specity
+                        ) serve
+                    ) subCat
+                    ON type.ID = serve.ID
+                ON house.ID = subCat.ID
             ) category
         ON res.ID = category.ID
     ) filter
-JOIN (
+LEFT JOIN (
         SELECT ID, AVG(Rating) AS avg_rating
         FROM Reviews
         GROUP BY ID
