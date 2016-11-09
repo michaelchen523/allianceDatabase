@@ -17,6 +17,9 @@ implementation:
  */
 
 
+
+#Housing
+
 SELECT rev.rating,
        resource.name,
        resource.description
@@ -35,7 +38,7 @@ FROM (
             ) category
         ON  category.ID = res.ID
     ) resource
-JOIN (
+LEFT JOIN (
         SELECT ID, AVG(Rating) AS rating
         FROM Reviews
         GROUP BY ID
@@ -43,7 +46,7 @@ JOIN (
 
 ON rev.ID = resource.ID
 
-ORDER BY rev.rating;
+ORDER BY rev.rating DESC;
 
 
 
@@ -61,6 +64,13 @@ exchange Housing for each table name
 WHERE  TABLE_NAME = 'Housing' 
         AND COLUMN_NAME != 'ID';
 
+/*
+Acess phone number
+ */
+
+SELECT Phone_Number
+FROM Phone_Numbers
+WHERE ID = #input resource ID
 
 
 /*
@@ -78,14 +88,20 @@ FROM (
         SELECT res.Name AS name, res.Description AS description, category.ID AS ID
         FROM Resource AS res
         JOIN (
+                SELECT type.ID AS ID
+                FROM (
+                    SELECT ID
+                    FROM Housing
+                    WHERE Gender = 'Female'
 
-        	/*
-        	This is where the filtering selection would go
-        	 */
-        	
-                SELECT ID
-                FROM Housing
-                WHERE Gender = 'Female'
+
+                    ) house
+                JOIN (
+                    SELECT ID
+                    FROM Housing_Type_Multi
+                    WHERE Type = 'Shelter'
+                    ) type
+                ON house.ID = type.ID
             ) category
         ON res.ID = category.ID
     ) filter
@@ -96,5 +112,9 @@ JOIN (
     ) rev
 ON filter.ID = rev.ID
 ORDER BY rev.avg_rating;
+
+
+
+
 
 

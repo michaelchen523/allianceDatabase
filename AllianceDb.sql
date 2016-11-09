@@ -10,8 +10,9 @@ SELECT 'BEGINNING OF SCRIPT'; # Select statements are placed throughout the scri
 
 DROP TABLE IF EXISTS Organization;
 
-CREATE TABLE Organization
- (Name VARCHAR(20),
+CREATE TABLE Organization(
+  Name VARCHAR(20),
+  Description VARCHAR(600),
   PRIMARY KEY (Name)
   );
 
