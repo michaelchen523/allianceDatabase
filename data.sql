@@ -1,7 +1,7 @@
 INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
 
 
-INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Website, Documentation, Eligibility, Description, ID MEDIUMINT) VALUES
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Website, Documentation, Eligibility, Description, ID) VALUES
 ('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 'W. Peachtree St, NE', 1105, 'www.familiesfirst.org', 'In all of Georgia', 0, 'Provides resources and information to new mothers with a low-birth weight baby', 3),
 
 ('Wellspring Living: Empowering Living Academy', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'www.wellspringliving.org', 0, 'Women 18-31 years old, no violent criminal charges, medically stable, no substance abuse, access to transportation, willingness to live a drug and alcohol

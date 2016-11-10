@@ -31,7 +31,7 @@ CREATE TABLE Resource
   Address_State VARCHAR(2) NOT NULL,
   Address_City VARCHAR(20) NOT NULL,
   Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(20) NOT NULL,
+  Address_Street VARCHAR(30) NOT NULL,
   Address_Number INT NOT NULL,
   Website VARCHAR(50),
   Non_Citizen TINYINT(1),
@@ -177,21 +177,21 @@ CREATE TABLE Housing
 DROP TABLE IF EXISTS Housing_Multi;
 
 CREATE TABLE Housing_Type_Multi
-( Type_Multi VARCHAR(20),
+( Housing_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Housing_Type (Type),
+  FOREIGN KEY (Housing_Type_Multi) REFERENCES Housing_Type (Type),
   FOREIGN KEY (ID) REFERENCES Housing (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Housing_Type_Multi)
   );
 
 DROP TABLE IF EXISTS Housing_Serve_Multi;
 
 CREATE TABLE Housing_Serve_Multi
-( Type_Multi VARCHAR(20),
+( Housing_Serve_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Serve_Type (Type),
+  FOREIGN KEY (Housing_Serve_Multi) REFERENCES Serve_Type (Type),
   FOREIGN KEY (ID) REFERENCES Housing (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Housing_Serve_Multi)
   );
 
 /*
@@ -224,11 +224,11 @@ CREATE TABLE Medical
 DROP TABLE IF EXISTS Med_Type_Multi;
 
 CREATE TABLE Med_Type_Multi
-( Type_Multi VARCHAR(20),
+( Med_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Med_Type (Type),
+  FOREIGN KEY (Med_Type_Multi) REFERENCES Med_Type (Type),
   FOREIGN KEY (ID) REFERENCES Medical (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Med_Type_Multi)
   );
 
 
@@ -260,11 +260,11 @@ CREATE TABLE Mental_Health
 DROP TABLE IF EXISTS Metal_Type_Multi;
 
 CREATE TABLE Metal_Type_Multi
-( Type_Multi VARCHAR(20),
+( Metal_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Mental_Type (Type),
+  FOREIGN KEY (Metal_Type_Multi) REFERENCES Mental_Type (Type),
   FOREIGN KEY (ID) REFERENCES Mental_Health (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Metal_Type_Multi)
   );
 
 
@@ -295,11 +295,11 @@ CREATE TABLE Legal
 DROP TABLE IF EXISTS Leg_Type_Multi;
 
 CREATE TABLE Leg_Type_Multi
-( Type_Multi VARCHAR(20),
+( Leg_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Leg_Type (Type),
+  FOREIGN KEY (Leg_Type_Multi) REFERENCES Leg_Type (Type),
   FOREIGN KEY (ID) REFERENCES Legal (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Leg_Type_Multi)
   );
 
 
@@ -341,21 +341,21 @@ CREATE TABLE Employment
 DROP TABLE IF EXISTS Emp_Type_Multi;
 
 CREATE TABLE Emp_Type_Multi
-( Type_Multi VARCHAR(20),
+( Emp_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Emp_Type (Type),
+  FOREIGN KEY (Emp_Type_Multi) REFERENCES Emp_Type (Type),
   FOREIGN KEY (ID) REFERENCES Employment (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Emp_Type_Multi)
   );
 
 DROP TABLE IF EXISTS Skills_Multi;
 
 CREATE TABLE Emp_Skills_Multi
-( Skills_Multi VARCHAR(20),
+( Emp_Skills_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Skills_Multi) REFERENCES Emp_Skills (Type),
+  FOREIGN KEY (Emp_Skills_Multi) REFERENCES Emp_Skills (Type),
   FOREIGN KEY (ID) REFERENCES Employment (ID),
-  PRIMARY KEY (ID, Skills_Multi)
+  PRIMARY KEY (ID, Emp_Skills_Multi)
   );
 
 /*
@@ -385,11 +385,11 @@ CREATE TABLE Transportation
 DROP TABLE IF EXISTS Trans_Multi;
 
 CREATE TABLE Trans_Multi
-( Type_Multi VARCHAR(20),
+( Trans_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Trans_Type (Type),
+  FOREIGN KEY (Trans_Multi) REFERENCES Trans_Type (Type),
   FOREIGN KEY (ID) REFERENCES Transportation (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Trans_Multi)
   );
 
 
@@ -420,11 +420,11 @@ CREATE TABLE Mentors
 DROP TABLE IF EXISTS Mentor_Multi;
 
 CREATE TABLE Mentor_Multi
-( Type_Multi VARCHAR(20),
+( Mentor_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Mentor_Type (Type),
+  FOREIGN KEY (Mentor_Multi) REFERENCES Mentor_Type (Type),
   FOREIGN KEY (ID) REFERENCES Mentors (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Mentor_Multi)
   );
 
 
@@ -457,11 +457,11 @@ CREATE TABLE For_Children
 DROP TABLE IF EXISTS For_Child_Multi;
 
 CREATE TABLE For_Child_Multi
-( Type_Multi VARCHAR(20),
+( For_Child_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES For_Child_Type (Type),
+  FOREIGN KEY (For_Child_Multi) REFERENCES For_Child_Type (Type),
   FOREIGN KEY (ID) REFERENCES For_Children (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, For_Child_Multi)
   );
 
 
@@ -493,11 +493,11 @@ CREATE TABLE Childcare
 DROP TABLE IF EXISTS Child_Type_Multi;
 
 CREATE TABLE Child_Type_Multi
-( Type_Multi VARCHAR(20),
+( Child_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Childcare_Type (Type),
+  FOREIGN KEY (Child_Type_Multi) REFERENCES Childcare_Type (Type),
   FOREIGN KEY (ID) REFERENCES Childcare (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Child_Type_Multi)
   );
 
 /*
@@ -529,10 +529,10 @@ DROP TABLE IF EXISTS Vehicle_Type_Multi;
 CREATE TABLE Vehicle_Type_Multi
 (
   ID MEDIUMINT NOT NULL,
-  Type_Multi VARCHAR(20),
-  PRIMARY KEY (ID, Type_Multi),
+  Vehicle_Type_Multi VARCHAR(20),
+  PRIMARY KEY (ID, Vehicle_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Vehicle(ID),
-  FOREIGN KEY (Type_Multi) REFERENCES Vehicle_Type(Type)
+  FOREIGN KEY (Vehicle_Type_Multi) REFERENCES Vehicle_Type(Type)
 );
 
 SELECT 'Life Skills';
@@ -564,10 +564,10 @@ DROP TABLE IF EXISTS Life_Skill_Type_Multi;
 CREATE TABLE Life_Skill_Type_Multi
 (
   ID MEDIUMINT NOT NULL,
-  Type_Multi VARCHAR(20),
-  PRIMARY KEY (ID, Type_Multi),
+  Life_Skill_Type_Multi VARCHAR(20),
+  PRIMARY KEY (ID, Life_Skill_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Life_Skills(ID),
-  FOREIGN KEY (Type_Multi) REFERENCES Skill_Type(Type)
+  FOREIGN KEY (Life_Skill_Type_Multi) REFERENCES Skill_Type(Type)
 );
 
 SELECT 'Education';
@@ -599,10 +599,10 @@ DROP TABLE IF EXISTS Education_Type_Multi;
 CREATE TABLE Education_Type_Multi
 (
   ID MEDIUMINT NOT NULL,
-  Type_Multi VARCHAR(20),
-  PRIMARY KEY (ID, Type_Multi),
+  Education_Type_Multi VARCHAR(20),
+  PRIMARY KEY (ID, Education_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Education(ID),
-  FOREIGN KEY (Type_Multi) REFERENCES Education_Type(Type)
+  FOREIGN KEY (Education_Type_Multi) REFERENCES Education_Type(Type)
 );
 
 SELECT 'Networks';
@@ -646,20 +646,20 @@ DROP TABLE IF EXISTS Net_Mem_Multi;
 CREATE TABLE Net_Mem_Multi
 (
   ID MEDIUMINT NOT NULL,
-  Type_Multi VARCHAR(20),
-  PRIMARY KEY (ID, Type_Multi),
+  Net_Mem_Multi VARCHAR(20),
+  PRIMARY KEY (ID, Net_Mem_Multi),
   FOREIGN KEY (ID) REFERENCES Networks(ID),
-  FOREIGN KEY (Type_Multi) REFERENCES Net_Mem(Members)
+  FOREIGN KEY (Net_Mem_Multi) REFERENCES Net_Mem(Members)
 );
 
 DROP TABLE IF EXISTS Net_Sub_Multi;
 CREATE TABLE Net_Sub_Multi
 (
 	ID MEDIUMINT NOT NULL,
-	Type_Multi VARCHAR(20),
-	PRIMARY KEY (ID, Type_Multi),
+	Net_Sub_Multi VARCHAR(20),
+	PRIMARY KEY (ID, Net_Sub_Multi),
     FOREIGN KEY (ID) REFERENCES Networks(ID),
-	FOREIGN kEY (Type_Multi) REFERENCES Net_Sub(Subject)
+	FOREIGN kEY (Net_Sub_Multi) REFERENCES Net_Sub(Subject)
 );
 
 /*
@@ -686,10 +686,10 @@ DROP TABLE IF EXISTS Job_Readiness_Type_Multi;
 CREATE TABLE Job_Readiness_Type_Multi
 (
   ID MEDIUMINT NOT NULL,
-  Type_Multi VARCHAR(20),
-  PRIMARY KEY (ID, Type_Multi),
+  Job_Readiness_Type_Multi VARCHAR(20),
+  PRIMARY KEY (ID, Job_Readiness_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Job_Readiness(ID),
-  FOREIGN KEY (Type_Multi) REFERENCES Job_Readiness_Type(Type)
+  FOREIGN KEY (Job_Readiness_Type_Multi) REFERENCES Job_Readiness_Type(Type)
 );
 
 /*
