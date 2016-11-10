@@ -138,47 +138,87 @@ implementation:
 3) join newly created 'filter' with review to get avg score
  */
 
+
+
 SELECT rev.avg_rating, filter.name, filter.description
 FROM (
-        SELECT res.Name AS name, res.Description AS description, category.ID AS ID
-        FROM (
-            SELECT Name, Description, ID
-            FROM Resource
-            WHERE Non_Citizen = 0 #alter this to specify
-            ) res
-        JOIN (
-                SELECT house.ID AS ID
-                FROM (
-                    SELECT ID
-                    FROM Housing
-                    WHERE Gender = 'Female' # alter this to specity (AND blah for more filtering)
+    SELECT res.Name AS name, res.Description AS description, category.ID AS ID
+    FROM Resource AS res
+    NATURAL JOIN (
+            SELECT ID
+            FROM Housing
+            NATURAL LEFT JOIN (
 
-                    ) house
-                LEFT JOIN (
-                    SELECT serve.ID AS ID #might need to fix
-                    FROM (
-                            SELECT ID
-                            FROM Housing_Type_Multi
-                            WHERE Housing_Type_Multi = 'Shelter' #alter here to specify
-                        ) type
-                    JOIN (
-                        SELECT ID
-                        FROM Housing_Serve_Multi
-                        WHERE Housing_Serve_Multi = 'Homeless' #alter here to specity
-                        ) serve
-                    ON type.ID = serve.ID
-                    ) subCat
-                ON house.ID = subCat.ID
-            ) category
-        ON res.ID = category.ID
+                SELECT ID #might need to fix
+                FROM 
+                    Housing_Type_Multi
+                NATURAL LEFT JOIN 
+                    Housing_Serve_Multi
+                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert options here
+
+                UNION
+
+                SELECT ID
+                FROM
+                    Housing_Type_Multi
+                NATURAL RIGHT JOIN
+                    Housing_Serve_Multi
+                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert options here
+
+                ) subCat
+            WHERE Gender = 'Female'
+        ) category
+    WHERE Non_Citizen = 0 #insert options here
     ) filter
-LEFT JOIN (
+NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS avg_rating
         FROM Reviews
         GROUP BY ID
     ) rev
-ON filter.ID = rev.ID
 ORDER BY rev.avg_rating;
+
+
+-- SELECT rev.avg_rating, filter.name, filter.description
+-- FROM (
+--         SELECT res.Name AS name, res.Description AS description, category.ID AS ID
+--         FROM (
+--             SELECT Name, Description, ID
+--             FROM Resource
+--             WHERE Non_Citizen = 0 #alter this to specify
+--             ) res
+--         JOIN (
+--                 SELECT house.ID AS ID
+--                 FROM (
+--                     SELECT ID
+--                     FROM Housing
+--                     WHERE Gender = 'Female' # alter this to specity (AND blah for more filtering)
+
+--                     ) house
+--                 LEFT JOIN (
+--                     SELECT serve.ID AS ID #might need to fix
+--                     FROM (
+--                             SELECT ID
+--                             FROM Housing_Type_Multi
+--                             WHERE Housing_Type_Multi = 'Shelter' #alter here to specify
+--                         ) type
+--                     JOIN (
+--                         SELECT ID
+--                         FROM Housing_Serve_Multi
+--                         WHERE Housing_Serve_Multi = 'Homeless' #alter here to specity
+--                         ) serve
+--                     ON type.ID = serve.ID
+--                     ) subCat
+--                 ON house.ID = subCat.ID
+--             ) category
+--         ON res.ID = category.ID
+--     ) filter
+-- LEFT JOIN (
+--         SELECT ID, AVG(Rating) AS avg_rating
+--         FROM Reviews
+--         GROUP BY ID
+--     ) rev
+-- ON filter.ID = rev.ID
+-- ORDER BY rev.avg_rating;
 
 
 
