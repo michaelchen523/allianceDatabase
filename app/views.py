@@ -17,13 +17,12 @@ def login():
         conn = mysql.connection
         cursor = conn.cursor()
 
-        cursor.execute("SELECT Username, Name FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
+        cursor.execute("SELECT Username FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
 
         data = cursor.fetchall()
         if len(data) > 0:
             session['logged_in'] = True
             session['user'] = username
-            session['name'] = data[0][1]
 
             cursor2 = conn.cursor()
             cursor2.execute("SELECT * FROM Category_Names;")
@@ -90,36 +89,31 @@ def search(ctgry):
         cursor = conn.cursor()
 
         cursor.execute("""
-        SELECT rev.rating,
-               resource.name,
-               resource.description
-        FROM (
-                SELECT res.Name AS name,
-                       res.Description AS description,
-                       res.ID AS ID
-                FROM Resource AS res
-                JOIN (
-                        SELECT *
-                        FROM Categories
-                        WHERE Name = %s
-                    ) category
-                ON  category.ID = res.ID
-            ) resource
-        LEFT JOIN (
-                SELECT ID, AVG(Rating) AS rating
-                FROM Reviews
-                GROUP BY ID
-            ) rev
+        SELECT rev.rating, res.name, res.description, res.Address_State AS State,
+    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+    res.Address_Number AS Num
+FROM (
+        SELECT *
+        FROM Resource
+        NATURAL JOIN (
+            SELECT ID
+            FROM Categories
+            WHERE Name = %s
+            ) categories
+    ) res
+NATURAL LEFT JOIN (
+        SELECT ID, AVG(Rating) AS rating
+        FROM Reviews
+        GROUP BY ID
+    ) rev
 
-        ON rev.ID = resource.ID
-
-        ORDER BY rev.rating DESC;
+ORDER BY rev.rating DESC;
         """, (ctgry, ))
 
         resources = cursor.fetchall()
         print resources
 
-        return render_template('search.html', resources=resources, categories=categories)
+        return render_template('search.html', resources=resources, categories=categories, user=user)
 
 @app.route('/resource_detail')
 def resource_detail():
@@ -132,9 +126,69 @@ def resource_detail():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM RESOURCE WHERE Name = '" + resourcename + "';")
         resource = cursor.fetchall()
+        id=resource[0][12]
+        cursor2 = conn.cursor()
+        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
+        cursor3 = conn.cursor()
+        cursor3.execute("SELECT * FROM User_Favorites WHERE Username = %s AND ID = %s;", (user, id, ))
+        phones=cursor2.fetchall()
+        isfav = cursor3.fetchall()
+        if len(isfav) > 0:
+            favorite = True
+        else:
+            favorite = False
         categories = session.get('categories')
         return render_template('resource_detail.html', title='resource details',
-                               user = user, categories = categories, resource = resource)
+                               user = user, categories = categories, resource = resource, phones = phones, favorite = favorite)
+
+@app.route('/deletefav/<resourceid>', methods=['GET'])
+def deletefav(resourceid):
+    user = session.get('user')
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute("""DELETE FROM User_Favorites
+WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
+    conn.commit()
+    return redirect(url_for('favorites'))
+
+@app.route('/addfav/<resourceid>', methods=['GET'])
+def addfav(resourceid):
+    user = session.get('user')
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute("""INSERT INTO User_Favorites
+    VALUES (%s, %s);""", (user, resourceid, ))
+    conn.commit()
+    return redirect(url_for('favorites'))
+
+@app.route('/favorites')
+def favorites():
+    if not session.get('logged_in'):
+        return redirect('login')
+    else:
+        user = session.get('user')
+        conn = mysql.connection
+        cursor = conn.cursor()
+        cursor.execute("""SELECT rev.avg_rating AS Rating, res.name AS Name, res.description AS Description, res.Address_State AS State,
+    res.Address_City AS city, res.Address_Zip AS Zip, res.Address_Street AS Street, res.Address_Number AS Num
+FROM (
+    SELECT *
+    FROM (
+        SELECT ID
+        FROM User_Favorites
+        WHERE Username = %s
+        ) favs
+    NATURAL JOIN Resource
+    ) res
+NATURAL LEFT JOIN (
+    SELECT ID, AVG(Rating) AS avg_rating
+    FROM Reviews
+    GROUP BY ID
+    ) rev
+ORDER BY rev.avg_rating DESC;""", (user, ))
+        resources = cursor.fetchall()
+        categories = session.get('categories')
+        return render_template('search.html', resources=resources, categories=categories, user=user, favorites = True)
 
 @app.route('/organizations')
 def organizations():

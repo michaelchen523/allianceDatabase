@@ -46,10 +46,22 @@
               {% block welcome %}
               {% endblock %}
               <ul class="nav navbar-nav navbar-right">
-                  <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{ url_for('organizations') }}">Organizations</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{ url_for('edit_user') }}">Profile</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                  <li class="nav-item dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="{{ url_for('home') }}">Search</a></li>
+                          <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
+                          <li><a href="{{ url_for('edit_add_resource') }}">Add</a></li>
+                      </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }}<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="{{ url_for('edit_user') }}">Edit Profile</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                      </ul>
+                  </li>
               </ul>
           </div>
       </div>

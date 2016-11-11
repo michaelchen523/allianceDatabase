@@ -3,12 +3,12 @@
 {%block content %}
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <form class="col-md-8 container vertical-center" method="post">
+    <form class="col-md-10 col-md-offset-1 container vertical-center" method="post">
         <label for="orgName"><h3>Organization Name: </h3></label>
         <div class="form-group row">
-            <input  class = "input-lg col-md-10" id = "orgName" type="text" name = "orgName"
+            <input  class = "input-lg col-md-12" id = "orgName" type="text" name = "orgName"
                     { % if user % }
-                        value = "{{ userdata[0][4] }}"
+                        value = "{{ userdata[0][3] }}"
                     { % else % }
                         placeholder="Organization Name">
         </div>
@@ -19,7 +19,7 @@
 
         <label for="orgDescription">Description: </label>
         <div class="form-group row">
-            <textarea class = "col-md-10" id="orgDescription" rows = "5" name = "orgDescription" placeholder="Enter Description"></textarea>
+            <textarea class = "col-md-12" id="orgDescription" rows = "5" name = "orgDescription" placeholder="Enter Description"></textarea>
 
         </div>
         <div class="form-group row">
@@ -29,7 +29,7 @@
             <ul class="list-unstyled">
                 {% for resource in userresource %}
                 <li>
-                    <div class="col-md-10 row">
+                    <div class="col-md-12 row">
                         <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail', resourcename = resource[0]) }}"><h4>{{ resource[0] }}</h4></a>
                         <a href="{{ url_for('edit_add_resource', resource = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
                         <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
@@ -37,7 +37,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <div class="col-md-10 row">
+                    <div class="col-md-12 row">
                         <a class="col-md-4" href="{{ url_for('edit_add_resource') }}"><h5>+ Add Resource</h5></a>
                     </div>
                 </li>
@@ -48,11 +48,6 @@
             <button class="btn btn-default btn-lg col-md-4" name="resourceSubmit" type="submit">Submit</button>
         </div>
     </form>
-    <div class="col-md-4 container profile-div">
-        <div class="edit-pic center-block">
-            <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-        </div>
-    </div>
 </div>
 
 
