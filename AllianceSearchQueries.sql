@@ -97,13 +97,6 @@ FROM Phone_Numbers
 WHERE ID = 3; #input resource ID
 
 /*
-edit user phone number
- */
-UPDATE Phone_Numbers
-SET Phone_Number = '1234567' #new number
-WHERE ID = 3; #ID of resource to be changed
-
-/*
 edit every attribute of a resource (including sub cat)
  */
 
@@ -113,6 +106,10 @@ SET Name = '', Address_State = '', Address_City = '',       #new info
  Website = '', Non_Citizen = 1, Documentation = 0, Eligibility = '',
  Description = ''
  WHERE ID = 1; #ID of resource
+
+UPDATE Phone_Numbers
+SET Phone_Number = '1234'
+WHERE ID = 1;
 
 UPDATE Housing_Type_Multi#category name
  SET Housing_Type_Multi = 'Group'#attribute names
@@ -130,7 +127,8 @@ FROM (
     FROM 
         Housing_Type_Multi
     NATURAL LEFT JOIN 
-        Housing_Serve_Multi
+        Housing_Serve_
+        Multi
 
     UNION
 
@@ -231,11 +229,21 @@ ORDER BY rev.avg_rating DESC;
 
 
 /*
-adding a resource
+editing a resource
  */
 
-#
-#UPDATE Resource
+UPDATE Resource
+SET Name = 'foobar', Creator_Username = 'SonikaF', Address_State = 'GA', Address_City = 'Atlanta', Address_Zip = 1234, #put data which is to be updated here
+ Address_Street = 'Peachtree', Address_Number = '5', Website = null, Non_Citizen = 1, Documentation = 0,
+ Eligibility = 'not you', Description = 'poop'
+WHERE ID = 1; #Put ID of resource to edit here
+
+UPDATE Phone_Numbers
+SET Phone_Number = '1234'
+WHERE ID = 1;
+
+UPDATE Housing
+SET 
 
 
 

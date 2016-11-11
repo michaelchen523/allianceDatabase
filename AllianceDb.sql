@@ -32,7 +32,7 @@ CREATE TABLE Resource
   Address_City VARCHAR(20) NOT NULL,
   Address_Zip INT NOT NULL,
   Address_Street VARCHAR(30) NOT NULL,
-  Address_Number INT NOT NULL,
+  Address_Number VARCHAR(10),
   Website VARCHAR(50),
   Non_Citizen TINYINT(1),
   Documentation TINYINT(1),
