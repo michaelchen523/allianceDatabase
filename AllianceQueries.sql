@@ -140,9 +140,10 @@ implementation:
 
 
 
-SELECT rev.avg_rating, filter.name, filter.description
+SELECT rev.avg_rating AS Rating, filter.name AS Name, filter.description AS Description, filter.Address_State AS State,
+    filter.Address_City AS city, filter.Address_Zip AS Zip, filter.Address_Street AS Street, filter.Address_Number AS Num
 FROM (
-    SELECT res.Name AS name, res.Description AS description, category.ID AS ID
+    SELECT *
     FROM Resource AS res
     NATURAL JOIN (
             SELECT ID
