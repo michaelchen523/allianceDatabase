@@ -174,3 +174,13 @@ See if resource is a favorite
 SELECT *
 FROM User_Favorites
 WHERE Username = 'SonikaF' AND ID = 1; #insert user's username and resource's ID
+
+/*
+pull ratings for a resource
+ */
+SELECT Rating, Testimonial
+FROM Reviews
+WHERE ID = 1; #insert ID here
+
+
+
