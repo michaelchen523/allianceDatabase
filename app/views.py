@@ -90,28 +90,23 @@ def search(ctgry):
         cursor = conn.cursor()
 
         cursor.execute("""
-        SELECT rev.rating,
-               resource.name,
-               resource.description
+        SELECT rev.rating, res.name, res.description, res.Address_State AS State,
+            res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+            res.Address_Number AS Num
         FROM (
-                SELECT res.Name AS name,
-                       res.Description AS description,
-                       res.ID AS ID
-                FROM Resource AS res
-                JOIN (
-                        SELECT *
-                        FROM Categories
-                        WHERE Name = %s
-                    ) category
-                ON  category.ID = res.ID
-            ) resource
-        LEFT JOIN (
+                SELECT *
+                FROM Resource
+                NATURAL JOIN (
+                    SELECT ID
+                    FROM Categories
+                    WHERE Name = %s
+                    ) categories
+            ) res
+        NATURAL LEFT JOIN (
                 SELECT ID, AVG(Rating) AS rating
                 FROM Reviews
                 GROUP BY ID
             ) rev
-
-        ON rev.ID = resource.ID
 
         ORDER BY rev.rating DESC;
         """, (ctgry, ))

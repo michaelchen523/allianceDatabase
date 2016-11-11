@@ -20,34 +20,25 @@ implementation:
 
 #Housing
 
-SELECT rev.rating,
-       resource.name,
-       resource.description
+SELECT rev.rating, res.name, res.description, res.Address_State AS State,
+    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+    res.Address_Number AS Num
 FROM (
-        SELECT res.Name AS name,
-               res.Description AS description,
-               res.ID AS ID
-        FROM Resource AS res
-        JOIN (
-                SELECT *
-                FROM Categories
-        /*
-        exchange Housing for category name
-         */
-                WHERE Name = 'Housing'
-            ) category
-        ON  category.ID = res.ID
-    ) resource
-LEFT JOIN (
+        SELECT *
+        FROM Resource
+        NATURAL JOIN (
+            SELECT ID
+            FROM Categories
+            WHERE Name = 'Housing'
+            ) categories
+    ) res
+NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS rating
         FROM Reviews
         GROUP BY ID
     ) rev
 
-ON rev.ID = resource.ID
-
 ORDER BY rev.rating DESC;
-
 
 
 
@@ -176,50 +167,7 @@ NATURAL LEFT JOIN (
         FROM Reviews
         GROUP BY ID
     ) rev
-ORDER BY rev.avg_rating;
-
-
--- SELECT rev.avg_rating, filter.name, filter.description
--- FROM (
---         SELECT res.Name AS name, res.Description AS description, category.ID AS ID
---         FROM (
---             SELECT Name, Description, ID
---             FROM Resource
---             WHERE Non_Citizen = 0 #alter this to specify
---             ) res
---         JOIN (
---                 SELECT house.ID AS ID
---                 FROM (
---                     SELECT ID
---                     FROM Housing
---                     WHERE Gender = 'Female' # alter this to specity (AND blah for more filtering)
-
---                     ) house
---                 LEFT JOIN (
---                     SELECT serve.ID AS ID #might need to fix
---                     FROM (
---                             SELECT ID
---                             FROM Housing_Type_Multi
---                             WHERE Housing_Type_Multi = 'Shelter' #alter here to specify
---                         ) type
---                     JOIN (
---                         SELECT ID
---                         FROM Housing_Serve_Multi
---                         WHERE Housing_Serve_Multi = 'Homeless' #alter here to specity
---                         ) serve
---                     ON type.ID = serve.ID
---                     ) subCat
---                 ON house.ID = subCat.ID
---             ) category
---         ON res.ID = category.ID
---     ) filter
--- LEFT JOIN (
---         SELECT ID, AVG(Rating) AS avg_rating
---         FROM Reviews
---         GROUP BY ID
---     ) rev
--- ON filter.ID = rev.ID
--- ORDER BY rev.avg_rating;
+ORDER BY rev.avg_rating DESC;
 
 
 

@@ -53,6 +53,8 @@ CREATE TABLE Category_Names
   Description VARCHAR(500),
   PRIMARY KEY (Name));
 
+INSERT INTO Category_Names VALUES ('Housing');
+
 
 DROP TABLE IF EXISTS Categories;
 
