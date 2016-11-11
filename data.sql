@@ -1,8 +1,8 @@
 INSERT INTO Resource VALUES ('Beloved', 'SonikaF', 'GA', 'Atlanta', 30308, 'Spring St.', 9, 1, 'women', 'shelter', 1);
 
 
-INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Website, Documentation, Eligibility, Description, ID) VALUES
-('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 'W. Peachtree St, NE', 1105, 'www.familiesfirst.org', 'In all of Georgia', 0, 'Provides resources and information to new mothers with a low-birth weight baby', 3),
+INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City, Address_Zip, Address_Street, Address_Number, Website, Eligibility, Documentation, Description) VALUES
+('Families First, Inc.: Resource Moms', 'SonikaF', 'GA', 'Atlanta', 30308, 'W. Peachtree St, NE', '1105', 'www.familiesfirst.org', 'In all of Georgia', 0, 'Provides resources and information to new mothers with a low-birth weight baby'),
 
 ('Wellspring Living: Empowering Living Academy', 'SonikaF', 'GA', 'Atlanta', 30342, 'Johnson Ferry Rd Suite 140-331', 860, 'www.wellspringliving.org', 0, 'Women 18-31 years old, no violent criminal charges, medically stable, no substance abuse, access to transportation, willingness to live a drug and alcohol
   free lifestyle, no history of sexual offending behavior, committed to empowered living curriculum and schedule', '9 week program (9am-3:40pm,5 days a week) that provides GED preparation, life skills classes, health and fitness classes, career readiness training, opportunities for

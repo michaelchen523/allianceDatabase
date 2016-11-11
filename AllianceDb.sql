@@ -59,8 +59,8 @@ INSERT INTO Category_Names VALUES ('Housing');
 DROP TABLE IF EXISTS Categories;
 
 CREATE TABLE Categories
-( ID MEDIUMINT NOT NULL,
-  Name VARCHAR(20),
+( Name VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Name),
   FOREIGN KEY (Name) REFERENCES Category_Names(Name),
   FOREIGN KEY (ID) REFERENCES Resource (ID));
@@ -164,12 +164,12 @@ INSERT INTO Serve_Type VALUES ('Exploited'), ('Addiction'), ('Battered'),
 DROP TABLE IF EXISTS Housing;
 
 CREATE TABLE Housing
-  (ID MEDIUMINT NOT NULL,
-  Capacity INT,
+  (Capacity INT,
   Gender VARCHAR(20),
   AgeMax INT,
   AgeMin INT,
   Children TINYINT(1),
+  ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender)
   );
@@ -261,12 +261,12 @@ CREATE TABLE Mental_Health
 
 DROP TABLE IF EXISTS Metal_Type_Multi;
 
-CREATE TABLE Metal_Type_Multi
-( Metal_Type_Multi VARCHAR(20),
+CREATE TABLE Mental_Type_Multi
+( Mental_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Metal_Type_Multi) REFERENCES Mental_Type (Type),
+  FOREIGN KEY (Mental_Type_Multi) REFERENCES Mental_Type (Type),
   FOREIGN KEY (ID) REFERENCES Mental_Health (ID),
-  PRIMARY KEY (ID, Metal_Type_Multi)
+  PRIMARY KEY (ID, Mental_Type_Multi)
   );
 
 
