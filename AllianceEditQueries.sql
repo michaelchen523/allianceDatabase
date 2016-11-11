@@ -34,7 +34,9 @@ UPDATE Phone_Numbers
 SET Phone_Number = '1234'
 WHERE ID = 1;
 
-UPDATE Housing
-SET 
-
-
+/*
+Edit user
+ */
+UPDATE User
+SET Email = 'foobar@gmail.com', Password = 'foobar', OrgName = 'idk'
+WHERE Username = 'SonikaF'; #put username of user in here 

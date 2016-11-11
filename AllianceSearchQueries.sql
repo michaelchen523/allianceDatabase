@@ -171,7 +171,7 @@ ORDER BY rev.avg_rating DESC;
 /*
 See if resource is a favorite
  */
-SELECT *
+SELECT * #if empty set, then not a fav
 FROM User_Favorites
 WHERE Username = 'SonikaF' AND ID = 1; #insert user's username and resource's ID
 
