@@ -5,6 +5,18 @@ Bring up category names
 SELECT *
 FROM Category_Names;
 
+
+/*
+Given ID
+Find category name
+ */
+
+SELECT Name
+FROM Categories
+WHERE ID = 1;
+
+
+
 /*
 1. find resources based on category
     1. sorted by rating <- order by and avg
@@ -153,11 +165,11 @@ implementation:
 
 
 
-SELECT rev.avg_rating AS Rating, filter.name AS Name, filter.description AS Description, filter.Address_State AS State,
-    filter.Address_City AS city, filter.Address_Zip AS Zip, filter.Address_Street AS Street, filter.Address_Number AS Num
+SELECT rev.avg_rating AS Rating, res.name AS Name, res.description AS Description, res.Address_State AS State,
+    res.Address_City AS city, res.Address_Zip AS Zip, res.Address_Street AS Street, res.Address_Number AS Num
 FROM (
     SELECT *
-    FROM Resource AS res
+    FROM Resource
     NATURAL JOIN (
             SELECT ID
             FROM Housing
@@ -183,7 +195,7 @@ FROM (
             WHERE Gender = 'Female' #insert category filters
         ) category
     WHERE Non_Citizen = 0 #insert resource filters
-    ) filter
+    ) res
 NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS avg_rating
         FROM Reviews
@@ -193,11 +205,37 @@ ORDER BY rev.avg_rating DESC;
 
 
 /*
+See favorites
+
+Given: username
+Pull: name, description, rating address
+ */
+SELECT rev.avg_rating AS Rating, res.name AS Name, res.description AS Description, res.Address_State AS State,
+    res.Address_City AS city, res.Address_Zip AS Zip, res.Address_Street AS Street, res.Address_Number AS Num
+FROM (
+    SELECT *
+    FROM (
+        SELECT ID
+        FROM User_Favorites
+        WHERE Username = 'SonikaF'  #insert username here
+        ) favs
+    NATURAL JOIN Resource
+    ) res
+NATURAL LEFT JOIN (
+    SELECT ID, AVG(Rating) AS avg_rating
+    FROM Reviews
+    GROUP BY ID
+    ) rev
+ORDER BY rev.avg_rating DESC;
+
+
+
+/*
 adding a resource
  */
 
-
-
+#
+#UPDATE Resource
 
 
 
