@@ -117,11 +117,11 @@ CREATE TABLE Supplies
 DROP TABLE IF EXISTS Supp_Type_Multi;
 
 CREATE TABLE Supp_Type_Multi
-( Type_Multi VARCHAR(20),
+( Supp_Type_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Type_Multi) REFERENCES Supp_Type (Type),
+  FOREIGN KEY (Supp_Type_Multi) REFERENCES Supp_Type (Type),
   FOREIGN KEY (ID) REFERENCES Supplies (ID),
-  PRIMARY KEY (ID, Type_Multi)
+  PRIMARY KEY (ID, Supp_Type_Multi)
   );
 
 
@@ -485,8 +485,10 @@ INSERT INTO Childcare_Type VALUES ('Mentoring'), ('Tutoring'), ('Day Care'), ('I
 DROP TABLE IF EXISTS Childcare;
 
 CREATE TABLE Childcare
-( Age INT,
-  Cost INT,
+( AgeMax INT,
+  AgeMin INT,
+  CostMax INT,
+  CostMin INT,
   Capacity INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID)
@@ -565,8 +567,8 @@ CREATE TABLE Life_Skills
 DROP TABLE IF EXISTS Life_Skill_Type_Multi;
 CREATE TABLE Life_Skill_Type_Multi
 (
-  ID MEDIUMINT NOT NULL,
   Life_Skill_Type_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Life_Skill_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Life_Skills(ID),
   FOREIGN KEY (Life_Skill_Type_Multi) REFERENCES Skill_Type(Type)
@@ -600,8 +602,8 @@ CREATE TABLE Education
 DROP TABLE IF EXISTS Education_Type_Multi;
 CREATE TABLE Education_Type_Multi
 (
-  ID MEDIUMINT NOT NULL,
   Education_Type_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Education_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Education(ID),
   FOREIGN KEY (Education_Type_Multi) REFERENCES Education_Type(Type)
@@ -637,7 +639,8 @@ DROP TABLE IF EXISTS Networks;
 
 CREATE TABLE Networks
 ( Gender VARCHAR(20),
-  Age INT,
+  AgeMax INT,
+  AgeMin INT,
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Resource (ID),
   FOREIGN KEY (Gender) REFERENCES Gender (Gender),
@@ -647,8 +650,8 @@ CREATE TABLE Networks
 DROP TABLE IF EXISTS Net_Mem_Multi;
 CREATE TABLE Net_Mem_Multi
 (
-  ID MEDIUMINT NOT NULL,
   Net_Mem_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Net_Mem_Multi),
   FOREIGN KEY (ID) REFERENCES Networks(ID),
   FOREIGN KEY (Net_Mem_Multi) REFERENCES Net_Mem(Members)
@@ -657,8 +660,8 @@ CREATE TABLE Net_Mem_Multi
 DROP TABLE IF EXISTS Net_Sub_Multi;
 CREATE TABLE Net_Sub_Multi
 (
-	ID MEDIUMINT NOT NULL,
 	Net_Sub_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
 	PRIMARY KEY (ID, Net_Sub_Multi),
     FOREIGN KEY (ID) REFERENCES Networks(ID),
 	FOREIGN kEY (Net_Sub_Multi) REFERENCES Net_Sub(Subject)
@@ -687,8 +690,8 @@ INSERT INTO Job_Readiness_Type VALUES ('Training'), ('Counseling');
 DROP TABLE IF EXISTS Job_Readiness_Type_Multi;
 CREATE TABLE Job_Readiness_Type_Multi
 (
-  ID MEDIUMINT NOT NULL,
   Job_Readiness_Type_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Job_Readiness_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Job_Readiness(ID),
   FOREIGN KEY (Job_Readiness_Type_Multi) REFERENCES Job_Readiness_Type(Type)
@@ -703,10 +706,10 @@ SELECT 'Reviews';
 DROP TABLE IF EXISTS Reviews;
 
 CREATE TABLE Reviews
-  (ID MEDIUMINT NOT NULL,
-   Username VARCHAR(20) NOT NULL,
+  (Username VARCHAR(20) NOT NULL,
    Rating INT NOT NULL,
    Testimonial VARCHAR(600),
+   ID MEDIUMINT NOT NULL,
    PRIMARY KEY (ID, Username),
    FOREIGN KEY (ID) REFERENCES Resource (ID),
    FOREIGN KEY (Username) REFERENCES User (Username)
