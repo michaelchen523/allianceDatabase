@@ -29,8 +29,30 @@ FROM (
         NATURAL JOIN (
             SELECT ID
             FROM Categories
-            WHERE Name = 'Housing'
+            WHERE Name = 'Housing' #put in category name
             ) categories
+    ) res
+NATURAL LEFT JOIN (
+        SELECT ID, AVG(Rating) AS rating
+        FROM Reviews
+        GROUP BY ID
+    ) rev
+
+ORDER BY rev.rating DESC;
+
+
+
+/*
+search by name
+ */
+
+SELECT rev.rating, res.name, res.description, res.Address_State AS State,
+    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+    res.Address_Number AS Num
+FROM (
+        SELECT *
+        FROM Resource
+        WHERE name = 'Beloved' #insert name here
     ) res
 NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS rating
@@ -146,7 +168,7 @@ FROM (
                     Housing_Type_Multi
                 NATURAL LEFT JOIN 
                     Housing_Serve_Multi
-                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert options here
+                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert subcategory filters
 
                 UNION
 
@@ -155,12 +177,12 @@ FROM (
                     Housing_Type_Multi
                 NATURAL RIGHT JOIN
                     Housing_Serve_Multi
-                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert options here
+                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert subcategory filters
 
                 ) subCat
-            WHERE Gender = 'Female'
+            WHERE Gender = 'Female' #insert category filters
         ) category
-    WHERE Non_Citizen = 0 #insert options here
+    WHERE Non_Citizen = 0 #insert resource filters
     ) filter
 NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS avg_rating
@@ -168,6 +190,11 @@ NATURAL LEFT JOIN (
         GROUP BY ID
     ) rev
 ORDER BY rev.avg_rating DESC;
+
+
+/*
+adding a resource
+ */
 
 
 
