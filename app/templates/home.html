@@ -45,7 +45,7 @@
 </div>
 <script>
     function searchname() {
-         sname = document.getElementById("Search").value;
+         var sname = document.getElementById("Search").value;
          window.location = {{ url_for('searchName', name= sname) }};
     }
 </script>

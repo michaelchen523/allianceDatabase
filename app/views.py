@@ -260,7 +260,7 @@ def user_detail():
         return render_template('user_detail.html', title='User Details', user = user,
                                orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)
 
-@app.route('/editresource<name>')
+@app.route('/editresource<name>', methods=['GET', 'POST'])
 def editresource(name):
     if not session.get('logged_in'):
         return redirect('login')
@@ -289,7 +289,7 @@ def editresource(name):
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
                            categories = categories, resource = resource)
 
-@app.route('/addresource')
+@app.route('/addresource', methods = ['GET', 'POST'])
 def addresource():
     if not session.get('logged_in'):
         return redirect('login')
