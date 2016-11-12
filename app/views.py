@@ -76,6 +76,40 @@ def edit_user():
         return render_template('edit_user.html', title = 'edit profile', user = user,
                                categories = categories, userdata = userdata, userresource = userresource)
 
+@app.route('/searchName/<name>/', methods=["GET"])
+def searchName(name):
+    if not session.get('logged_in'):
+        return redirect('login')
+    else:
+        user = session.get('user')
+        categories = session.get('categories')
+
+        conn = mysql.connection
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        SELECT rev.rating, res.name, res.description, res.Address_State AS State,
+    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+    res.Address_Number AS Num
+FROM (
+        SELECT *
+        FROM Resource
+        WHERE name = %s
+    ) res
+NATURAL LEFT JOIN (
+        SELECT ID, AVG(Rating) AS rating
+        FROM Reviews
+        GROUP BY ID
+    ) rev
+
+ORDER BY rev.rating DESC;
+        """, (name, ))
+
+        resources = cursor.fetchall()
+        print resources
+
+        return render_template('search.html', resources=resources, categories=categories, user=user)
+
 @app.route('/search/<ctgry>/', methods=["GET"])
 def search(ctgry):
     print ctgry
@@ -226,19 +260,17 @@ def user_detail():
         return render_template('user_detail.html', title='User Details', user = user,
                                orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)
 
-@app.route('/edit_add_resource')
-def edit_add_resource():
+@app.route('/editresource<name>')
+def editresource(name):
     if not session.get('logged_in'):
         return redirect('login')
     else:
-        resource = None
         user = session.get('user')
         conn = mysql.connection
-        if 'resource' in request.args:
-            resourceName = request.args['resource']
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
-            resource = cursor.fetchall()
+        resourceName = name
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
+        resource = cursor.fetchall()
         if request.method == 'POST':
             resourceName = request.form['resourceName']
             resourcePhone = request.form['resourcePhone']
@@ -247,19 +279,39 @@ def edit_add_resource():
             resourceState = request.form['resourceState']
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
-            if resource != None:
-                cursor2 = conn.cursor()
-                cursor2.execute("UPDATE Resource SET Name = '" + resourceName + "', Address_State = '" + resourceState
-                                 + "', Address_City = '" + resourceCity + "', Address_Zip = '" + resourceZip + "', Address_Street = '"
-                                 + resourceStreet + "', Description = '" + resourceDescription + "' WHERE Username = '" +
-                                 user + "';")
-                return redirect(url_for('edit_user'))
-            else:
-                cursor3 = conn.cursor()
-                cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
-                                resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
-                                + ", " + resourceStreet + ", " + resourceDescription + ");")
-                return redirect(url_for('edit_user'))
-        categories = session.get('categories')
-        return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                               categories = categories, resource = resource)
+            cursor2 = conn.cursor()
+            cursor2.execute("UPDATE Resource SET Name = '" + resourceName + "', Address_State = '" + resourceState
+                            + "', Address_City = '" + resourceCity + "', Address_Zip = '" + resourceZip + "', Address_Street = '"
+                            + resourceStreet + "', Description = '" + resourceDescription + "' WHERE Username = '" +
+                            user + "';")
+            return redirect(url_for('edit_user'))
+    categories = session.get('categories')
+    return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
+                           categories = categories, resource = resource)
+
+@app.route('/addresource')
+def addresource():
+    if not session.get('logged_in'):
+        return redirect('login')
+    else:
+        user = session.get('user')
+        conn = mysql.connection
+        cursor = conn.cursor()
+        if request.method == 'POST':
+            resourceName = request.form['resourceName']
+            resourcePhone = request.form['resourcePhone']
+            resourceStreet = request.form['resourceStreet']
+            resourceCity = request.form['resourceCity']
+            resourceState = request.form['resourceState']
+            resourceZip = request.form['resourceZip']
+            resourceDescription = request.form['resourceDescription']
+            cursor3 = conn.cursor()
+            cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
+                            resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
+                            + ", " + resourceStreet + ", " + resourceDescription + ");")
+            return redirect(url_for('edit_user'))
+    categories = session.get('categories')
+    return render_template('edit_add_resource.html', title = "Add Resource", user = user,
+                           categories = categories)
+
+

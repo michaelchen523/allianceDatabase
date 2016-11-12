@@ -17,17 +17,19 @@
                 <h2>Search for Resource by Name</h2>
                 <div id="custom-search-input">
                     <div class="input-group col-md-8 col-md-offset-2">
-                        <input type="text" class="form-control input-lg" placeholder="Search" />
+                        <input type="text" id="Search" class="form-control input-lg" placeholder="Search" />
                         <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
+                        <button class="btn btn-info btn-lg" type="button" onclick="searchname()">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
     <div class="container text-center">
         <h2>Search for Resource by Category</h2>
     </div>
@@ -41,6 +43,12 @@
         {% endfor %}
       </div>
 </div>
+<script>
+    function searchname() {
+         sname = document.getElementById("Search").value;
+         window.location = {{ url_for('searchName', name= sname) }};
+    }
+</script>
 
 <!--filters
     different for each category
