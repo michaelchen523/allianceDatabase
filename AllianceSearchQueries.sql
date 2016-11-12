@@ -80,29 +80,46 @@ WHERE ID = 3; #input resource ID
 /*
 given resource ID, show every attribute all info
  */
+
 SELECT *
-FROM (
-    SELECT *
-    FROM 
-        Housing_Type_Multi
-    NATURAL LEFT JOIN 
-        Housing_Serve_Multi
-
-    UNION
-
-    SELECT *
-    FROM 
-        Housing_Type_Multi
-    NATURAL RIGHT JOIN 
-        Housing_Serve_Multi
-    ) type
-NATURAL RIGHT JOIN 
-    Housing
+FROM Housing
 NATURAL LEFT JOIN 
     Phone_Numbers
 NATURAL JOIN 
     Resource
 WHERE ID = 1; #INSERT ID HERE
+
+SELECT *
+FROM Housing_Type_Multi
+WHERE ID = 1; #INSERT ID HERE
+
+SELECT *
+FROM Housing_Serve_Multi
+WHERE ID = 1; #INSERT ID HERE
+
+-- SELECT *
+-- FROM (
+--     SELECT *
+--     FROM 
+--         Housing_Type_Multi
+--     NATURAL LEFT JOIN 
+--         Housing_Serve_Multi
+
+--     UNION
+
+--     SELECT *
+--     FROM 
+--         Housing_Type_Multi
+--     NATURAL RIGHT JOIN 
+--         Housing_Serve_Multi
+--     ) type
+-- NATURAL RIGHT JOIN 
+--     Housing
+-- NATURAL LEFT JOIN 
+--     Phone_Numbers
+-- NATURAL JOIN 
+--     Resource
+-- WHERE ID = 1; #INSERT ID HERE
 
 
 /*

@@ -53,7 +53,7 @@ CREATE TABLE Category_Names
   Description VARCHAR(500),
   PRIMARY KEY (Name));
 
-INSERT INTO Category_Names VALUES ('Housing');
+INSERT INTO Category_Names VALUES ('Housing', 'Place to live');
 
 
 DROP TABLE IF EXISTS Categories;
@@ -81,6 +81,7 @@ DROP TABLE IF EXISTS Phone_Numbers; # changed this because 'Number' seems to be 
 
 CREATE TABLE Phone_Numbers
   (Phone_Number VARCHAR(25) NOT NULL, # why is this a varchar and not an int? changed from 'PhoneNumber' for format consistency
+  Type ENUM('Home', 'Mobile', 'Work', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
@@ -91,18 +92,6 @@ CREATE TABLE Phone_Numbers
 Supplies
  */
 SELECT 'Supplies';
-
-DROP TABLE IF EXISTS Supp_Type;
-
-CREATE TABLE Supp_Type
-  (Type VARCHAR(20),
-    PRIMARY KEY (Type)
-    );
-
-INSERT INTO Supp_Type VALUES ('Clothing'), ('Children''s Things'),
-('Hygienic Supplies'), ('Laundry'), ('Food'), ('Medical'),
-('Food Stamps'), ('Financial Aid '), ('Other');
-
 
 DROP TABLE IF EXISTS Supplies;
 
@@ -117,9 +106,9 @@ CREATE TABLE Supplies
 DROP TABLE IF EXISTS Supp_Type_Multi;
 
 CREATE TABLE Supp_Type_Multi
-( Supp_Type_Multi VARCHAR(20),
+( Supp_Type_Multi ENUM('Clothing', 'Children''s Things', 'Hygienic Supplies', 'Laundry',
+ 'Food', 'Medical', 'Food Stamps', 'Financial Aid ', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Supp_Type_Multi) REFERENCES Supp_Type (Type),
   FOREIGN KEY (ID) REFERENCES Supplies (ID),
   PRIMARY KEY (ID, Supp_Type_Multi)
   );
@@ -130,58 +119,23 @@ Housing
  */
 SELECT 'Housing';
 
-# for gender, do we want it to be a multivaried attribute with its own table or is it more like an enum?
-
-DROP TABLE IF EXISTS Gender;
-
-CREATE TABLE Gender
-  (Gender VARCHAR(20),
-    PRIMARY KEY (Gender)
-    );
-
-INSERT INTO Gender VALUES ('Male'), ('Female'), ('All'), ('Other');
-
-DROP TABLE IF EXISTS Housing_Type;
-
-CREATE TABLE Housing_Type
-  (Type VARCHAR(20),
-    PRIMARY KEY (Type)
-    );
-
-INSERT INTO Housing_Type VALUES ('Group'), ('Rent'), ('Buy'), ('Shelter'), ('Other');
-
-DROP TABLE IF EXISTS Serve_Type;
-
-CREATE TABLE Serve_Type
-  (Type VARCHAR(20),
-    PRIMARY KEY (Type)
-    );
-
-INSERT INTO Serve_Type VALUES ('Exploited'), ('Addiction'), ('Battered'),
- ('Homeless'), ('Temporary/ Emergency'), ('Religious'), ('Families'), ('Children'), ('Other');
-
-
 DROP TABLE IF EXISTS Housing;
 
 CREATE TABLE Housing
   (Capacity INT,
-  Gender VARCHAR(20),
+  Gender ENUM('Male', 'Female', 'All', 'Other'),
   AgeMax INT,
   AgeMin INT,
   Children TINYINT(1),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
-  FOREIGN KEY (Gender) REFERENCES Gender (Gender)
+  FOREIGN KEY (ID) REFERENCES Resource (ID)
   );
-
-#INSERT INTO Housing VALUES (1, 5, 'Female', 18, 30, 'Shelter', 0);
 
 DROP TABLE IF EXISTS Housing_Multi;
 
 CREATE TABLE Housing_Type_Multi
-( Housing_Type_Multi VARCHAR(20),
+( Housing_Type_Multi ENUM('Group', 'Rent', 'Buy', 'Shelter', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Housing_Type_Multi) REFERENCES Housing_Type (Type),
   FOREIGN KEY (ID) REFERENCES Housing (ID),
   PRIMARY KEY (ID, Housing_Type_Multi)
   );
@@ -189,9 +143,9 @@ CREATE TABLE Housing_Type_Multi
 DROP TABLE IF EXISTS Housing_Serve_Multi;
 
 CREATE TABLE Housing_Serve_Multi
-( Housing_Serve_Multi VARCHAR(20),
+( Housing_Serve_Multi ENUM('Exploited', 'Addiction', 'Battered', 'Homeless',
+  'Temporary/ Emergency', 'Religious', 'Families', 'Children', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Housing_Serve_Multi) REFERENCES Serve_Type (Type),
   FOREIGN KEY (ID) REFERENCES Housing (ID),
   PRIMARY KEY (ID, Housing_Serve_Multi)
   );
@@ -201,19 +155,6 @@ Medical
  */
 
 SELECT 'Medical';
-
-DROP TABLE IF EXISTS Med_Type;
-
-CREATE TABLE Med_Type
-  (Type VARCHAR(20),
-    PRIMARY KEY (Type)
-    );
-
-
-INSERT INTO Med_Type VALUES ('Dental'), ('Medical'),
-('Gynecologist'), ('Abortion Clinic'), ('STI/ HIV'), ('Pediatrician'),
-('Pharmacy'), ('Check-Up'), ('Immunization'), ('Residential'), ('Addiction'), ('Vision'), ('Other');
-
 
 DROP TABLE IF EXISTS Medical;
 
@@ -226,7 +167,8 @@ CREATE TABLE Medical
 DROP TABLE IF EXISTS Med_Type_Multi;
 
 CREATE TABLE Med_Type_Multi
-( Med_Type_Multi VARCHAR(20),
+( Med_Type_Multi ENUM('Dental', 'Medical', 'Gynecologist', 'Abortion Clinic', 'STI/ HIV', 'Pediatrician',
+  'Pharmacy', 'Check-Up', 'Immunization', 'Residential', 'Addiction', 'Vision', 'Other'),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (Med_Type_Multi) REFERENCES Med_Type (Type),
   FOREIGN KEY (ID) REFERENCES Medical (ID),
@@ -238,16 +180,6 @@ CREATE TABLE Med_Type_Multi
 Mental Health
  */
 SELECT 'Mental Health';
-
-DROP TABLE IF EXISTS Mental_Type;
-
-CREATE TABLE Mental_Type
-( Type VARCHAR(20),
-  PRIMARY KEY (Type)
-  );
-
-INSERT INTO Mental_Type VALUES ('Counseling'), ('Case Management'),
- ('Substance Abuse'), ('Psych Evals'), ('Counseling Hotline'), ('Other');
 
 
 DROP TABLE IF EXISTS Mental_Health;
@@ -262,9 +194,9 @@ CREATE TABLE Mental_Health
 DROP TABLE IF EXISTS Metal_Type_Multi;
 
 CREATE TABLE Mental_Type_Multi
-( Mental_Type_Multi VARCHAR(20),
+( Mental_Type_Multi ENUM('Counseling', 'Case Management', 'Substance Abuse', 'Psych Evals',
+ 'Counseling Hotline', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Mental_Type_Multi) REFERENCES Mental_Type (Type),
   FOREIGN KEY (ID) REFERENCES Mental_Health (ID),
   PRIMARY KEY (ID, Mental_Type_Multi)
   );
@@ -276,17 +208,6 @@ Legal
 
 SELECT 'Legal';
 
-DROP TABLE IF EXISTS Leg_Type;
-
-CREATE TABLE Leg_Type
-( Type VARCHAR(20),
-  PRIMARY KEY (Type)
-);
-
-INSERT INTO Leg_Type VALUES ('Custody'), ('Divorce'), ('Contract'),
- ('Police'), ('Advocacy'), ('Case Management'), ('Other');
-
-
 DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal
@@ -297,9 +218,8 @@ CREATE TABLE Legal
 DROP TABLE IF EXISTS Leg_Type_Multi;
 
 CREATE TABLE Leg_Type_Multi
-( Leg_Type_Multi VARCHAR(20),
+( Leg_Type_Multi ENUM('Custody', 'Divorce', 'Contract', 'Police', 'Advocacy', 'Case Management', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Leg_Type_Multi) REFERENCES Leg_Type (Type),
   FOREIGN KEY (ID) REFERENCES Legal (ID),
   PRIMARY KEY (ID, Leg_Type_Multi)
   );
@@ -309,15 +229,6 @@ CREATE TABLE Leg_Type_Multi
 Employment
  */
 SELECT 'Employment';
-
-DROP TABLE IF EXISTS Emp_Type;
-
-CREATE TABLE Emp_Type
-( Type VARCHAR(20),
-  PRIMARY KEY (Type)
-);
-
-INSERT INTO Emp_Type VALUES ('Food'), ('Retail'), ('Office'), ('Factory'), ('Service'), ('Other');
 
 
 DROP TABLE IF EXISTS Skills;
@@ -343,9 +254,8 @@ CREATE TABLE Employment
 DROP TABLE IF EXISTS Emp_Type_Multi;
 
 CREATE TABLE Emp_Type_Multi
-( Emp_Type_Multi VARCHAR(20),
+( Emp_Type_Multi ENUM('Food', 'Retail', 'Office', 'Factory', 'Service', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Emp_Type_Multi) REFERENCES Emp_Type (Type),
   FOREIGN KEY (ID) REFERENCES Employment (ID),
   PRIMARY KEY (ID, Emp_Type_Multi)
   );
@@ -353,9 +263,8 @@ CREATE TABLE Emp_Type_Multi
 DROP TABLE IF EXISTS Skills_Multi;
 
 CREATE TABLE Emp_Skills_Multi
-( Emp_Skills_Multi VARCHAR(20),
+( Emp_Skills_Multi ENUM('Typing', 'People Skills', 'Reading', 'Writing', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (Emp_Skills_Multi) REFERENCES Emp_Skills (Type),
   FOREIGN KEY (ID) REFERENCES Employment (ID),
   PRIMARY KEY (ID, Emp_Skills_Multi)
   );
@@ -532,8 +441,8 @@ CREATE TABLE Vehicle
 DROP TABLE IF EXISTS Vehicle_Type_Multi;
 CREATE TABLE Vehicle_Type_Multi
 (
-  ID MEDIUMINT NOT NULL,
   Vehicle_Type_Multi VARCHAR(20),
+  ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Vehicle_Type_Multi),
   FOREIGN KEY (ID) REFERENCES Vehicle(ID),
   FOREIGN KEY (Vehicle_Type_Multi) REFERENCES Vehicle_Type(Type)
@@ -663,7 +572,7 @@ CREATE TABLE Net_Sub_Multi
 	Net_Sub_Multi VARCHAR(20),
   ID MEDIUMINT NOT NULL,
 	PRIMARY KEY (ID, Net_Sub_Multi),
-    FOREIGN KEY (ID) REFERENCES Networks(ID),
+  FOREIGN KEY (ID) REFERENCES Networks(ID),
 	FOREIGN kEY (Net_Sub_Multi) REFERENCES Net_Sub(Subject)
 );
 

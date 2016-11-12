@@ -71,6 +71,58 @@ INSERT INTO Legal_Type_Multi
 VALUES ('Divorce', 1); #to edit -> (type, ID)
 
 
+#Employment
+INSERT INTO Employment
+VALUES (100, 0, 0, 1); #to edit -> (SalaryMax, SalaryMin, Childcare, ID)
+
+INSERT INTO Emp_Type_Multi
+VALUES ('Retail', 1); #to edit -> (type, ID)
+
+INSERT INTO Emp_Skills_Multi
+VALUES ('People SKills', 1); #to edit -> (type, ID)
+
+
+#Transportation
+INSERT INTO Transportation
+VALUES (10, 10, 1); #to edit -> (CostMax, CostMin, ID)
+
+INSERT INTO Trans_Multi
+VALUES ('Taxi', 1); #to edit -> (type, ID)
+
+
+#Mentors
+INSERT INTO Mentors
+VALUES (0, 0, 1); #to edit -> (CostMax, CostMin, ID)
+
+INSERT INTO Mentor_Multi
+VALUES ('Professional', 1); #to edit -> (type, ID)
+
+
+#For_Children
+INSERT INTO For_Children
+VALUES (18, 0, 1); #to edit -> (AgeMax, AgeMin, ID)
+
+INSERT INTO For_Child_Multi
+VALUES ('Therapy', 1); #to edit -> (type, ID)
+
+
+#Childcare
+INSERT INTO Childcare
+VALUES (18, 0, 	100, 100, 3, 1); #to edit -> (AgeMax, AgeMin, CostMax, CostMin, Capacity, ID)
+
+INSERT INTO Child_Type_Multi
+VALUES ('Tutoring' 1); #to edit -> (type, ID)
+
+
+#Vehicle
+INSERT INTO Vehicle
+VALUES (1000, 500, 1); #to edit -> (CostMax, CostMin, ID)
+
+INSERT INTO Vehicle_Type_Multi
+VALUES ('Buy', 1);
+
+
+
 
 
 
