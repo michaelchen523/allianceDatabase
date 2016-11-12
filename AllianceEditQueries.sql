@@ -16,8 +16,8 @@ UPDATE Housing
 SET Capacity = 4
 WHERE ID = 1;
 
-UPDATE Housing_Type_Multi#category name
-SET Housing_Type_Multi = 'Group'#attribute names
+UPDATE Housing_Type#category name
+SET Housing_Type = 'Group'#attribute names
 WHERE ID = 1; #ID of resource
 
 

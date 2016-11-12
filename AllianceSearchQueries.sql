@@ -81,45 +81,44 @@ WHERE ID = 3; #input resource ID
 given resource ID, show every attribute all info
  */
 
+#2 categories 
+
 SELECT *
-FROM Housing
-NATURAL LEFT JOIN 
-    Phone_Numbers
-NATURAL JOIN 
-    Resource
+FROM (
+    SELECT *
+    FROM Housing #Insert category name 1 here
+    NATURAL LEFT JOIN 
+        Phone_Numbers
+    NATURAL JOIN 
+        Resource
+    ) category1
+JOIN (
+    SELECT *
+    FROM Medical #Insert category name 2 here
+    NATURAL LEFT JOIN 
+        Phone_Numbers
+    NATURAL JOIN 
+        Resource
+    ) category2
+ON category1.ID = category2.ID 
+WHERE category1.ID = 1; #INSERT ID HERE
+
+#2 sub categories
+
+SELECT *
+FROM Housing_Type #Insert subcategory 1 here
 WHERE ID = 1; #INSERT ID HERE
 
 SELECT *
-FROM Housing_Type_Multi
+FROM Housing_Serve #Insert subcategory 2 here
 WHERE ID = 1; #INSERT ID HERE
+
+#1 sub category
 
 SELECT *
-FROM Housing_Serve_Multi
+FROM Med_Type #Insert subcategory 1 here
 WHERE ID = 1; #INSERT ID HERE
 
--- SELECT *
--- FROM (
---     SELECT *
---     FROM 
---         Housing_Type_Multi
---     NATURAL LEFT JOIN 
---         Housing_Serve_Multi
-
---     UNION
-
---     SELECT *
---     FROM 
---         Housing_Type_Multi
---     NATURAL RIGHT JOIN 
---         Housing_Serve_Multi
---     ) type
--- NATURAL RIGHT JOIN 
---     Housing
--- NATURAL LEFT JOIN 
---     Phone_Numbers
--- NATURAL JOIN 
---     Resource
--- WHERE ID = 1; #INSERT ID HERE
 
 
 /*
@@ -137,19 +136,19 @@ FROM (
 
                 SELECT ID #might need to fix
                 FROM 
-                    Housing_Type_Multi
+                    Housing_Type
                 NATURAL LEFT JOIN 
-                    Housing_Serve_Multi
-                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert subcategory filters
+                    Housing_Serve
+                WHERE Housing_Serve = 'Homeless' AND Housing_Type = 'Shelter' #insert subcategory filters
 
                 UNION
 
                 SELECT ID
                 FROM
-                    Housing_Type_Multi
+                    Housing_Type
                 NATURAL RIGHT JOIN
-                    Housing_Serve_Multi
-                WHERE Housing_Serve_Multi = 'Homeless' AND Housing_Type_Multi = 'Shelter' #insert subcategory filters
+                    Housing_Serve
+                WHERE Housing_Serve = 'Homeless' AND Housing_Type = 'Shelter' #insert subcategory filters
 
                 ) subCat
             WHERE Gender = 'Female' #insert category filters
