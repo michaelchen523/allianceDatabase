@@ -80,7 +80,7 @@ VALUES ('Taxi', 1); #to edit -> (type, ID)
 INSERT INTO Mentors
 VALUES (0, 0, 1); #to edit -> (CostMax, CostMin, ID)
 
-INSERT INTO Mentor
+INSERT INTO Mentor_Type
 VALUES ('Professional', 1); #to edit -> (type, ID)
 
 

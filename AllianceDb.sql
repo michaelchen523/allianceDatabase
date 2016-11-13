@@ -26,13 +26,15 @@ INSERT INTO User VALUES ('SonikaF','sfinch@hotmail.com', 'i<3Dogs', 'Beloved');
 DROP TABLE IF EXISTS Resource;
 
 CREATE TABLE Resource (
-  Name VARCHAR(60) NOT NULL,
+  Name VARCHAR(70) NOT NULL,
   Creator_Username VARCHAR(20) NOT NULL, # changed this from 'Username' to reduce possible confusion
   Address_State VARCHAR(2) NOT NULL,
   Address_City VARCHAR(20) NOT NULL,
   Address_Zip INT NOT NULL,
-  Address_Street VARCHAR(30) NOT NULL,
-  Address_Number VARCHAR(10),
+  Address_Street VARCHAR(60) NOT NULL,
+  Address_Number VARCHAR(10)
+
+   NOT NULL,
   Website VARCHAR(50),
   Non_Citizen TINYINT(1),
   Documentation TINYINT(1),
@@ -83,7 +85,7 @@ DROP TABLE IF EXISTS Phone_Numbers; # changed this because 'Number' seems to be 
 
 CREATE TABLE Phone_Numbers (
   Phone_Number VARCHAR(25) NOT NULL, # why is this a varchar and not an int? changed from 'PhoneNumber' for format consistency
-  Type ENUM('Home', 'Cell', 'Work', 'Other'),
+  Type VARCHAR(30),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
   FOREIGN KEY (ID) REFERENCES Resource (ID)
@@ -138,7 +140,7 @@ CREATE TABLE Housing (
 DROP TABLE IF EXISTS Housing_Type;
 
 CREATE TABLE Housing_Type (
-  Housing_Type ENUM('Group', 'Rent', 'Buy', 'Shelter', 'Other'),
+  Housing_Type ENUM('Group', 'Rent', 'Buy', 'Shelter', 'Transitional', 'Other'),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Housing (ID),
   PRIMARY KEY (ID, Housing_Type)
@@ -173,7 +175,7 @@ DROP TABLE IF EXISTS Med_Type;
 
 CREATE TABLE Med_Type (
   Med_Type ENUM('Dental', 'Medical', 'Gynecologist', 'Abortion Clinic', 'STI/ HIV', 'Pediatrician',
-  'Pharmacy', 'Check-Up', 'Immunization', 'Residential', 'Addiction', 'Vision', 'Other'),
+  'Pharmacy', 'Check-Up', 'Immunization', 'Residential', 'Addiction', 'Vision', 'General', 'Other'),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Medical (ID),
   PRIMARY KEY (ID, Med_Type)
@@ -305,7 +307,7 @@ CREATE TABLE Mentors (
 
 DROP TABLE IF EXISTS Mentor;
 
-CREATE TABLE Mentor (
+CREATE TABLE Mentor_Type (
   Mentor ENUM('Life Coach', 'Professional', 'Personal', 'Other'),
   ID MEDIUMINT NOT NULL,
   FOREIGN KEY (ID) REFERENCES Mentors (ID),
@@ -408,7 +410,7 @@ CREATE TABLE Life_Skills (
 DROP TABLE IF EXISTS Life_Skill_Type;
 
 CREATE TABLE Life_Skill_Type (
-  Life_Skill_Type ENUM('Finances', 'Resume', 'Education', 'Health', 'Parenting', 'Cooking', 'Faith', 'Home Ownership', 'Other'),
+  Life_Skill_Type ENUM('Financial', 'Resume', 'Education', 'Health', 'Parenting', 'Cooking', 'Faith', 'Home Ownership', 'General', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Life_Skill_Type),
   FOREIGN KEY (ID) REFERENCES Life_Skills(ID)
