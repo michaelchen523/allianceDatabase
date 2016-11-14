@@ -19,12 +19,11 @@
                     <div class="input-group col-md-8 col-md-offset-2">
                         <input type="text" id="Search" class="form-control input-lg" placeholder="Search" />
                         <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button" onclick="searchname()">
+                        <button class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -43,12 +42,6 @@
         {% endfor %}
       </div>
 </div>
-<script>
-    function searchname() {
-         var sname = document.getElementById("Search").value;
-         window.location = {{ url_for('searchName', name= sname) }};
-    }
-</script>
 
 <!--filters
     different for each category
