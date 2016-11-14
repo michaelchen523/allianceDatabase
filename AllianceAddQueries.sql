@@ -1,3 +1,56 @@
+DELETE FROM Supp_Type;
+DELETE FROM Supplies;
+
+DELETE FROM For_Child;
+DELETE FROM For_Children;
+
+DELETE FROM Net_Sub;
+DELETE FROM Net_Mem;
+DELETE FROM Networks;
+
+DELETE FROM Mentor_Type;
+DELETE FROM Mentors;
+
+DELETE FROM Transportation;
+
+DELETE FROM Med_Type;
+DELETE FROM Medical;
+
+DELETE FROM Supplies;
+DELETE FROM Supp_Type;
+
+DELETE FROM Leg_Type;
+DELETE FROM Legal;
+
+DELETE FROM Mental_Type;
+DELETE FROM Mental_Health;
+
+DELETE FROM Emp_Skills;
+DELETE FROM Emp_Type;
+DELETE FROM Employment;
+
+DELETE FROM Job_Readiness_Type;
+DELETE FROM Job_Readiness;
+
+DELETE FROM Education_Type;
+DELETE FROM Education;
+
+DELETE FROM Life_Skill_Type;
+DELETE FROM Life_Skills;
+
+DELETE FROM Child_Type;
+DELETE FROM Childcare;
+
+DELETE FROM Housing_Serve;
+DELETE FROM Housing_Type;
+DELETE FROM Housing;
+
+DELETE FROM Vehicle_Type;
+DELETE FROM Vehicle;
+
+DELETE FROM Phone_Numbers;
+DELETE FROM Resource;
+
 /*
 Add resource
  */
