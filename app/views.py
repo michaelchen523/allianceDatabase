@@ -1,6 +1,7 @@
 from app import app, mysql
 from flask import render_template, request, url_for, redirect, flash, session
 
+
 @app.route('/')
 def index():
     if not session.get('logged_in'):
@@ -8,7 +9,8 @@ def index():
     else:
         return redirect('home')
 
-@app.route('/login', methods = ['GET', 'POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -17,7 +19,8 @@ def login():
         conn = mysql.connection
         cursor = conn.cursor()
 
-        cursor.execute("SELECT Username FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
+        cursor.execute("SELECT Username FROM USER WHERE Username='" +
+                       username + "' AND PASSWORD='" + password + "';")
 
         data = cursor.fetchall()
         if len(data) > 0:
@@ -30,6 +33,7 @@ def login():
 
             return redirect(url_for('home'))
     return render_template("login.html")
+
 
 @app.route('/logout')
 def logout():
@@ -48,9 +52,10 @@ def home():
         categories = session.get('categories')
 
         return render_template('home.html', title='home', user=user,
-                                categories=categories, name=name)
+                               categories=categories, name=name)
 
-@app.route('/edit_user', methods = ['GET', 'POST'])
+
+@app.route('/edit_user', methods=['GET', 'POST'])
 def edit_user():
     if not session.get('logged_in'):
         return redirect('login')
@@ -62,7 +67,8 @@ def edit_user():
         cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
         userdata = cursor.fetchall()
         cursor2 = conn.cursor()
-        cursor2.execute("SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
+        cursor2.execute(
+            "SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
         userresource = cursor2.fetchall()
         if request.method == 'POST':
             orgName = request.form['orgName']
@@ -73,8 +79,9 @@ def edit_user():
                            "', Description = '" + orgDescription + "' WHERE Username = '" + user + "';")
             return redirect(url_for('edit_user'))
 
-        return render_template('edit_user.html', title = 'edit profile', user = user,
-                               categories = categories, userdata = userdata, userresource = userresource)
+        return render_template('edit_user.html', title='edit profile', user=user,
+                               categories=categories, userdata=userdata, userresource=userresource)
+
 
 @app.route('/searchName/<name>/', methods=["GET"])
 def searchName(name):
@@ -109,6 +116,7 @@ ORDER BY rev.rating DESC;
         print resources
 
         return render_template('search.html', resources=resources, categories=categories, user=user)
+
 
 @app.route('/search/<ctgry>/', methods=["GET"])
 def search(ctgry):
@@ -149,6 +157,7 @@ ORDER BY rev.rating DESC;
 
         return render_template('search.html', resources=resources, categories=categories, user=user)
 
+
 @app.route('/resource_detail')
 def resource_detail():
     if not session.get('logged_in'):
@@ -158,14 +167,17 @@ def resource_detail():
         resourcename = request.args['resourcename']
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM RESOURCE WHERE Name = '" + resourcename + "';")
+        cursor.execute(
+            "SELECT * FROM RESOURCE WHERE Name = '" + resourcename + "';")
         resource = cursor.fetchall()
-        id=resource[0][12]
+        id = resource[0][12]
         cursor2 = conn.cursor()
-        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
+        cursor2.execute(
+            "SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
         cursor3 = conn.cursor()
-        cursor3.execute("SELECT * FROM User_Favorites WHERE Username = %s AND ID = %s;", (user, id, ))
-        phones=cursor2.fetchall()
+        cursor3.execute(
+            "SELECT * FROM User_Favorites WHERE Username = %s AND ID = %s;", (user, id, ))
+        phones = cursor2.fetchall()
         isfav = cursor3.fetchall()
         if len(isfav) > 0:
             favorite = True
@@ -173,7 +185,8 @@ def resource_detail():
             favorite = False
         categories = session.get('categories')
         return render_template('resource_detail.html', title='resource details',
-                               user = user, categories = categories, resource = resource, phones = phones, favorite = favorite)
+                               user=user, categories=categories, resource=resource, phones=phones, favorite=favorite)
+
 
 @app.route('/deletefav/<resourceid>', methods=['GET'])
 def deletefav(resourceid):
@@ -185,6 +198,7 @@ WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
     conn.commit()
     return redirect(url_for('favorites'))
 
+
 @app.route('/addfav/<resourceid>', methods=['GET'])
 def addfav(resourceid):
     user = session.get('user')
@@ -194,6 +208,7 @@ def addfav(resourceid):
     VALUES (%s, %s);""", (user, resourceid, ))
     conn.commit()
     return redirect(url_for('favorites'))
+
 
 @app.route('/favorites')
 def favorites():
@@ -222,7 +237,8 @@ NATURAL LEFT JOIN (
 ORDER BY rev.avg_rating DESC;""", (user, ))
         resources = cursor.fetchall()
         categories = session.get('categories')
-        return render_template('search.html', resources=resources, categories=categories, user=user, favorites = True)
+        return render_template('search.html', resources=resources, categories=categories, user=user, favorites=True)
+
 
 @app.route('/organizations')
 def organizations():
@@ -235,8 +251,9 @@ def organizations():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Organization;")
         orgdata = cursor.fetchall()
-        return render_template('organizations.html', title='Organizations', user = user,
-                               orgdata = orgdata, categories = categories)
+        return render_template('organizations.html', title='Organizations', user=user,
+                               orgdata=orgdata, categories=categories)
+
 
 @app.route('/user_detail')
 def user_detail():
@@ -248,17 +265,21 @@ def user_detail():
         detailorg = request.args['detailorg']
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
+        cursor.execute(
+            "SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
         orgdata = cursor.fetchall()
         cursor2 = conn.cursor()
-        cursor2.execute("SELECT Username FROM User WHERE Organization = '" + detailorg + "';")
+        cursor2.execute(
+            "SELECT Username FROM User WHERE Organization = '" + detailorg + "';")
         name = cursor2.fetchall()
         name = name[0][0]
         cursor3 = conn.cursor()
-        cursor3.execute("SELECT Name FROM Resource WHERE Creator_Username = '" + name + "';")
+        cursor3.execute(
+            "SELECT Name FROM Resource WHERE Creator_Username = '" + name + "';")
         resources = cursor3.fetchall()
-        return render_template('user_detail.html', title='User Details', user = user,
-                               orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)
+        return render_template('user_detail.html', title='User Details', user=user,
+                               orgdata=orgdata, detailorg=detailorg, categories=categories, resources=resources)
+
 
 @app.route('/editresource<name>', methods=['GET', 'POST'])
 def editresource(name):
@@ -269,7 +290,8 @@ def editresource(name):
         conn = mysql.connection
         resourceName = name
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
+        cursor.execute(
+            "SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
         resource = cursor.fetchall()
         if request.method == 'POST':
             resourceName = request.form['resourceName']
@@ -281,15 +303,18 @@ def editresource(name):
             resourceDescription = request.form['resourceDescription']
             cursor2 = conn.cursor()
             cursor2.execute("UPDATE Resource SET Name = '" + resourceName + "', Address_State = '" + resourceState
-                            + "', Address_City = '" + resourceCity + "', Address_Zip = '" + resourceZip + "', Address_Street = '"
+                            + "', Address_City = '" + resourceCity +
+                            "', Address_Zip = '" + resourceZip +
+                            "', Address_Street = '"
                             + resourceStreet + "', Description = '" + resourceDescription + "' WHERE Username = '" +
                             user + "';")
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
-    return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                           categories = categories, resource = resource)
+    return render_template('edit_add_resource.html', title="Edit Resource", user=user,
+                           categories=categories, resource=resource)
 
-@app.route('/addresource', methods = ['GET', 'POST'])
+
+@app.route('/addresource', methods=['GET', 'POST'])
 def addresource():
     if not session.get('logged_in'):
         return redirect('login')
@@ -306,12 +331,16 @@ def addresource():
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
             cursor3 = conn.cursor()
-            cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
-                            resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
-                            + ", " + resourceStreet + ", " + resourceDescription + ");")
+            cursor3.execute(
+                """INSERT INTO RESOURCE
+                        (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s);
+                """, (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, resourceDescription, ))
+
+            # """INSERT INTO RESOURCE (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description)
+            #                VALUES (%s, %s, %s, %s, %s, %s, %s);
+            # """,(resourceName, resourcePhone, resourceStreet, resourceCity, resourceState, resourceZip, resourceDescription, )
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
-    return render_template('edit_add_resource.html', title = "Add Resource", user = user,
-                           categories = categories)
-
-
+    return render_template('edit_add_resource.html', title="Add Resource", user=user,
+                           categories=categories)
