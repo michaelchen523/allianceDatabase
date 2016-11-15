@@ -51,6 +51,15 @@
                         placeholder="Zip">
                     {% endif %}
         </div>
+        <label>Website:</label>
+        <div class="form-group row">
+            <input type="text" class="col-md-6" id="resourceWebsite" name="resourceWebsite"
+                    {% if resource %}
+                        value = "{{resource[0][7]}}">
+                    {% else %}
+                        placeholder = "Website">
+                    {% endif %}
+        </div>
 
         <label for="resourceDescription">Description: </label>
         <div class="form-group row">
@@ -74,63 +83,304 @@
         <div class="specific">
             <h1>{{ checkList }}</h1>
             <div class="Childcare">
-                <h3>Childcare</h3>
+                <label><h3>Childcare</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="Education">
-                <h3>Education</h3>
+                <label><h3>Education</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="Employment">
-                <h3>Employment</h3>
-                <p>Attribz</p>
+                <label><h3>Employment</h3></label>
+                <div class="row">
+                    <label>Min Salary:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Salary:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="100000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="emp-type">
+                        <option value="Food">Food</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Office">Office</option>
+                        <option value="Factory">Factory</option>
+                        <option value="Service">Service</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Skills:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="emp-skills">
+                        <option value="Typing">Typing</option>
+                        <option value="People Skills">People Skills</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="checkbox" name="takesChildren" value="takesChildren">Childcare Offered</input>
+                </div>
             </div>
             <div class="For_Children">
-                <h3>For Children</h3>
+                <label><h3>For Children</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="Housing">
-                <h3>Housing</h3>
-                <p>Attribz</p>
+                <label><h3>Housing</h3></label>
+                <div class="row">
+                    <label>Housing Type:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-4" placeholder="Type">
+                </div>
+                <div class="row">
+                    <label>Capacity:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-3" placeholder="Enter an integer">
+                </div>
+                <div class="row">
+                    <label>Gender:</label>
+                </div>
+                <div class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="All">All</label>
+                    <label class="radio-inline"><input type="radio" name="Other">Other</label>
+                </div>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="housing-type">
+                        <option value="Group">Group</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Buy">Buy</option>
+                        <option value="Shelter">Shelter</option>
+                        <option value="Transitional">Transitional</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Serves:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="housing-serves">
+                        <option value="Exploited">Exploited</option>
+                        <option value="Addiction">Addiction</option>
+                        <option value="Battered">Battered</option>
+                        <option value="Homeless">Homeless</option>
+                        <option value="Temporary/Emergency">Temporary/Emergency</option>
+                        <option value="Religious">Religious</option>
+                        <option value="Families">Families</option>
+                        <option value="Children">Children</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="checkbox" name="takesChildren" value="takesChildren">Takes Children</input>
+                </div>
+
             </div>
             <div class="Job_Readiness">
-                <h3>Job Readiness</h3>
-                <p>Attribz</p>
+                <label><h3>Job Readiness</h3></label>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Training">Training</label>
+                    <label class="radio-inline"><input type="radio" name="Counseing">Counseling</label>
+                </div>
             </div>
             <div class="Legal">
-                <h3>Legal</h3>
-                <p>Attribz</p>
+                <label><h3>Legal</h3></label>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="legal-type">
+                        <option value="Custody">Custody</option>
+                        <option value="Divorce">Divorce</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Police">Police</option>
+                        <option value="Advocacy">Advocacy</option>
+                        <option value="Case Management">Case Management</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Life_Skills">
-                <h3>Life Skills</h3>
+                <label><h3>Life Skills</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="Medical">
-                <h3>Medical</h3>
-                <p>Attribz</p>
+                <label><h3>Medical</h3></label>
+                <div class="row">
+                    <label>Insurance:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-3" placeholder="Insurance Name">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="medical-type">
+                        <option value="Dental">Dental</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Gynecologist">Gynecologist</option>
+                        <option value="Abortion Clinic">Abortion Clinic</option>
+                        <option value="STI/HIV">STI/HIV</option>
+                        <option value="Pediatrician">Pediatrician</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                        <option value="Check-up">Check-up</option>
+                        <option value="Immunization">Immunization</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Addiction">Addiction</option>
+                        <option value="Vision">Vision</option>
+                        <option value="General">General</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Mental_Health">
-                <h3>Mental Health</h3>
-                <p>Attribz</p>
+                <label><h3>Mental Health</h3></label>
+                <div class="row">
+                    <label>Insurance:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-3" placeholder="Insurance Name">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="mental-type">
+                        <option value="Counseling">Counseling</option>
+                        <option value="Case Management">Case Management</option>
+                        <option value="Substance Abuse">Substance Abuse</option>
+                        <option value="Psych Evals">Psych Evals</option>
+                        <option value="Counseling Hotline">Counseling Hotline</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Mentors">
-                <h3>Mentors</h3>
-                <p>Attribz</p>
+                <label><h3>Mentors</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="mentor-type">
+                        <option value="Life Coach">Life Coach</option>
+                        <option value="Professional">Professional</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Networks">
-                <h3>Networks</h3>
+                <label><h3>Networks</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="Supplies">
-                <h3>Supplies</h3>
-                <p>Attribz</p>
+                <label><h3>Supplies</h3></label>
+                <div class="row">
+                    <label>Supply Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="supply-type">
+                        <option value="Clothing">Clothing</option>
+                        <option value="Children's Things">Children's Things</option>
+                        <option value="Hygenic Supplices">Hygenic Supplies</option>
+                        <option value="Laundry">Laundry</option>
+                        <option value="Food">Food</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Food Stamps">Food Stamps</option>
+                        <option value="Financial Aid">Financial Aid</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" placeholder="1000">
+                </div>
             </div>
             <div class="Transportation">
-                <h3>Transportation</h3>
-                <p>Attribz</p>
+                <label><h3>Transportation</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="transp-type">
+                        <option value="Taxi">Taxi</option>
+                        <option value="Subway">Subway</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Plane">Plane</option>
+                        <option value="Train">Train</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Vehicle">
-                <h3>Vehicle</h3>
+                <label><h3>Vehicle</h3></label>
                 <p>Attribz</p>
             </div>
             <div class="form-group row">

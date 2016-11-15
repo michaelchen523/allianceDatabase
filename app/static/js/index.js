@@ -17,6 +17,7 @@ $(document).ready(function() {
     $(".Supplies").hide();
     $(".Transportation").hide();
     $(".Vehicle").hide();
+    $(".For_Children").hide();
 
     $("#edit-resource").on('click', '#addphone',function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
