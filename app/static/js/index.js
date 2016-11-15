@@ -3,6 +3,9 @@
 $(document).ready(function() {
     $(".dropdown-toggle").dropdown();
     $(".specific").hide();
+    $(".Childcare").hide();
+    $(".Education").hide();
+    $(".Employment").hide();
 
     $("#edit-resource").on('click', '#addphone',function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
@@ -14,7 +17,18 @@ $(document).ready(function() {
     $("#next").click(function() {
         $(".specific").show();
         $("#cancel").hide();
+        if($("#Childcare").is(':checked')) {
+            $(".Childcare").show();
+        }
+        if($("#Education").is(':checked')) {
+            $(".Education").show();
+        }
+        if($("#Employment").is(':checked')) {
+            $(".Employment").show();
+        }
+
     })
+
 });
 
 function goBack() {

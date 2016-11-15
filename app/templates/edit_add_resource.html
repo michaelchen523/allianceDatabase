@@ -64,7 +64,7 @@
         <label>Categories:<span> (Choose as many as applicable)</span></label>
         {% for category in categories %}
         <div class="row form-group checkbox">
-            <input type="checkbox" name="checkedCategory" value="{{ category[0] }}">{{ category[0] }}: {{ category[1] }}</input>
+            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}">{{ category[0] }}: {{ category[1] }}</input>
         </div>
         {% endfor %}
         <div class="form-group row">
@@ -73,24 +73,18 @@
         </div>
         <div class="specific">
             <h1>{{ checkList }}</h1>
-            {% if 'Childcare' in checkList %}
             <div class="Childcare">
                 <h3>Childcare</h3>
                 <p>Attribz</p>
             </div>
-            {% endif %}
-            {% if 'Education' in checkList %}
             <div class="Education">
                 <h3>Education</h3>
                 <p>Attribz</p>
             </div>
-            {% endif %}
-            {% if 'Employment' in checkList %}
             <div class="Employment">
                 <h3>Employment</h3>
                 <p>Attribz</p>
             </div>
-            {% endif %}
             <div class="form-group row">
                 <button class="btn btn-default col-md-6" name="submit" type="submit">Submit</button>
                 <button class="btn btn-default col-md-6" name="cancel" type="button" onclick="goBack()">Cancel</button>
