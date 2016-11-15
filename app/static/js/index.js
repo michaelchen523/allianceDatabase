@@ -6,6 +6,17 @@ $(document).ready(function() {
     $(".Childcare").hide();
     $(".Education").hide();
     $(".Employment").hide();
+    $(".Housing").hide();
+    $(".Job_Readiness").hide();
+    $(".Legal").hide();
+    $(".Life_Skills").hide();
+    $(".Medical").hide();
+    $(".Mental_Health").hide();
+    $(".Mentors").hide();
+    $(".Networks").hide();
+    $(".Supplies").hide();
+    $(".Transportation").hide();
+    $(".Vehicle").hide();
 
     $("#edit-resource").on('click', '#addphone',function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
@@ -25,6 +36,39 @@ $(document).ready(function() {
         }
         if($("#Employment").is(':checked')) {
             $(".Employment").show();
+        }
+        if($("#Housing").is(':checked')) {
+            $(".Housing").show();
+        }
+        if($("#Job_Readiness").is(':checked')) {
+            $(".Job_Readiness").show();
+        }
+        if($("#Legal").is(':checked')) {
+            $(".Legal").show();
+        }
+        if($("#Life_Skills").is(':checked')) {
+            $(".Life_Skills").show();
+        }
+        if($("#Medical").is(':checked')) {
+            $(".Medical").show();
+        }
+        if($("#Mental_Health").is(':checked')) {
+            $(".Mental_Health").show();
+        }
+        if($("#Mentors").is(':checked')) {
+            $(".Mentors").show();
+        }
+        if($("#Networks").is(':checked')) {
+            $(".Networks").show();
+        }
+        if($("#Supplies").is(':checked')) {
+            $(".Supplies").show();
+        }
+        if($("#Transportation").is(':checked')) {
+            $(".Transportation").show();
+        }
+        if($("#Vehicle").is(':checked')) {
+            $(".Vehicle").show();
         }
 
     })
