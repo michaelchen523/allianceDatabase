@@ -123,7 +123,38 @@
             </div>
             <div class="Education">
                 <label><h3>Education</h3></label>
-                <p>Attribz</p>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="100000">
+                </div>
+                <div class="row">
+                    <label>Prerequisites:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-5" type="text" placeholder = "Degree, Application...etc">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" id="education-type">
+                        <option value="GED">GED</option>
+                        <option value="Scholarships">Scholarships</option>
+                        <option value="College">College</option>
+                        <option value="Certifications">Certifications</option>
+                        <option value="Workshops">Workshops</option>
+                        <option value="Computer Skills">Computer Skills</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Employment">
                 <label><h3>Employment</h3></label>
@@ -294,7 +325,35 @@
             </div>
             <div class="Life_Skills">
                 <label><h3>Life Skills</h3></label>
-                <p>Attribz</p>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="life-skills-type">
+                        <option value="Financial">Financial</option>
+                        <option value="Resume">Resume</option>
+                        <option value="Education">Education</option>
+                        <option value="Health">Health</option>
+                        <option value="Parenting">Parenting</option>
+                        <option value="Cooking">Cooking</option>
+                        <option value="Faith">Faith</option>
+                        <option value="Home Ownership">Home Ownership</option>
+                        <option value="General">General</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Medical">
                 <label><h3>Medical</h3></label>
@@ -376,7 +435,51 @@
             </div>
             <div class="Networks">
                 <label><h3>Networks</h3></label>
-                <p>Attribz</p>
+                <div class="row">
+                    <label>Gender:</label>
+                </div>
+                <div class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="All">All</label>
+                    <label class="radio-inline"><input type="radio" name="Other">Other</label>
+                </div>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Members:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="network-members">
+                        <option value="Survivors">Survivors</option>
+                        <option value="Parents of Survivors">Parents of Survivors</option>
+                        <option value="Family of Survivors">Family of Survivors</option>
+                        <option value="Volunteers">Volunteers</option>
+                        <option value="Food">Food</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Subject:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="network-subject">
+                        <option value="Clothing">Partner</option>
+                        <option value="Children's Things">Sex Trafficing</option>
+                        <option value="Hygenic Supplices">Prostitution</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="Supplies">
                 <label><h3>Supplies</h3></label>
@@ -440,7 +543,32 @@
             </div>
             <div class="Vehicle">
                 <label><h3>Vehicle</h3></label>
-                <p>Attribz</p>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" id="vehicle-type">
+                        <option value="Donations">Donations</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Buy">Buy</option>
+                        <option value="Classes">Classes</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Register">Register</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group row">
                 <button class="btn btn-default col-md-6" name="submit" type="submit">Submit</button>
