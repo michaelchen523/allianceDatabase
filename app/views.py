@@ -71,6 +71,7 @@ def edit_user():
 
             cursor.execute("UPDATE Users SET Organization = '" + orgName + "', Phone = '" + orgPhone +
                            "', Description = '" + orgDescription + "' WHERE Username = '" + user + "';")
+
             return redirect(url_for('edit_user'))
 
         return render_template('edit_user.html', title = 'edit profile', user = user,
