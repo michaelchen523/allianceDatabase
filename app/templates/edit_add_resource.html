@@ -88,31 +88,31 @@
                     <label>Min Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input type="text" name="childcare-min-age" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="100">
+                    <input type="text" name="childare-max-age" class="col-md-2" placeholder="100">
                 </div>
                 <div class="row">
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input type="text" name="childcare-min-cost" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="1000">
+                    <input type="text" name="childcare-max-cost" class="col-md-2" placeholder="1000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="childcare-type">
+                    <select class="col-md-3" name="childcare-type" id="childcare-type">
                         <option value="Mentoring">Mentoring</option>
                         <option value="Tutoring">Tutoring</option>
                         <option value="Daycare">Daycare</option>
@@ -127,25 +127,25 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input name="education-min-cost" type="text" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="100000">
+                    <input name="education-max-cost" type="text" class="col-md-2" placeholder="100000">
                 </div>
                 <div class="row">
                     <label>Prerequisites:</label>
                 </div>
                 <div class="form-group row">
-                    <input class="col-md-5" type="text" placeholder = "Degree, Application...etc">
+                    <input name="education-prereqs" class="col-md-5" type="text" placeholder = "Degree, Application...etc">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="education-type">
+                    <select class="col-md-3" name="education-type" id="education-type">
                         <option value="GED">GED</option>
                         <option value="Scholarships">Scholarships</option>
                         <option value="College">College</option>
@@ -162,19 +162,19 @@
                     <label>Min Salary:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input name="employment-min-salary" type="text" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Salary:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="100000">
+                    <input name="employment-max-salary" type="text" class="col-md-2" placeholder="100000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="emp-type">
+                    <select class="col-md-3" name="emp-type" id="emp-type">
                         <option value="Food">Food</option>
                         <option value="Retail">Retail</option>
                         <option value="Office">Office</option>
@@ -187,7 +187,7 @@
                     <label>Skills:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="emp-skills">
+                    <select class="col-md-3" name="emp-skills" id="emp-skills">
                         <option value="Typing">Typing</option>
                         <option value="People Skills">People Skills</option>
                         <option value="Reading">Reading</option>
@@ -205,19 +205,19 @@
                     <label>Min Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input name="for-children-min-age" type="text" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="100">
+                    <input name="for-children-max-age" type="text" class="col-md-2" placeholder="100">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="for-children-type">
+                    <select class="col-md-3" name="for-children-type" id="for-children-type">
                         <option value="Sexual Abuse">Sexual Abuse</option>
                         <option value="Physical Abuse">Physical Abuse</option>
                         <option value="Therapy">Therapy</option>
@@ -230,21 +230,15 @@
             <div class="Housing">
                 <label><h3>Housing</h3></label>
                 <div class="row">
-                    <label>Housing Type:</label>
-                </div>
-                <div class="form-group row">
-                    <input type="text" class="col-md-4" placeholder="Type">
-                </div>
-                <div class="row">
                     <label>Capacity:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-3" placeholder="Enter an integer">
+                    <input type="text" name="housing-capacity" class="col-md-3" placeholder="Enter an integer">
                 </div>
                 <div class="row">
                     <label>Gender:</label>
                 </div>
-                <div class="form-group row">
+                <div name="housing-gender" class="form-group row">
                     <label class="radio-inline"><input type="radio" name="Male">Male</label>
                     <label class="radio-inline"><input type="radio" name="Female">Female</label>
                     <label class="radio-inline"><input type="radio" name="All">All</label>
@@ -254,19 +248,19 @@
                     <label>Min Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input name="housing-min-age" type="text" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="100">
+                    <input name="housing-max-age" type="text" class="col-md-2" placeholder="100">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="housing-type">
+                    <select class="col-md-3" name="housing-type" id="housing-type">
                         <option value="Group">Group</option>
                         <option value="Rent">Rent</option>
                         <option value="Buy">Buy</option>
@@ -279,7 +273,7 @@
                     <label>Serves:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="housing-serves">
+                    <select class="col-md-3" name="housing-serves" id="housing-serves">
                         <option value="Exploited">Exploited</option>
                         <option value="Addiction">Addiction</option>
                         <option value="Battered">Battered</option>
@@ -312,7 +306,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="legal-type">
+                    <select class="col-md-3" name="legal-type" id="legal-type">
                         <option value="Custody">Custody</option>
                         <option value="Divorce">Divorce</option>
                         <option value="Contract">Contract</option>
@@ -329,19 +323,19 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input name="life-skills-min-cost" type="text" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="1000">
+                    <input name="life-skills-max-cost" type="text" class="col-md-2" placeholder="1000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="life-skills-type">
+                    <select class="col-md-3" name="life-skills-type" id="life-skills-type">
                         <option value="Financial">Financial</option>
                         <option value="Resume">Resume</option>
                         <option value="Education">Education</option>
@@ -361,13 +355,13 @@
                     <label>Insurance:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-3" placeholder="Insurance Name">
+                    <input type="text" name="medical-insurance" class="col-md-3" placeholder="Insurance Name">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="medical-type">
+                    <select class="col-md-3" name="medical-type" id="medical-type">
                         <option value="Dental">Dental</option>
                         <option value="Medical">Medical</option>
                         <option value="Gynecologist">Gynecologist</option>
@@ -391,13 +385,13 @@
                     <label>Insurance:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-3" placeholder="Insurance Name">
+                    <input type="text" name="mental-health-insurance" class="col-md-3" placeholder="Insurance Name">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" id="mental-type">
+                    <select class="col-md-3" name="mental-type" id="mental-type">
                         <option value="Counseling">Counseling</option>
                         <option value="Case Management">Case Management</option>
                         <option value="Substance Abuse">Substance Abuse</option>
@@ -413,19 +407,19 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input type="text" name="mentors-min-cost" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="1000">
+                    <input type="text" name="mentors-max-cost" class="col-md-2" placeholder="1000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="mentor-type">
+                    <select class="col-md-3" name="mentor-type" id="mentor-type">
                         <option value="Life Coach">Life Coach</option>
                         <option value="Professional">Professional</option>
                         <option value="Personal">Personal</option>
@@ -448,19 +442,19 @@
                     <label>Min Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input class="col-md-2" placeholder="0">
+                    <input class="col-md-2" name="networks-min-age" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
                 <div class="form-group row">
-                    <input class="col-md-2" placeholder="100">
+                    <input class="col-md-2" name="networks-max-age" placeholder="100">
                 </div>
                 <div class="row">
                     <label>Members:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="network-members">
+                    <select class="col-md-3" name="network-members" id="network-members">
                         <option value="Survivors">Survivors</option>
                         <option value="Parents of Survivors">Parents of Survivors</option>
                         <option value="Family of Survivors">Family of Survivors</option>
@@ -473,7 +467,7 @@
                     <label>Subject:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="network-subject">
+                    <select class="col-md-3" name="network-subject" id="network-subject">
                         <option value="Clothing">Partner</option>
                         <option value="Children's Things">Sex Trafficing</option>
                         <option value="Hygenic Supplices">Prostitution</option>
@@ -487,7 +481,7 @@
                     <label>Supply Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="supply-type">
+                    <select class="col-md-3" name="supply-type" id="supply-type">
                         <option value="Clothing">Clothing</option>
                         <option value="Children's Things">Children's Things</option>
                         <option value="Hygenic Supplices">Hygenic Supplies</option>
@@ -503,13 +497,13 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input class="col-md-2" placeholder="0">
+                    <input class="col-md-2" name="supply-min-cost" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input class="col-md-2" placeholder="1000">
+                    <input class="col-md-2" name="supply-max-cost" placeholder="1000">
                 </div>
             </div>
             <div class="Transportation">
@@ -518,19 +512,19 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input type="text" name="transportation-min-cost" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="1000">
+                    <input type="text" name="transportation-max-cost" class="col-md-2" placeholder="1000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="transp-type">
+                    <select class="col-md-3" name="transp-type" id="transp-type">
                         <option value="Taxi">Taxi</option>
                         <option value="Subway">Subway</option>
                         <option value="Bus">Bus</option>
@@ -547,19 +541,19 @@
                     <label>Min Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="0">
+                    <input type="text" name="vehicle-min-cost" class="col-md-2" placeholder="0">
                 </div>
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
                 <div class="form-group row">
-                    <input type="text" class="col-md-2" placeholder="1000">
+                    <input type="text" name="vehicle-max-cost" class="col-md-2" placeholder="1000">
                 </div>
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" id="vehicle-type">
+                    <select class="col-md-3" name="vehicle-type" id="vehicle-type">
                         <option value="Donations">Donations</option>
                         <option value="Rent">Rent</option>
                         <option value="Buy">Buy</option>
