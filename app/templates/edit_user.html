@@ -3,24 +3,23 @@
 {% block content %}
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    {{ userdata[0][3] }}
     <form class="col-md-10 col-md-offset-1 container vertical-center" method="post">
-        <label for="orgName"><h3>Organization Name: </h3></label>
+        <h3>Organization Name: {{ userdata[0][3] }}</h3>
+        <label for="username">Username: </label>
         <div class="form-group row">
-            <input  class = "input-lg col-md-12" id = "orgName" type="text" name = "orgName"
-                    { % if user % }
-                        value = "{{ userdata[0][3] }}"
-                    { % else % }
-                        placeholder="Organization Name">
-        </div>
-        <label for="orgPhone">Username: </label>
-        <div class="form-group row">
-            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="Username">
+            <input class="col-md-5" type="text" id="username" name="username"
+                   value= {{ userdata[0][0] }}>
         </div>
 
-        <label for="orgDescription">Password: </label>
+        <label for="password">Password: </label>
         <div class="form-group row">
-            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="Username">
+            <input class="col-md-5" type="text" id="password" name="password"
+                   value= {{ userdata[0][2] }}>
+        </div>
+        <label for="email">Email: </label>
+        <div class="form-group row">
+            <input class="col-md-5" type="text" id="email" name="email"
+                    value= {{userdata[0][1]}}>
         </div>
         <div class="form-group row">
             <h2>Resources</h2>
