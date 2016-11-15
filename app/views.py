@@ -275,6 +275,10 @@ def editresource(name):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
         resource = cursor.fetchall()
+        id=resource[0][12]
+        cursor2 = conn.cursor()
+        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
+        phones = cursor2.fetchall()
         if request.method == 'POST':
             resourceName = request.form['resourceName']
             resourcePhone = request.form['resourcePhone']
@@ -291,7 +295,7 @@ def editresource(name):
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                           categories = categories, resource = resource)
+                           categories = categories, resource = resource, phones = phones)
 
 @app.route('/addresource', methods = ['GET', 'POST'])
 def addresource():
@@ -317,3 +321,8 @@ def addresource():
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
                            categories = categories)
+
+@app.route('/showNext', methods=['GET'])
+def showNext():
+    checkList = request.GET.getlist('checkedCategory')
+    return redirect(url_for('edit_user', checkList = checkList))

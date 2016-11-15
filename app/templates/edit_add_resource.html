@@ -3,7 +3,7 @@
 {%block content %}
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <form class="col-md-10 col-md-offset-1 container vertical-center" method = post>
+    <form class="col-md-10 col-md-offset-1 container vertical-center" id="edit-resource" method = post>
         <label for="resourceName"><h3>Name: </h3></label>
         <div class="form-group row">
             <input  class = "input-lg col-md-12" id = "resourceName" type="text" name = "resourceName"
@@ -13,9 +13,16 @@
                         placeholder = "Resource Name">
                     {% endif %}
         </div>
-        <label for="resourcePhone">Phone Number: </label>
-        <div class="form-group row">
-            <input  class= "col-md-5" type="text" id="resourcePhone" name = "resourcePhone" placeholder="(000)000-0000">
+        <label>Phone Number: </label>
+        <div class="form-group row phone">
+            {% if phones %}
+                {% for phone in phones %}
+                <input  class= "col-md-5 resourcePhone" type="text" name = "resourcePhone" value="{{phone[0]}}">
+                {% endfor %}
+            {% else %}
+            <input  class= "col-md-5 resourcePhone" type="text" name = "resourcePhone" placeholder="(000)000-0000">
+            {% endif %}
+            <span><a id="addphone" href="#">+Add</a></span>
         </div>
         <label>Address: </label>
         <div class="form-group row">
@@ -49,15 +56,45 @@
         <div class="form-group row">
             <textarea class = "col-md-12" id="resourceDescription" rows = "5" name = "resourceDescription"
                       {% if resource %}
-                        >{{ resource[0][11] }}
+                        >{{ resource[0][11] }}</textarea>
                       {% else %}
-                        placeholder="Enter Description">
+                        placeholder="Enter Description"></textarea>
                       {% endif %}
-            </textarea>
         </div>
+        <label>Categories:<span> (Choose as many as applicable)</span></label>
+        {% for category in categories %}
+        <div class="row form-group checkbox">
+            <input type="checkbox" name="checkedCategory" value="{{ category[0] }}">{{ category[0] }}: {{ category[1] }}</input>
+        </div>
+        {% endfor %}
         <div class="form-group row">
-            <button class="btn btn-default col-md-6" name="resourceSubmit" type="submit">Submit</button>
-            <button class="btn btn-default col-md-6" name="cancel" type="button" onclick="goBack()">Cancel</button>
+            <button class="btn btn-default col-md-6" method="get" onclick="{{ url_for('showNext') }}"name="next" id="next" type="button">Next</button>
+            <button class="btn btn-default col-md-6" id="cancel" name="cancel" type="button" onclick="goBack()">Cancel</button>
+        </div>
+        <div class="specific">
+            <h1>{{ checkList }}</h1>
+            {% if 'Childcare' in checkList %}
+            <div class="Childcare">
+                <h3>Childcare</h3>
+                <p>Attribz</p>
+            </div>
+            {% endif %}
+            {% if 'Education' in checkList %}
+            <div class="Education">
+                <h3>Education</h3>
+                <p>Attribz</p>
+            </div>
+            {% endif %}
+            {% if 'Employment' in checkList %}
+            <div class="Employment">
+                <h3>Employment</h3>
+                <p>Attribz</p>
+            </div>
+            {% endif %}
+            <div class="form-group row">
+                <button class="btn btn-default col-md-6" name="submit" type="submit">Submit</button>
+                <button class="btn btn-default col-md-6" name="cancel" type="button" onclick="goBack()">Cancel</button>
+            </div>
         </div>
     </form>
 
