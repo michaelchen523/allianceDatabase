@@ -56,13 +56,10 @@ def edit_user():
         return redirect('login')
     else:
         conn = mysql.connection
+        user = session.get('user')
         if request.method == 'POST':
-            username = request.form['username']
             password = request.form['password']
             email = request.form['email']
-            print username
-            print password
-            print email
 
             cursor3 = conn.cursor()
             cursor3.execute(
@@ -70,12 +67,11 @@ def edit_user():
             UPDATE User
             SET Email = %s, Password = %s
             WHERE Username = %s;
-            """, (email, password, username)
+            """, (email, password, user)
             )
             conn.commit()
             return redirect('edit_user')
         else:
-            user = session.get('user')
             categories = session.get('categories')
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
