@@ -55,27 +55,36 @@ def edit_user():
     if not session.get('logged_in'):
         return redirect('login')
     else:
-        user = session.get('user')
-        categories = session.get('categories')
         conn = mysql.connection
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
-        userdata = cursor.fetchall()
-        cursor2 = conn.cursor()
-        cursor2.execute("SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
-        userresource = cursor2.fetchall()
         if request.method == 'POST':
-            orgName = request.form['orgName']
-            orgPhone = request.form['orgPhone']
-            orgDescription = request.form['orgDescription']
+            username = request.form['username']
+            password = request.form['password']
+            email = request.form['email']
+            print username
+            print password
+            print email
 
-            cursor.execute("UPDATE Users SET Organization = '" + orgName + "', Phone = '" + orgPhone +
-                           "', Description = '" + orgDescription + "' WHERE Username = '" + user + "';")
-
-            return redirect(url_for('edit_user'))
-
-        return render_template('edit_user.html', title = 'edit profile', user = user,
-                               categories = categories, userdata = userdata, userresource = userresource)
+            cursor3 = conn.cursor()
+            cursor3.execute(
+            """
+            UPDATE User
+            SET Email = %s, Password = %s
+            WHERE Username = %s;
+            """, (email, password, username)
+            )
+            conn.commit()
+            return redirect('edit_user')
+        else:
+            user = session.get('user')
+            categories = session.get('categories')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
+            userdata = cursor.fetchall()
+            cursor2 = conn.cursor()
+            cursor2.execute("SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
+            userresource = cursor2.fetchall()
+            return render_template('edit_user.html', title = 'edit profile', user = user,
+                                   categories = categories, userdata = userdata, userresource = userresource)
 
 @app.route('/searchName/<name>/', methods=["GET"])
 def searchName(name):
