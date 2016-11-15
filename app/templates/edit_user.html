@@ -1,8 +1,9 @@
 {% extends 'layout.html' %}
 
-{%block content %}
+{% block content %}
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
+    {{ userdata[0][3] }}
     <form class="col-md-10 col-md-offset-1 container vertical-center" method="post">
         <label for="orgName"><h3>Organization Name: </h3></label>
         <div class="form-group row">
@@ -12,15 +13,14 @@
                     { % else % }
                         placeholder="Organization Name">
         </div>
-        <label for="orgPhone">Phone Number: </label>
+        <label for="orgPhone">Username: </label>
         <div class="form-group row">
-            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="(000)000-0000">
+            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="Username">
         </div>
 
-        <label for="orgDescription">Description: </label>
+        <label for="orgDescription">Password: </label>
         <div class="form-group row">
-            <textarea class = "col-md-12" id="orgDescription" rows = "5" name = "orgDescription" placeholder="Enter Description"></textarea>
-
+            <input  class= "col-md-5" type="text" id="orgPhone" name = "orgPhone" placeholder="Username">
         </div>
         <div class="form-group row">
             <h2>Resources</h2>
