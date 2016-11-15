@@ -8,7 +8,7 @@
         <div class="form-group row">
             <input  class = "input-lg col-md-12" id = "resourceName" type="text" name = "resourceName"
                     {% if resource %}
-                        value = "{{ resource[0][1] }}">
+                        value = "{{ resource[0][0] }}">
                     {% else %}
                         placeholder = "Resource Name">
                     {% endif %}
