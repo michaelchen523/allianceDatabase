@@ -283,9 +283,37 @@ def editresource(name):
         cursor3.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
         resource_categories = cursor3.fetchall()
         for category in resource_categories:
-            if category == 'Housing':
-                cursor4 = conn.cursor()
-                #cursor4.execute("SELECT * FROM %s WHERE ID = %s;", (category[0], id))
+            if category == 'Childcare':
+                pass
+            elif category == 'Education':
+                pass
+            elif category == 'Employment':
+                pass
+            elif category == 'For_Children':
+                pass
+            elif category == 'Housing':
+                pass
+            elif category == 'Job_Readiness':
+                pass
+            elif category == 'Legal':
+                pass
+            elif category == 'Life_Skills':
+                pass
+            elif category == 'Medical':
+                pass
+            elif category == 'Mental_Health':
+                pass
+            elif category == 'Mentors':
+                pass
+            elif category == 'Networks':
+                pass
+            elif category == 'Supplies':
+                pass
+            elif category == 'Transportation':
+                pass
+            elif category == 'Vehicle':
+                pass
+
         if request.method == 'POST':
             resourceName = request.form['resourceName']
             resourcePhone = request.form['resourcePhone']
@@ -344,7 +372,7 @@ def editresource(name):
                 lscostmax = request.form['life-skills-max-cost']
                 lstype = request.form['life-skills-type']
 
-            if 'Medical' in reques.args:
+            if 'Medical' in request.args:
                 medinsurance = request.form['medical-insurance']
                 medtype = request.form['medical-type']
 
