@@ -401,22 +401,24 @@ def addresource():
             resourceName = request.form['resourceName']
             resourceState = request.form['resourceState']
             resourceCity = request.form['resourceCity']
-            resourceZip = int(request.form['resourceZip'])
+            resourceZip = request.form['resourceZip']
             resourceStreet = request.form['resourceStreet']
             resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
             resourcePhone = request.form['resourcePhone']
-            # Sruti will add these inputs below
             resourceStreetNumber = 0
-            resourceNonCitizen = "True"
-            resourceDocumentation = "True"
-            resourceEligibility = "None"
+            resourceNonCitizen = 1
+            resourceDocumentation = 1
+            resourceEligibility = request.form['resourceEligibility']
             cursor3 = conn.cursor()
+            # still need to check that certain fields aren't null
+            # still need to fix radio buttons
+            # still need to do sub categories
             cursor3.execute("""INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City,
                 Address_Zip, Address_Street, Address_Number, Website, Non_Citizen, Documentation, Eligibility,
-                Description) VALUES (%s, %s, %s, %s, %d, %s, %s, %s,
-                1, 1, %s, %s);""", (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, 
-                resourceStreetNumber, resourceWebsite, resourceEligibility, resourceDescription))
+                Description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 
+                (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, resourceStreetNumber, 
+                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription))
             conn.commit()
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
