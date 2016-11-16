@@ -345,16 +345,25 @@ def addresource():
         cursor = conn.cursor()
         if request.method == 'POST':
             resourceName = request.form['resourceName']
-            resourcePhone = request.form['resourcePhone']
-            resourceStreet = request.form['resourceStreet']
-            resourceCity = request.form['resourceCity']
             resourceState = request.form['resourceState']
-            resourceZip = request.form['resourceZip']
+            resourceCity = request.form['resourceCity']
+            resourceZip = int(request.form['resourceZip'])
+            resourceStreet = request.form['resourceStreet']
+            resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
+            resourcePhone = request.form['resourcePhone']
+            # Sruti will add these inputs below
+            resourceStreetNumber = 0
+            resourceNonCitizen = "True"
+            resourceDocumentation = "True"
+            resourceEligibility = "None"
             cursor3 = conn.cursor()
-            cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
-                            resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
-                            + ", " + resourceStreet + ", " + resourceDescription + ");")
+            cursor3.execute("""INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City,
+                Address_Zip, Address_Street, Address_Number, Website, Non_Citizen, Documentation, Eligibility,
+                Description) VALUES (%s, %s, %s, %s, %d, %s, %s, %s,
+                1, 1, %s, %s);""", (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, 
+                resourceStreetNumber, resourceWebsite, resourceEligibility, resourceDescription))
+            conn.commit()
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
