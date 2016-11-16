@@ -8,9 +8,9 @@
         <div class="form-group row">
             <input  class = "input-lg col-md-12" id = "resourceName" type="text" name = "resourceName"
                     {% if resource %}
-                        value = "{{ resource[0][0] }}">
+                        value = "{{ resource[0][0] }}" required>
                     {% else %}
-                        placeholder = "Resource Name">
+                        placeholder = "Resource Name" required>
                     {% endif %}
         </div>
         <label>Phone Number: </label>
@@ -28,27 +28,27 @@
         <div class="form-group row">
             <input id="resourceStreet" class="col-md-12" type="text" name = "resourceStreet"
                    {%if resource %}
-                        value = "{{ resource[0][6] }} {{ resource[0][5] }}">
+                        value = "{{ resource[0][6] }} {{ resource[0][5] }}" required>
                    {% else %}
-                        placeholder="123 E. EnterStreet St.">
+                        placeholder="123 E. EnterStreet St." required>
                     {% endif %}
             <input id="resourceCity" class="col-md-6" type="text" name = "resourceCity"
                     {% if resource %}
-                        value = "{{ resource[0][3] }}">
+                        value = "{{ resource[0][3] }}" required>
                     {% else %}
-                        placeholder = "City">
+                        placeholder = "City" required>
                     {% endif %}
             <input type="text" class="col-md-3" id="resourceState" name="resourceState"
                     {% if resource %}
-                        value = "{{ resource[0][2] }}">
+                        value = "{{ resource[0][2] }}" required>
                     {% else %}
-                        placeholder = "State">
+                        placeholder = "State" required>
                     {% endif %}
             <input type="text" class="col-md-3" id="resourceZip" name="resourceZip"
                     {% if resource %}
-                        value = "{{ resource[0][4] }}">
+                        value = "{{ resource[0][4] }}" required>
                     {% else %}
-                        placeholder="Zip">
+                        placeholder="Zip" required>
                     {% endif %}
         </div>
         <label>Website:</label>
@@ -60,7 +60,36 @@
                         placeholder = "Website">
                     {% endif %}
         </div>
+        <label>Takes Non-Citizens:</label>
+        <div class="form-group row">
+            {% if resource %}
+            {% if resource[0][8] == 1 %}
+            <label class="radio-inline"><input type="radio" checked="checked" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            {% else %}
+            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" checked="checked" name="No-Non-Citizens">No</label>
+            {% endif %}
+            {% else %}
+            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            {% endif %}
 
+        </div>
+        <label>Identification Required:</label>
+        <div class="form-group row">
+            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+        </div>
+        <label>Eligibility:</label>
+        <div class="form-group row">
+            <textarea class="col-md-12" id="resourceEligibility" name="resourceEligibility" rows="3"
+                      {% if resource %}
+            >{{ resource[0][10] }}</textarea>
+            {% else %}
+            placeholder="Enter Eligibility"></textarea>
+            {% endif %}
+        </div>
         <label for="resourceDescription">Description: </label>
         <div class="form-group row">
             <textarea class = "col-md-12" id="resourceDescription" rows = "5" name = "resourceDescription"
@@ -379,7 +408,7 @@
                     </select>
                 </div>
             </div>
-            <div class="mth">
+            <div class="Mental_Health">
                 <label><h3>Mental Health</h3></label>
                 <div class="row">
                     <label>Insurance:</label>
@@ -427,7 +456,7 @@
                     </select>
                 </div>
             </div>
-            <div class="Fn">
+            <div class="Networks">
                 <label><h3>Networks</h3></label>
                 <div class="row">
                     <label>Gender:</label>
