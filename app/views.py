@@ -414,7 +414,7 @@ def editresource(name):
                     conn.commit()
 
                     cursor6.execute("SELECT * FROM Emp_Type WHERE ID = %s", (id))
-                    emptypecheck = cursor6().fetchall();
+                    emptypecheck = cursor6().fetchall()
 
                     for x in emptype:
                         if x not in emptypecheck:
@@ -423,9 +423,10 @@ def editresource(name):
                     for y in emptypecheck:
                         if y not in emptype:
                             cursor6.execute("DELETE FROM Emp_Type WHERE Emp_Type = %s AND ID = %s", (y, id))
+                            conn.commit()
 
                     cursor6.execute("SELECT * FROM Emp_Skills WHERE ID = %s", (id))
-                    empskillcheck = cursor6().fetchall();
+                    empskillcheck = cursor6().fetchall()
 
                     for x in empskills:
                         if x not in empskillcheck:
@@ -434,18 +435,20 @@ def editresource(name):
                     for y in empskillcheck:
                         if y not in empskills:
                             cursor6.execute("DELETE FROM Emp_Skills WHERE Emp_Skills = %s AND ID = %s", (y, id))
+                            conn.commit()
   
                 else:
                     #create new
                     cursor6.execute("INSERT INTO Employment VALUES (%s, %s,  %s, %s);", (emaxsalary, eminsalary, empchildcare, id))
+                    conn.commit()
 
                     for x in emptype:
                         cursor6.execute("INSERT INTO Emp_Type VALUES (%s, %s);", (x, id))
+                        conn.commit()
 
                     for y in empskills:
                         cursor6.execute("INSERT INTO Emp_Skills VALUES (%s, %s);", (y, id))
-
-                conn.commit()
+                        conn.commit()
 
             if 'For_Children' in request.args:
                 fcminage = request.form['for-children-min-age']
@@ -454,8 +457,34 @@ def editresource(name):
 
                 cursor7 = conn.cursor()
                 cursor7.execute("SELECT * FROM For_Children WHERE ID = %s", (id))
+                forchildren_check = cursor7.fetchall()
 
+                if len(forchildren_check) > 0:
+                    #update
+                    cursor7.execute("UPDATE For_Children SET AgeMax = %s, AgeMin = %s WHERE ID = %s", (fcmaxage, fcminage, id))
+                    conn.commit()
 
+                    cursor7.execute("SELECT * FROM For_Child WHERE ID = %s", (id))
+                    forchild_typecheck = cursor7.fetchall()
+
+                    for x in fctype:
+                        if x not in forchild_typecheck:
+                            cursor7.execute("INSERT INTO For_Child VALUES (%s, %s)", (x, id))
+                            conn.commit()
+
+                    for y in forchild_typecheck
+                        if y not in fctype
+                            cursor7.execute("DELETE FROM For_Child WHERE For_Child = %s AND ID = %s", (y, id))
+                            conn.commit()
+
+                else:
+                    #create new
+                    cursor7.execute("INSERT INTO For_Children VALUES (%s, %s, %s)", (fcmaxage, fcminage, id))
+                    conn.commit()
+
+                    for x in fctype
+                        cursor7.execute("INSERT INTO For_Child VALUES (%s, %s)", (x, id))
+                    
 
             if 'Housing' in request.args:
                 hcapacity = request.form['housing-capacity']
@@ -465,6 +494,54 @@ def editresource(name):
                 htype = request.form['housing-type']
                 hserves = request.form['housing-serves']
                 hchildren = request.form['takesChildren']
+
+                cursor8 = conn.cursor()
+                cursor8.execute("SELECT * FROM Housing WHERE ID = %s", (id))
+                housing_check = cursor8.fetchall()
+
+                if len(housing_check) > 0:
+                    #update
+                    cursor8.execute("UPDATE Housing SET Capacity = %s, Gender = %s, AgeMax = %s, AgeMin = %s, Children = %s WHERE ID = %s", 
+                        (hcapacity, hgender, hminage, hmaxage, hchildren, id))
+                    conn.commit()
+
+                    cursor8.execute("SELECT * FROM Housing_Type WHERE ID = %s", (id))
+                    housing_typecheck = cursor8.fetchall()
+
+                    for x in htype:
+                        if x not in housing_typecheck:
+                            cursor7.execute("INSERT INTO Housing_Type VALUES (%s, %s)", (x, id))
+                            conn.commit()
+
+                    for y in housing_typecheck
+                        if y not in htype
+                            cursor7.execute("DELETE FROM Housing_Type WHERE Housing_Type = %s AND ID = %s", (y, id))
+                            conn.commit()
+
+
+                    cursor8.execute("SELECT * FROM Housing_Serve WHERE ID = %s", (id))
+                    housing_servecheck = cursor8.fetchall()
+
+                    for x in hserves:
+                        if x not in housing_servecheck:
+                            cursor7.execute("INSERT INTO Housing_Serve VALUES (%s, %s)", (x, id))
+                            conn.commit()
+
+                    for y in housing_servecheck
+                        if y not in hserves
+                            cursor7.execute("DELETE FROM Housing_Serve WHERE Housing_Serve = %s AND ID = %s", (y, id))
+                            conn.commit()
+
+                else:
+                    #create new
+                    cursor7.execute("INSERT INTO Housing VALUES (%s, %s, %s, %s, %s, %s)", (hcapacity, hgender, hminage, hmaxage, hchildren, id))
+                    conn.commit()
+
+                    for x in htype
+                        cursor7.execute("INSERT INTO Housing_Type VALUES (%s, %s)", (x, id))
+
+                    for x in hserves
+                        cursor7.execute("INSERT INTO Housing_Serve VALUES (%s, %s)", (x, id))
 
             if 'Job_Readiness' in request.args:
                 jrtraining = request.form['Training']
