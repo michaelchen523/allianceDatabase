@@ -93,7 +93,7 @@ def searchName(name):
 
         conn = mysql.connection
         cursor = conn.cursor()
-
+        name = "%" + name + "%"
         cursor.execute("""
         SELECT rev.rating, res.name, res.description, res.Address_State AS State,
     res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
