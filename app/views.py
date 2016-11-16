@@ -427,16 +427,27 @@ def addresource():
         cursor = conn.cursor()
         if request.method == 'POST':
             resourceName = request.form['resourceName']
-            resourcePhone = request.form['resourcePhone']
-            resourceStreet = request.form['resourceStreet']
-            resourceCity = request.form['resourceCity']
             resourceState = request.form['resourceState']
+            resourceCity = request.form['resourceCity']
             resourceZip = request.form['resourceZip']
+            resourceStreet = request.form['resourceStreet']
+            resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
+            resourcePhone = request.form['resourcePhone']
+            resourceStreetNumber = 0
+            resourceNonCitizen = 1
+            resourceDocumentation = 1
+            resourceEligibility = request.form['resourceEligibility']
             cursor3 = conn.cursor()
-            cursor3.execute("INSERT INTO Resource (Name, Username, Address_State, Address_City, Address_Zip, Address_Street, Description) VALUES (" +
-                            resourceName + ", " + user + ", " + resourceState + ", " + resourceCity + ", " + resourceZip
-                            + ", " + resourceStreet + ", " + resourceDescription + ");")
+            # still need to check that certain fields aren't null
+            # still need to fix radio buttons
+            # still need to do sub categories
+            cursor3.execute("""INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City,
+                Address_Zip, Address_Street, Address_Number, Website, Non_Citizen, Documentation, Eligibility,
+                Description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 
+                (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, resourceStreetNumber, 
+                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription))
+            conn.commit()
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
