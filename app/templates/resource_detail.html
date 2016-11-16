@@ -18,7 +18,7 @@
         {% endfor %}
         <h4>{{ resource[0][6] }} {{ resource[0][5] }}</h4>
         <h4>{{ resource[0][3] }}, {{resource[0][2] }} {{resource[0][4] }}</h4>
-        {% if ('{{resource[0][7]}}' != 'None') %}
+        {% if (resource[0][7] != None) %}
         <a href="http://{{ resource[0][7] }}"><h5>{{ resource[0][7] }}</h5></a>
         {% endif %}
         <p class="word-wrap pink">{{ resource[0][11] }}</p>
