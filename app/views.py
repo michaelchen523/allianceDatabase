@@ -78,7 +78,7 @@ def edit_user():
             cursor.execute("SELECT * FROM User WHERE Username='" + user + "';")
             userdata = cursor.fetchall()
             cursor2 = conn.cursor()
-            cursor2.execute("SELECT Name FROM Resource WHERE Creator_Username='" + user + "';")
+            cursor2.execute("SELECT Name, ID FROM Resource WHERE Creator_Username='" + user + "';")
             userresource = cursor2.fetchall()
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
@@ -160,7 +160,7 @@ def resource_detail():
         return redirect('login')
     else:
         user = session.get('user')
-        resourcename = requestCategories['resourcename']
+        resourcename = request.args['resourcename']
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourcename + "';")
@@ -247,7 +247,7 @@ def organizations():
 def user_detail():
     user = session.get('user')
     categories = session.get('categories')
-    detailorg = requestCategories['detailorg']
+    detailorg = request.args['detailorg']
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
@@ -277,7 +277,7 @@ def editresource(name):
         resource = cursor.fetchall()
         id=resource[0][12]
         cursor2 = conn.cursor()
-        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id))
+        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
         phones = cursor2.fetchall()
         cursor3 = conn.cursor()
         cursor3.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
@@ -322,9 +322,9 @@ def editresource(name):
             resourceState = request.form['resourceState']
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
-            requestCategories = request.form.getlist('checkedCategory')
+            requestCategories = request.form.getlist('check')
 
-            if 'Childcare' in requestCategories:
+            if 'Childcare' in request.args:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
                 cmincost = request.form['childcare-min-cost']
@@ -362,7 +362,7 @@ def editresource(name):
                         cursor4.execute("INSERT INTO Child_Type VALUES (%s, %s);", (x, id))
                         conn.commit()
 
-            if 'Education' in requestCategories:
+            if 'Education' in request.args:
                 emincost = request.form['education-min-cost']
                 emaxcost = request.form['education-max-cost']
                 eprereqs = request.form['education-prereqs']
@@ -398,7 +398,7 @@ def editresource(name):
                         cursor5.execute("INSERT INTO Education_Type VALUES (%s, %s);", (x, id))
                         conn.commit()
 
-            if 'Employment' in requestCategories:
+            if 'Employment' in request.args:
                 eminsalary = request.form['employment-min-salary']
                 emaxsalary = request.form['employment-max-salary']
                 emptype = request.form['emp-type']
@@ -448,7 +448,7 @@ def editresource(name):
 
                 conn.commit()
 
-            if 'For_Children' in requestCategories:
+            if 'For_Children' in request.args:
                 fcminage = request.form['for-children-min-age']
                 fcmaxage = request.form['for-children-max-age']
                 fctype = request.form['for-children-type']
@@ -458,7 +458,7 @@ def editresource(name):
 
 
 
-            if 'Housing' in requestCategories:
+            if 'Housing' in request.args:
                 hcapacity = request.form['housing-capacity']
                 hgender = request.form['housing-gender']
                 hminage = request.form['housing-min-age']
@@ -467,32 +467,32 @@ def editresource(name):
                 hserves = request.form['housing-serves']
                 hchildren = request.form['takesChildren']
 
-            if 'Job_Readiness' in requestCategories:
+            if 'Job_Readiness' in request.args:
                 jrtraining = request.form['Training']
                 jrcounseling = request.form['Counseling']
 
-            if 'Legal' in requestCategories:
+            if 'Legal' in request.args:
                 legtype = request.form['legal-type']
 
-            if 'Life_Skills' in requestCategories:
+            if 'Life_Skills' in request.args:
                 lscostmin = request.form['life-skills-min-cost']
                 lscostmax = request.form['life-skills-max-cost']
                 lstype = request.form['life-skills-type']
 
-            if 'Medical' in requestCategories:
+            if 'Medical' in request.args:
                 medinsurance = request.form['medical-insurance']
                 medtype = request.form['medical-type']
 
-            if 'Mental_Health' in requestCategories:
+            if 'Mental_Health' in request.args:
                 mentalinsurance = request.form['mental-health-insurance']
                 mentaltype = request.form['mental-type']
 
-            if 'Mentors' in requestCategories:
+            if 'Mentors' in request.args:
                 mentorcostmin = request.form['mentors-min-cost']
                 mentorcostmax = request.form['mentors-max-cost']
                 mentortype = request.form['mentor-type']
 
-            if 'Networks' in requestCategories:
+            if 'Networks' in request.args:
                 netmale = request.form['Male']
                 netfemale = request.form['Female']
                 netall = request.form['All']
@@ -502,17 +502,17 @@ def editresource(name):
                 netmem = request.form['network-members']
                 netsub = request.form['network-subject']
 
-            if 'Supplies' in requestCategories:
+            if 'Supplies' in request.args:
                 supptype = request.form['supply-type']
                 suppcostmin = request.form['supply-min-cost']
                 suppcostmax = request.form['supply-max-cost']
 
-            if 'Transportation' in requestCategories:
+            if 'Transportation' in request.args:
                 transcostmin = request.form['transportation-min-cost']
                 transcostmax = request.form['transportation-max-cost']
                 transtype = request.form['transp-type']
 
-            if 'Vehicle' in requestCategories:
+            if 'Vehicle' in request.args:
                 vehiclecostmin = request.form['vehicle-min-cost']
                 vehiclecostmax = request.form['vehicle-max-cost']
                 vehicletype = request.form['vehicle-type']
@@ -545,7 +545,7 @@ def addresource():
             resourceNonCitizen = 1
             resourceDocumentation = 1
             resourceEligibility = request.form['resourceEligibility']
-            resourceCategories = request.form.getlist['checkedCategory']
+            resourceCategories = request.form.getlist('check')
             cursor3 = conn.cursor()
             # still need to check that certain fields aren't null
             # still need to fix radio buttons
