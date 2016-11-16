@@ -83,7 +83,7 @@ def edit_user():
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
 
-@app.route('/searchName/<name>/', methods=["GET"])
+@app.route('/searchName/<name>/', methods=["GET", "POST"])
 def searchName(name):
     if not session.get('logged_in'):
         return redirect('login')
@@ -101,7 +101,7 @@ def searchName(name):
 FROM (
         SELECT *
         FROM Resource
-        WHERE name = %s
+        WHERE name LIKE %s
     ) res
 NATURAL LEFT JOIN (
         SELECT ID, AVG(Rating) AS rating

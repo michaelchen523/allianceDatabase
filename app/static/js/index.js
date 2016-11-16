@@ -111,7 +111,4 @@ function goBack() {
 }
 
 
-// function searchname() {
-//      var sname = document.getElementById("Search").value;
-//      window.location = {{ url_for('searchName', name= sname) }};
-// }
+

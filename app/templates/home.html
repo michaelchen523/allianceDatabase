@@ -15,7 +15,7 @@
                     <div class="input-group col-md-8 col-md-offset-2">
                         <input type="text" id="Search" class="form-control input-lg" placeholder="Search" />
                         <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
+                        <button class="btn btn-info btn-lg" onclick="searchname()" type="button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
@@ -24,6 +24,24 @@
             </div>
         </div>
     </div>
+    <script>
+            function searchname() {
+                var sname = $("#Search").val();
+                console.log(sname);
+                $.ajax({
+                    url: '/searchName/' + sname + '/',
+                    type: 'POST',
+                    data: {'name' : sname},
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href = '/searchName/' + sname + '/';
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            };
+    </script>
 
     <div class="container text-center">
         <h2 class="pink">Search for Resource by Category</h2>
