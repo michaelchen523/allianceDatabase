@@ -4,9 +4,15 @@
 
 <div class="container-fluid">
     <div class="jumbotron row">
+        {% if favorites %}
+        <div class="row home-header">
+            <h1 class="text-center">Favorites</h1>
+        </div>
+        {% else %}
         <div class="row home-header">
             <h1 class="text-center">Search Results</h1>
         </div>
+        {% endif %}
         <div class="dropdown">
             <button class="btn btn-default btn-lg btn-secondary dropdown-toggle"
                     data-toggle="dropdown" style="margin-top:10px; margin-left:50px;"
@@ -97,7 +103,7 @@
                   center: atlanta
         });
 
-        var addresses = [{% for resource in resources %} "{{resource[6]}} {{resource[5]}}, {{resource[3]}}, {{resource[2]}} {{resource[4]}}", {% endfor %}]
+        var addresses = [{% for resource in resources %} "{{resource[7]}} {{resource[6]}}, {{resource[4]}}, {{resource[3]}} {{resource[5]}}", {% endfor %}]
 
 
         for (x = 0; x < addresses.length; x++) {
