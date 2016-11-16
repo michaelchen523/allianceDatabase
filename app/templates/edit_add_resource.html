@@ -62,13 +62,34 @@
         </div>
         <label>Takes Non-Citizens:</label>
         <div class="form-group row">
+            {% if resource %}
+            {% if resource[0][8] == 1 %}
+            <label class="radio-inline"><input type="radio" checked="checked" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            {% else %}
+            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" checked="checked" name="No-Non-Citizens">No</label>
+            {% endif %}
+            {% else %}
             <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
             <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            {% endif %}
+
         </div>
         <label>Identification Required:</label>
         <div class="form-group row">
+            {% if resource %}
+            {% if resource[0][9] == 1 %}
+            <label class="radio-inline"><input type="radio" checked="checked" name="Documentation">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+            {% else %}
+            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
+            <label class="radio-inline"><input type="radio" checked="checked" name="No-Documentation">No</label>
+            {% endif %}
+            {% else %}
             <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
             <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+            {% endif %}
         </div>
         <label>Eligibility:</label>
         <div class="form-group row">

@@ -25,12 +25,12 @@
   <nav class="navbar navbar-inverse navbar-static-top" style="background-color: #FFC9C5">
       <div class="container">
           <div class="navbar-header">
-              <a class="navbar-brand" style="color: #333;" href="{{ url_for('home')}}">Alliance for Survivor Care</a>
+              <a class="navbar-brand" href="{{ url_for('home')}}">Alliance for Survivor Care</a>
           </div>
           <div class="navbar-collapse navbar-toggleable-xs" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                   <li class="nav-item dropdown">
-                      <a href="#" class="dropdown-toggle" style="color: #333;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources<span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Resources<span class="caret"></span></a>
                       <ul class="dropdown-menu">
                           <li><a href="{{ url_for('home') }}">Search</a></li>
                           <li><a href="{{ url_for('favorites') }}">Favorites</a></li>
@@ -38,7 +38,7 @@
                       </ul>
                   </li>
                   <li class="nav-item dropdown">
-                      <a href="#" class="dropdown-toggle" style="color: #333" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }}<span class="caret"></span></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }}<span class="caret"></span></a>
                       <ul class="dropdown-menu">
                           <li><a href="{{ url_for('edit_user') }}">Edit Profile</a></li>
                           <li role="separator" class="divider"></li>
