@@ -108,7 +108,7 @@ NATURAL LEFT JOIN (
         FROM Reviews
         GROUP BY ID
     ) rev
-ORDER BY rev.rating DESC;
+ORDER BY res.name;
         """, (name, ))
 
         resources = cursor.fetchall()
@@ -146,7 +146,7 @@ NATURAL LEFT JOIN (
         FROM Reviews
         GROUP BY ID
     ) rev
-ORDER BY rev.rating DESC;
+ORDER BY res.name;
         """, (ctgry, ))
 
         resources = cursor.fetchall()
@@ -316,14 +316,43 @@ def editresource(name):
 
         if request.method == 'POST':
             resourceName = request.form['resourceName']
-            resourcePhone = request.form['resourcePhone']
+            resourcePhone = request.form.getlist('resourcePhone')
             resourceStreet = request.form['resourceStreet']
             resourceCity = request.form['resourceCity']
+            resourceWebsite = request.form['resourceWebsite']
+            streetsplit = resourceStreet.split(" ");
+            streetNum = streetsplit[0]
+            streetName = " ".join(map(str,streetsplit[1:]))
             resourceState = request.form['resourceState']
             resourceZip = request.form['resourceZip']
+            resourceEligibility = request.form['resourceEligibility']
             resourceDescription = request.form['resourceDescription']
-            requestCategories = request.form.getlist('check')
-
+            resourceCategories = request.form.getlist('checkedCategory')
+            cursory = conn.cursor()
+            cursory.execute("""UPDATE Resource
+SET Name = %s, Creator_Username = %s, Address_State = %s, Address_City = %s, Address_Zip = %s,
+ Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
+ Eligibility = %s, Description = %s
+WHERE ID = %s;""", (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, 1, 1, resourceEligibility, resourceDescription, id,))
+            conn.commit()
+            cursorx = conn.cursor()
+            cursorz = conn.cursor()
+            for phone in resourcePhone:
+                cursorx.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s", (id,))
+                phoneCheck = cursorx.fetchall()
+                '''if phone not in phoneCheck:
+                    cursorx.execute(""" UPDATE Phone_Numbers
+                    SET Phone_Number = %s
+                    WHERE ID = %s;""", (phone, id,))
+                    conn.commit()'''
+            for category in resourceCategories:
+                cursorz.execute("SELECT * FROM Categories WHERE ID = %s", (id,))
+                catCheck = cursorz.fetchall()
+                print(len(catCheck))
+                '''if category not in catCheck:
+                    cursorz.execute("""INSERT INTO Categories
+                    VALUES (%s, %s);""", (category, id,))
+                    conn.commit()'''
             if 'Childcare' in request.args:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
