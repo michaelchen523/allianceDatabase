@@ -561,10 +561,10 @@ def addresource():
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
                            categories = categories)
 
-@app.route('/deleteresource<name>', methods=['GET'])
-def deleteresource(name):
+@app.route('/deleteresource<id>', methods=['GET'])
+def deleteresource(id):
     conn = mysql.connection
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM Resource WHERE Name = %s;", (name,))
+    cursor.execute("DELETE FROM Resource WHERE ID = %s;", (id,))
     conn.commit()
     return redirect(url_for('edit_user'))

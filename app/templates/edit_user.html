@@ -25,7 +25,7 @@
                     <div class="col-md-12 row">
                         <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail', resourcename = resource[0]) }}"><h4>{{ resource[0] }}</h4></a>
                         <a href="{{ url_for('editresource', name = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-                        <a href="{{ url_for('deleteresource', name = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
+                        <a href="{{ url_for('deleteresource', id = resource[12]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
                     </div>
                 </li>
                 {% endfor %}
