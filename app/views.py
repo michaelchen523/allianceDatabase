@@ -288,7 +288,7 @@ def editresource(name):
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
 
-            if 'childcare' in request.args:
+            if 'Childcare' in request.args:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
                 cmincost = request.form['childcare-min-cost']
@@ -298,25 +298,25 @@ def editresource(name):
                 cursor3.execute("")
                 conn.commit()
 
-            if 'education' in request.args:
+            if 'Education' in request.args:
                 emincost = request.form['education-min-cost']
                 emaxcost = request.form['education-max-cost']
                 eprereqs = request.form['education-prereqs']
                 etype = request.form['education-type']
 
-            if 'employment' in request.args:
+            if 'Employment' in request.args:
                 eminsalary = request.form['employment-min-salary']
                 emaxsalary = request.form['employment-max-salary']
                 emptype = request.form['emp-type']
                 empskills = request.form['emp-skills']
                 empchildcare = request.form['childcare']
 
-            if 'for_children' in request.args:
+            if 'For_Children' in request.args:
                 fcminage = request.form['for-children-min-age']
                 fcmaxage = request.form['for-children-max-age']
                 fctype = request.form['for-children-type']
 
-            if 'housing' in request.args:
+            if 'Housing' in request.args:
                 hcapacity = request.form['housing-capacity']
                 hgender = request.form['housing-gender']
                 hminage = request.form['housing-min-age']
@@ -325,8 +325,55 @@ def editresource(name):
                 hserves = request.form['housing-serves']
                 hchildren = request.form['takesChildren']
 
-            #if 'job_readiness' in request.args:
+            if 'Job_Readiness' in request.args:
+                jrtraining = request.form['Training']
+                jrcounseling = request.form['Counseling']
 
+            if 'Legal' in request.args:
+                legtype = request.form['legal-type']
+
+            if 'Life_Skills' in request.args:
+                lscostmin = request.form['life-skills-min-cost']
+                lscostmax = request.form['life-skills-max-cost']
+                lstype = request.form['life-skills-type']
+
+            if 'Medical' in reques.args:
+                medinsurance = request.form['medical-insurance']
+                medtype = request.form['medical-type']
+
+            if 'Mental_Health' in request.args:
+                mentalinsurance = request.form['mental-health-insurance']
+                mentaltype = request.form['mental-type']
+
+            if 'Mentors' in request.args:
+                mentorcostmin = request.form['mentors-min-cost']
+                mentorcostmax = request.form['mentors-max-cost']
+                mentortype = request.form['mentor-type']
+
+            if 'Networks' in request.args:
+                netmale = request.form['Male']
+                netfemale = request.form['Female']
+                netall = request.form['All']
+                netother = request.form['Other']
+                netagemin = request.form['networks-min-age']
+                netagemax = request.form['networks-max-age']
+                netmem = request.form['network-members']
+                netsub = request.form['network-subject']
+
+            if 'Supplies' in request.args:
+                supptype = request.form['supply-type']
+                suppcostmin = request.form['supply-min-cost']
+                suppcostmax = request.form['supply-max-cost']
+
+            if 'Transportation' in request.args:
+                transcostmin = request.form['transportation-min-cost']
+                transcostmax = request.form['transportation-max-cost']
+                transtype = request.form['transp-type']
+
+            if 'Vehicle' in request.args:
+                vehiclecostmin = request.form['vehicle-min-cost']
+                vehiclecostmax = request.form['vehicle-max-cost']
+                vehicletype = request.form['vehicle-type']
 
 
 
