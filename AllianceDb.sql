@@ -66,7 +66,7 @@ CREATE TABLE Categories (
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Name),
   FOREIGN KEY (Name) REFERENCES Category_Names(Name),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 
@@ -76,8 +76,8 @@ CREATE TABLE User_Favorites (
   Username VARCHAR(20)  NOT NULL,
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Username, ID),
-  FOREIGN KEY (Username) REFERENCES User (Username),
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (Username) REFERENCES User (Username) ON DELETE CASCADE,
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 
@@ -88,7 +88,7 @@ CREATE TABLE Phone_Numbers (
   Type VARCHAR(30),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (Phone_Number, ID), # changed the second attribute from 'Name' to 'ID'
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 
@@ -104,7 +104,7 @@ CREATE TABLE Supplies (
   CostMax INT,
   CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 
@@ -114,7 +114,7 @@ CREATE TABLE Supp_Type (
   Supp_Type ENUM('Clothing', 'Children''s Things', 'Hygienic Supplies', 'Laundry',
  'Food', 'Medical', 'Food Stamps', 'Financial Aid ', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Supplies (ID),
+  FOREIGN KEY (ID) REFERENCES Supplies (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Supp_Type)
 );
 
@@ -134,7 +134,7 @@ CREATE TABLE Housing (
   AgeMin INT,
   Children TINYINT(1),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Housing_Type;
@@ -142,7 +142,7 @@ DROP TABLE IF EXISTS Housing_Type;
 CREATE TABLE Housing_Type (
   Housing_Type ENUM('Group', 'Rent', 'Buy', 'Shelter', 'Transitional', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Housing (ID),
+  FOREIGN KEY (ID) REFERENCES Housing (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Housing_Type)
 );
 
@@ -153,7 +153,7 @@ CREATE TABLE Housing_Serve (
   'Temporary/ Emergency', 'Religious', 'Families', 'Children', 'Other')
   ,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Housing (ID),
+  FOREIGN KEY (ID) REFERENCES Housing (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Housing_Serve)
 );
 
@@ -168,7 +168,7 @@ DROP TABLE IF EXISTS Medical;
 CREATE TABLE Medical (
   Insurance VARCHAR(500),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Med_Type;
@@ -177,7 +177,7 @@ CREATE TABLE Med_Type (
   Med_Type ENUM('Dental', 'Medical', 'Gynecologist', 'Abortion Clinic', 'STI/ HIV', 'Pediatrician',
   'Pharmacy', 'Check-Up', 'Immunization', 'Residential', 'Addiction', 'Vision', 'General', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Medical (ID),
+  FOREIGN KEY (ID) REFERENCES Medical (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Med_Type)
 );
 
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS Mental_Health;
 CREATE TABLE Mental_Health (
   Insurance VARCHAR(500),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 
@@ -204,7 +204,7 @@ CREATE TABLE Mental_Type (
   Mental_Type ENUM('Counseling', 'Case Management', 'Substance Abuse', 'Psych Evals',
  'Counseling Hotline', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Mental_Health (ID),
+  FOREIGN KEY (ID) REFERENCES Mental_Health (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Mental_Type)
 );
 
@@ -219,7 +219,7 @@ DROP TABLE IF EXISTS Legal;
 
 CREATE TABLE Legal (
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Leg_Type;
@@ -227,7 +227,7 @@ DROP TABLE IF EXISTS Leg_Type;
 CREATE TABLE Leg_Type (
   Leg_Type ENUM('Custody', 'Divorce', 'Contract', 'Police', 'Advocacy', 'Case Management', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Legal (ID),
+  FOREIGN KEY (ID) REFERENCES Legal (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Leg_Type)
 );
 
@@ -246,7 +246,7 @@ CREATE TABLE Employment (
   SalaryMin INT,
   Childcare TINYINT(1),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Emp_Type;
@@ -254,7 +254,7 @@ DROP TABLE IF EXISTS Emp_Type;
 CREATE TABLE Emp_Type (
   Emp_Type ENUM('Food', 'Retail', 'Office', 'Factory', 'Service', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Employment (ID),
+  FOREIGN KEY (ID) REFERENCES Employment (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Emp_Type)
 );
 
@@ -263,7 +263,7 @@ DROP TABLE IF EXISTS Skills;
 CREATE TABLE Emp_Skills (
   Emp_Skills ENUM('Typing', 'People Skills', 'Reading', 'Writing', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Employment (ID),
+  FOREIGN KEY (ID) REFERENCES Employment (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Emp_Skills)
 );
 
@@ -278,7 +278,7 @@ CREATE TABLE Transportation (
   CostMax INT,
   CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Trans;
@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS Trans;
 CREATE TABLE Trans (
   Trans ENUM('Taxi', 'Subway', 'Bus', 'Plane', 'Train', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Transportation (ID),
+  FOREIGN KEY (ID) REFERENCES Transportation (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Trans)
 );
 
@@ -302,7 +302,7 @@ CREATE TABLE Mentors (
   CostMax INT,
   CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Mentor;
@@ -310,7 +310,7 @@ DROP TABLE IF EXISTS Mentor;
 CREATE TABLE Mentor_Type (
   Mentor ENUM('Life Coach', 'Professional', 'Personal', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Mentors (ID),
+  FOREIGN KEY (ID) REFERENCES Mentors (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Mentor)
 );
 
@@ -327,7 +327,7 @@ CREATE TABLE For_Children (
   AgeMax INT,
   AgeMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS For_Child;
@@ -335,7 +335,7 @@ DROP TABLE IF EXISTS For_Child;
 CREATE TABLE For_Child (
   For_Child ENUM('Sexual Abuse', 'Physical Abuse', 'Therapy', 'Forensic Evaluations', 'Interviewing', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES For_Children (ID),
+  FOREIGN KEY (ID) REFERENCES For_Children (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, For_Child)
 );
 
@@ -355,7 +355,7 @@ CREATE TABLE Childcare (
   CostMin INT,
   Capacity INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Child_Type;
@@ -363,7 +363,7 @@ DROP TABLE IF EXISTS Child_Type;
 CREATE TABLE Child_Type (
   Child_Type ENUM('Mentoring', 'Tutoring', 'Day Care', 'Information', 'Other'),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Childcare (ID),
+  FOREIGN KEY (ID) REFERENCES Childcare (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID, Child_Type)
 );
 
@@ -379,7 +379,7 @@ CREATE TABLE Vehicle (
   CostMax INT,
   CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Vehicle_Type;
@@ -388,7 +388,7 @@ CREATE TABLE Vehicle_Type (
   Vehicle_Type ENUM('Donations', 'Rent', 'Buy', 'Classes', 'Insurance', 'Register', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Vehicle_Type),
-  FOREIGN KEY (ID) REFERENCES Vehicle(ID)
+  FOREIGN KEY (ID) REFERENCES Vehicle(ID) ON DELETE CASCADE
 );
 
 
@@ -404,7 +404,7 @@ CREATE TABLE Life_Skills (
   CostMax INT,
   CostMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Life_Skill_Type;
@@ -413,7 +413,7 @@ CREATE TABLE Life_Skill_Type (
   Life_Skill_Type ENUM('Financial', 'Resume', 'Education', 'Health', 'Parenting', 'Cooking', 'Faith', 'Home Ownership', 'General', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Life_Skill_Type),
-  FOREIGN KEY (ID) REFERENCES Life_Skills(ID)
+  FOREIGN KEY (ID) REFERENCES Life_Skills(ID) ON DELETE CASCADE
 );
 
 
@@ -430,7 +430,7 @@ CREATE TABLE Education (
   CostMin INT,
   Prerequisites VARCHAR(400),
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Education_Type;
@@ -439,7 +439,7 @@ CREATE TABLE Education_Type (
   Education_Type ENUM('GED', 'Scholarships', 'College', 'Certifications', 'Workshops', 'Computer Skills', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Education_Type),
-  FOREIGN KEY (ID) REFERENCES Education(ID)
+  FOREIGN KEY (ID) REFERENCES Education(ID) ON DELETE CASCADE
 );
 
 
@@ -456,7 +456,7 @@ CREATE TABLE Networks (
   AgeMax INT,
   AgeMin INT,
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID),
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE,
   PRIMARY KEY (ID)
   );
 
@@ -466,7 +466,7 @@ CREATE TABLE Net_Mem (
   Net_Mem ENUM('Survivors', 'Parents of Survivors', 'Family of Survivors', 'Volunteers', 'Other'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Net_Mem),
-  FOREIGN KEY (ID) REFERENCES Networks(ID)
+  FOREIGN KEY (ID) REFERENCES Networks(ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Net_Sub;
@@ -474,7 +474,7 @@ CREATE TABLE Net_Sub (
 	Net_Sub ENUM('Partner', 'Sex Trafficking', 'Prostitution'),
   ID MEDIUMINT NOT NULL,
 	PRIMARY KEY (ID, Net_Sub),
-  FOREIGN KEY (ID) REFERENCES Networks(ID)
+  FOREIGN KEY (ID) REFERENCES Networks(ID) ON DELETE CASCADE
 );
 
 /*
@@ -487,7 +487,7 @@ DROP TABLE IF EXISTS Job_Readiness;
 
 CREATE TABLE Job_Readiness (
   ID MEDIUMINT NOT NULL,
-  FOREIGN KEY (ID) REFERENCES Resource (ID)
+  FOREIGN KEY (ID) REFERENCES Resource (ID) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Job_Readiness_Type;
@@ -496,7 +496,7 @@ CREATE TABLE Job_Readiness_Type (
   Job_Readiness_Type ENUM('Training', 'Counseling'),
   ID MEDIUMINT NOT NULL,
   PRIMARY KEY (ID, Job_Readiness_Type),
-  FOREIGN KEY (ID) REFERENCES Job_Readiness(ID)
+  FOREIGN KEY (ID) REFERENCES Job_Readiness(ID) ON DELETE CASCADE
 );
 
 /*
