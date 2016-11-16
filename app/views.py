@@ -294,6 +294,9 @@ def editresource(name):
                 cmincost = request.form['childcare-min-cost']
                 cmaxcost = request.form['childcare-max-cost']
                 ctype = request.form['childcare-type']
+                cursor3 = conn.cursor()
+                cursor3.execute("")
+                conn.commit()
 
             if 'education' in request.args:
                 emincost = request.form['education-min-cost']
