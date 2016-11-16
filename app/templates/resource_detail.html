@@ -12,7 +12,6 @@
             <a href="{{ url_for('addfav', resourceid = resource[0][12] ) }}"><img src="{{url_for('static', filename='images/emptystar.png')}}", width="50px"></a>
             {% endif %}
         </div>
-        <h2 class="pink">Rating</h2>
         {% for phone in phones %}
             <h4>{{phone[0]}}</h4>
         {% endfor %}
