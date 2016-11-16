@@ -56,8 +56,6 @@ CREATE TABLE Category_Names (
   PRIMARY KEY (Name)
 );
 
-INSERT INTO Category_Names VALUES ('Housing', 'shelter and stuff'), ('Medical', 'drugs and stuff');
-
 
 DROP TABLE IF EXISTS Categories;
 
