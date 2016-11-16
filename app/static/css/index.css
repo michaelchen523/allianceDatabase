@@ -47,7 +47,7 @@ h1, h3, h4, li {
 .category {
     ..background-image: url(../images/randompic-fade.jpg);
     background-position: 500px 300px;
-    height: 300px;
+    height: 200px;
     ..background-color: #8B81B2;
     background-color: #AAA;
     border-style: solid;
