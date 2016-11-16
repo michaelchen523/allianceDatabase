@@ -25,6 +25,7 @@ $(document).ready(function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
         $(".phone").append(newDiv);
         $(".resourcePhone:last").attr("placeholder", "(000)000-0000");
+        $(".resourcePhone:last").attr("name", "resourcePhone");
         $(".resourcePhone:last").removeAttr("value");
     });
 

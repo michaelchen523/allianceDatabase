@@ -540,12 +540,16 @@ def addresource():
             resourceStreet = request.form['resourceStreet']
             resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
-            resourcePhone = request.form['resourcePhone']
-            resourceStreetNumber = 0
+            resourcePhone = request.form.getlist('resourcePhone')
+            print(resourcePhone)
+            streetsplit = resourceStreet.split(" ");
+            streetNum = streetsplit[0]
+            streetName = " ".join(map(str,streetsplit[1:]))
             resourceNonCitizen = 1
             resourceDocumentation = 1
             resourceEligibility = request.form['resourceEligibility']
-            resourceCategories = request.form.getlist('check')
+            resourceCategories = request.form.getlist('checkedCategory')
+            print(resourceCategories)
             cursor3 = conn.cursor()
             # still need to check that certain fields aren't null
             # still need to fix radio buttons
@@ -553,9 +557,24 @@ def addresource():
             cursor3.execute("""INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City,
                 Address_Zip, Address_Street, Address_Number, Website, Non_Citizen, Documentation, Eligibility,
                 Description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 
-                (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, resourceStreetNumber, 
-                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription))
+                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum,
+                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription,))
             conn.commit()
+            cursor5 = conn.cursor()
+            cursor5.execute("SELECT ID FROM Resource WHERE Name='" + resourceName + "';")
+            ids = cursor5.fetchall()
+            id = ids[0][0]
+            cursor4 = conn.cursor()
+            cursor6 = conn.cursor()
+            for phone in resourcePhone:
+                cursor4.execute(""" INSERT INTO Phone_Numbers
+                VALUES (%s, 'Cell', %s)""", (phone, id,))
+                conn.commit()
+            for category in resourceCategories:
+                print(category)
+                cursor6.execute("""INSERT INTO Categories
+                VALUES (%s, %s);""", (category, id,))
+                conn.commit()
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
