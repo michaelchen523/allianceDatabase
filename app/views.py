@@ -17,7 +17,7 @@ def login():
         conn = mysql.connection
         cursor = conn.cursor()
 
-        cursor.execute("SELECT Username FROM USER WHERE Username='" + username + "' AND PASSWORD='" + password + "';")
+        cursor.execute("SELECT Username FROM User WHERE Username='" + username + "' AND Password='" + password + "';")
 
         data = cursor.fetchall()
         if len(data) > 0:
@@ -74,10 +74,10 @@ def edit_user():
         else:
             categories = session.get('categories')
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM USER WHERE Username='" + user + "';")
+            cursor.execute("SELECT * FROM User WHERE Username='" + user + "';")
             userdata = cursor.fetchall()
             cursor2 = conn.cursor()
-            cursor2.execute("SELECT Name FROM RESOURCE WHERE Creator_Username='" + user + "';")
+            cursor2.execute("SELECT Name FROM Resource WHERE Creator_Username='" + user + "';")
             userresource = cursor2.fetchall()
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
@@ -162,7 +162,7 @@ def resource_detail():
         resourcename = request.args['resourcename']
         conn = mysql.connection
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM RESOURCE WHERE Name = '" + resourcename + "';")
+        cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourcename + "';")
         resource = cursor.fetchall()
         id=resource[0][12]
         cursor2 = conn.cursor()
