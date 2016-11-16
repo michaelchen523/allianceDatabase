@@ -139,34 +139,6 @@
 </script>
 
 
->>>>>>> 806b0aba62b431c3751af86b21295bb2f0423228
-
-        function makeCallback(addressIndex, bounds) {
-        var geocodeCallBack = function(results, status) {
-            var i = addressIndex;
-            if (status == google.maps.GeocoderStatus.OK) {
-                    var latitude = results[0].geometry.location.lat();
-                    var longitude = results[0].geometry.location.lng();
-                    var marker = new google.maps.Marker({
-                    position: {lat: latitude, lng: longitude}, map: map, label: (i+1).toString()});
-                    bounds.extend(marker.position);
-               }
-               map.fitBounds(bounds);
-
-            }
-            return geocodeCallBack;
-        }
-
-     }
-    </script>
-
-</div>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVCNy3UI9ujhTLUUz8qle6BnUpQP1k2pw&callback=initMap">
-</script>
-
-
-
 {% endblock %}
 
 </html>
