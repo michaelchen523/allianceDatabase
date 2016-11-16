@@ -160,7 +160,7 @@ def resource_detail():
         return redirect('login')
     else:
         user = session.get('user')
-        resourcename = request.args['resourcename']
+        resourcename = requestCategories['resourcename']
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourcename + "';")
@@ -247,7 +247,7 @@ def organizations():
 def user_detail():
     user = session.get('user')
     categories = session.get('categories')
-    detailorg = request.args['detailorg']
+    detailorg = requestCategories['detailorg']
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
@@ -322,8 +322,9 @@ def editresource(name):
             resourceState = request.form['resourceState']
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
+            requestCategories = request.form.getlist('checkedCategory')
 
-            if 'Childcare' in request.args:
+            if 'Childcare' in requestCategories:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
                 cmincost = request.form['childcare-min-cost']
@@ -361,7 +362,7 @@ def editresource(name):
                         cursor4.execute("INSERT INTO Child_Type VALUES (%s, %s);", (x, id))
                         conn.commit()
 
-            if 'Education' in request.args:
+            if 'Education' in requestCategories:
                 emincost = request.form['education-min-cost']
                 emaxcost = request.form['education-max-cost']
                 eprereqs = request.form['education-prereqs']
@@ -397,7 +398,7 @@ def editresource(name):
                         cursor5.execute("INSERT INTO Education_Type VALUES (%s, %s);", (x, id))
                         conn.commit()
 
-            if 'Employment' in request.args:
+            if 'Employment' in requestCategories:
                 eminsalary = request.form['employment-min-salary']
                 emaxsalary = request.form['employment-max-salary']
                 emptype = request.form['emp-type']
@@ -447,7 +448,7 @@ def editresource(name):
 
                 conn.commit()
 
-            if 'For_Children' in request.args:
+            if 'For_Children' in requestCategories:
                 fcminage = request.form['for-children-min-age']
                 fcmaxage = request.form['for-children-max-age']
                 fctype = request.form['for-children-type']
@@ -457,7 +458,7 @@ def editresource(name):
 
 
 
-            if 'Housing' in request.args:
+            if 'Housing' in requestCategories:
                 hcapacity = request.form['housing-capacity']
                 hgender = request.form['housing-gender']
                 hminage = request.form['housing-min-age']
@@ -466,32 +467,32 @@ def editresource(name):
                 hserves = request.form['housing-serves']
                 hchildren = request.form['takesChildren']
 
-            if 'Job_Readiness' in request.args:
+            if 'Job_Readiness' in requestCategories:
                 jrtraining = request.form['Training']
                 jrcounseling = request.form['Counseling']
 
-            if 'Legal' in request.args:
+            if 'Legal' in requestCategories:
                 legtype = request.form['legal-type']
 
-            if 'Life_Skills' in request.args:
+            if 'Life_Skills' in requestCategories:
                 lscostmin = request.form['life-skills-min-cost']
                 lscostmax = request.form['life-skills-max-cost']
                 lstype = request.form['life-skills-type']
 
-            if 'Medical' in request.args:
+            if 'Medical' in requestCategories:
                 medinsurance = request.form['medical-insurance']
                 medtype = request.form['medical-type']
 
-            if 'Mental_Health' in request.args:
+            if 'Mental_Health' in requestCategories:
                 mentalinsurance = request.form['mental-health-insurance']
                 mentaltype = request.form['mental-type']
 
-            if 'Mentors' in request.args:
+            if 'Mentors' in requestCategories:
                 mentorcostmin = request.form['mentors-min-cost']
                 mentorcostmax = request.form['mentors-max-cost']
                 mentortype = request.form['mentor-type']
 
-            if 'Networks' in request.args:
+            if 'Networks' in requestCategories:
                 netmale = request.form['Male']
                 netfemale = request.form['Female']
                 netall = request.form['All']
@@ -501,17 +502,17 @@ def editresource(name):
                 netmem = request.form['network-members']
                 netsub = request.form['network-subject']
 
-            if 'Supplies' in request.args:
+            if 'Supplies' in requestCategories:
                 supptype = request.form['supply-type']
                 suppcostmin = request.form['supply-min-cost']
                 suppcostmax = request.form['supply-max-cost']
 
-            if 'Transportation' in request.args:
+            if 'Transportation' in requestCategories:
                 transcostmin = request.form['transportation-min-cost']
                 transcostmax = request.form['transportation-max-cost']
                 transtype = request.form['transp-type']
 
-            if 'Vehicle' in request.args:
+            if 'Vehicle' in requestCategories:
                 vehiclecostmin = request.form['vehicle-min-cost']
                 vehiclecostmax = request.form['vehicle-max-cost']
                 vehicletype = request.form['vehicle-type']
@@ -544,6 +545,7 @@ def addresource():
             resourceNonCitizen = 1
             resourceDocumentation = 1
             resourceEligibility = request.form['resourceEligibility']
+            resourceCategories = request.form.getlist['checkedCategory']
             cursor3 = conn.cursor()
             # still need to check that certain fields aren't null
             # still need to fix radio buttons
