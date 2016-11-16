@@ -1,11 +1,24 @@
 /* Created by Michael Chen */
-h3 {
+body {
+    background-color: #111;
+}
+
+.jumbotron {
+    background-color: #111 ! important;
+}
+
+h1, h3, h4, li {
     text-align: center;
+    color: #FFC9C5 ! important;
 }
 
 #map {
    height: 400px;
    width: 100%;
+}
+
+.pink {
+    color: #FFC9C5 ! important;
 }
 
 .login-div {
@@ -20,18 +33,18 @@ h3 {
 }
 
 .blk {
-    border-style: solid;
-    border-width:5px;
-    border-color: #EEEEEE;
+    ..border-style: solid;
+    ..border-width:5px;
+    ..border-color: #111;
 }
 
 .category {
     background-image: url(../images/randompic-fade.jpg);
     background-position: 500px 300px;
     height: 300px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: #EEEEEE;
+    ..border-style: solid;
+    ..border-width: 5px;
+    ..border-color: #111;
 
 }
 
@@ -75,6 +88,8 @@ h3 {
 .container {
     display:flex;
 }
+
+
 
 
 

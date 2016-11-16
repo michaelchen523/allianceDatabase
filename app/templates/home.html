@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block welcome %}
-<h2 class="nav navbar-nav navbar-brand" style="color:#ddd; margin-left:150px;">Welcome, {{ name }}!</h2>
+<h2 class="nav navbar-nav navbar-brand" style="color:#333; margin-left:150px;">Welcome, {{ name }}!</h2>
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@
     <div class="container text-center" style="margin-bottom: 50px;">
         <div class="row">
             <div>
-                <h2>Search for Resource by Name</h2>
+                <h2 class="pink">Search for Resource by Name</h2>
                 <div id="custom-search-input">
                     <div class="input-group col-md-8 col-md-offset-2">
                         <input type="text" id="Search" class="form-control input-lg" placeholder="Search" />
@@ -26,7 +26,7 @@
     </div>
 
     <div class="container text-center">
-        <h2>Search for Resource by Category</h2>
+        <h2 class="pink">Search for Resource by Category</h2>
     </div>
     <div class='blk container content'>
       <div class='row'>

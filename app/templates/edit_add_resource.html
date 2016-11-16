@@ -2,7 +2,7 @@
 
 {%block content %}
 
-<div class="jumbotron container col-sm-8 col-sm-offset-2">
+<div class="jumbotron container col-sm-8 col-sm-offset-2" style="background-color: #111;">
     <form class="col-md-10 col-md-offset-1 container vertical-center" id="edit-resource" method = post>
         <label for="resourceName"><h3>Name: </h3></label>
         <div class="form-group row">
@@ -17,12 +17,12 @@
         <div class="form-group row phone">
             {% if phones %}
                 {% for phone in phones %}
-                <input  class= "col-md-5 resourcePhone" type="text" name = "resourcePhone" value="{{phone[0]}}">
+                <input  class= "input-md col-md-5 resourcePhone" type="text" name = "resourcePhone" value="{{phone[0]}}">
                 {% endfor %}
             {% else %}
             <input  class= "col-md-5 resourcePhone" type="text" name = "resourcePhone" placeholder="(000)000-0000">
             {% endif %}
-            <span><a id="addphone" href="#">+Add</a></span>
+            <span><a id="addphone" href="#" style="margin-left: 10px;">+Add</a></span>
         </div>
         <label>Address: </label>
         <div class="form-group row">
@@ -70,14 +70,14 @@
                         placeholder="Enter Description"></textarea>
                       {% endif %}
         </div>
-        <label>Categories:<span> (Choose as many as applicable)</span></label>
+        <label class="pink">Categories:<span> (Choose as many as applicable)</span></label>
         {% for category in categories %}
         <div class="row form-group checkbox">
-            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}">{{ category[0] }}: {{ category[1] }}</input>
+            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
         </div>
         {% endfor %}
         <div class="form-group row">
-            <button class="btn btn-default col-md-6" method="get" onclick="{{ url_for('showNext') }}"name="next" id="next" type="button">Next</button>
+            <button class="btn btn-default col-md-6" method="get" name="next" id="next" type="button">Next</button>
             <button class="btn btn-default col-md-6" id="cancel" name="cancel" type="button" onclick="goBack()">Cancel</button>
         </div>
         <div class="specific">
@@ -196,7 +196,7 @@
                     </select>
                 </div>
                 <div class="row">
-                    <input type="checkbox" name="takesChildren" value="takesChildren">Childcare Offered</input>
+                    <input type="checkbox" name="childcare" value="childcare"><label>Childcare Offered</label></input>
                 </div>
             </div>
             <div class="For_Children">
@@ -286,7 +286,7 @@
                     </select>
                 </div>
                 <div class="row">
-                    <input type="checkbox" name="takesChildren" value="takesChildren">Takes Children</input>
+                    <input type="checkbox" name="takesChildren" value="takesChildren"><label>Takes Children</label></input>
                 </div>
 
             </div>

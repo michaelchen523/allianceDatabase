@@ -18,7 +18,9 @@ $(document).ready(function() {
     $(".Transportation").hide();
     $(".Vehicle").hide();
     $(".For_Children").hide();
-
+    $("input").attr("style", "background-color: #CCC;")
+    $("textarea").attr("style", "background-color: #CCC")
+    $("label").addClass("pink");
     $("#edit-resource").on('click', '#addphone',function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
         $(".phone").append(newDiv);

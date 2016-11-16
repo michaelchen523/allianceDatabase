@@ -287,11 +287,46 @@ def editresource(name):
             resourceState = request.form['resourceState']
             resourceZip = request.form['resourceZip']
             resourceDescription = request.form['resourceDescription']
-            cursor2 = conn.cursor()
-            cursor2.execute("UPDATE Resource SET Name = '" + resourceName + "', Address_State = '" + resourceState
-                            + "', Address_City = '" + resourceCity + "', Address_Zip = '" + resourceZip + "', Address_Street = '"
-                            + resourceStreet + "', Description = '" + resourceDescription + "' WHERE Username = '" +
-                            user + "';")
+
+            if 'childcare' in request.args:
+                cminage = request.form['childcare-min-age']
+                cmaxage = request.form['childcare-max-age']
+                cmincost = request.form['childcare-min-cost']
+                cmaxcost = request.form['childcare-max-cost']
+                ctype = request.form['childcare-type']
+
+            if 'education' in request.args:
+                emincost = request.form['education-min-cost']
+                emaxcost = request.form['education-max-cost']
+                eprereqs = request.form['education-prereqs']
+                etype = request.form['education-type']
+
+            if 'employment' in request.args:
+                eminsalary = request.form['employment-min-salary']
+                emaxsalary = request.form['employment-max-salary']
+                emptype = request.form['emp-type']
+                empskills = request.form['emp-skills']
+                empchildcare = request.form['childcare']
+
+            if 'for_children' in request.args:
+                fcminage = request.form['for-children-min-age']
+                fcmaxage = request.form['for-children-max-age']
+                fctype = request.form['for-children-type']
+
+            if 'housing' in request.args:
+                hcapacity = request.form['housing-capacity']
+                hgender = request.form['housing-gender']
+                hminage = request.form['housing-min-age']
+                hmaxage = request.form['housing-max-age']
+                htype = request.form['housing-type']
+                hserves = request.form['housing-serves']
+                hchildren = request.form['takesChildren']
+
+            #if 'job_readiness' in request.args:
+
+
+
+
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
@@ -322,7 +357,3 @@ def addresource():
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
                            categories = categories)
 
-@app.route('/showNext', methods=['GET'])
-def showNext():
-    checkList = request.GET.getlist('checkedCategory')
-    return redirect(url_for('edit_user', checkList = checkList))
