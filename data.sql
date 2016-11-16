@@ -1034,21 +1034,21 @@ INSERT INTO Resource (
 
 
 INSERT INTO Category_Names VALUES 
-('Supplies', 'clothes and things and stuff'),
-('Housing', 'shelter and stuff'), 
-('Medical', 'drugs and stuff'),
-('Mental_Health', 'therapy and sruff'),
-('Legal', 'Lawyers and stuff'),
-('Employment', 'jobs and stuff'),
-('Transportation', 'movement and stuff'),
-('Mentors', 'role models and stuff'),
-('For_Children', 'stuff for the babies and stuff'),
-('Childcare', 'taking care of babies and stuff'),
-('Vehicle', 'personal transpo and stuff'),
-('Life_Skills', 'Adulting 101 and stuff'),
-('Education', 'learning and stuff'),
-('Networks', 'friends and stuff'),
-('Job_Readiness', 'employ me plz and stuff');
+('Supplies', 'Resources that provide supplies, such as clothing, food, hygienic supplies, and financial aid.'),
+('Housing', 'Resources that give options for housing based on gender and type of housing, including group and shelter.'), 
+('Medical', 'Resources that offer medical attention with different physicians, including dentist, gynecologist, and pediatrician.'),
+('Mental_Health', 'Resources that provide services relating to mental health, including counseling and case management.'),
+('Legal', 'Resources that help victims navigate their legal problems, including advocacy and case management.'),
+('Employment', 'Resources that help find job placement for victims.'),
+('Transportation', 'Resources that give transportation services for various reasons.'),
+('Mentors', 'Resources that aid victims find professional mentors to help them.'),
+('For_Children', 'Resources meant to help children get out of sexually or physically abusive environments and navigate the legal system.'),
+('Childcare', 'Resources for parents meant to help them with their children, including day care and tutoring.'),
+('Vehicle', 'Resources that help victims find vehicles.'),
+('Life_Skills', 'Resources that help victims learn life skills, including financial and health.'),
+('Education', 'Resources that help victims gain an education through GED programs and scholarships.'),
+('Networks', 'Resources that give victims a way to find survivor networks in their area.'),
+('Job_Readiness', 'Resources that help victims prepare themselves for a job or career.');
 
 
 INSERT INTO Categories VALUES
