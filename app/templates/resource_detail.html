@@ -13,7 +13,7 @@
             {% endif %}
         </div>
 
-        <h2>Rating</h2>
+        <h2 class="pink">Rating</h2>
         {% for phone in phones %}
             <h4>{{phone[0]}}</h4>
         {% endfor %}
@@ -22,7 +22,7 @@
         {% if ('{{resource[0][7]}}' != 'None') %}
         <a href="http://{{ resource[0][7] }}"><h5>{{ resource[0][7] }}</h5></a>
         {% endif %}
-        <p class="word-wrap">{{ resource[0][11] }}</p>
+        <p class="word-wrap pink">{{ resource[0][11] }}</p>
         <div class="row">
             <button class="btn btn-default col-md-4 col-md-offset-4" name="back" type="button" onclick = "goBack()">Back</button>
         </div>
