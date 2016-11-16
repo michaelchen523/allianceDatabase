@@ -1,8 +1,16 @@
 *.pyc
 *.xml
 /.idea
+<<<<<<< HEAD
+<<<<<<< HEAD
+.DS_Store
+=======
+>>>>>>> master
 .idea/
 workspace.xml
 *.iml
 .idea
+<<<<<<< HEAD
+=======
 .DS_Store
+>>>>>>> master
