@@ -60,7 +60,25 @@
                         placeholder = "Website">
                     {% endif %}
         </div>
-
+        <label>Takes Non-Citizens:</label>
+        <div class="form-group row">
+            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+        </div>
+        <label>Identification Required:</label>
+        <div class="form-group row">
+            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
+            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+        </div>
+        <label>Eligibility:</label>
+        <div class="form-group row">
+            <textarea class="col-md-12" id="resourceEligibility" name="resourceEligibility" rows="3"
+                      {% if resource %}
+                        >{{ resource[0][10] }}</textarea>
+                    {% else %}
+                        placeholder="Enter Eligibility"></textarea>
+                    {% endif %}
+        </div>
         <label for="resourceDescription">Description: </label>
         <div class="form-group row">
             <textarea class = "col-md-12" id="resourceDescription" rows = "5" name = "resourceDescription"
@@ -112,7 +130,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="childcare-type" id="childcare-type">
+                    <select class="selectpicker col-md-3" name="childcare-type" id="childcare-type" multiple>
                         <option value="Mentoring">Mentoring</option>
                         <option value="Tutoring">Tutoring</option>
                         <option value="Daycare">Daycare</option>
@@ -145,7 +163,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="education-type" id="education-type">
+                    <select class="selectpicker col-md-3" name="education-type" id="education-type" multiple>
                         <option value="GED">GED</option>
                         <option value="Scholarships">Scholarships</option>
                         <option value="College">College</option>
@@ -174,7 +192,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="emp-type" id="emp-type">
+                    <select class="selectpicker col-md-3" name="emp-type" id="emp-type" multiple>
                         <option value="Food">Food</option>
                         <option value="Retail">Retail</option>
                         <option value="Office">Office</option>
@@ -217,7 +235,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="for-children-type" id="for-children-type">
+                    <select class="col-md-3 selectpicker" name="for-children-type" id="for-children-type">
                         <option value="Sexual Abuse">Sexual Abuse</option>
                         <option value="Physical Abuse">Physical Abuse</option>
                         <option value="Therapy">Therapy</option>
@@ -260,7 +278,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="housing-type" id="housing-type">
+                    <select class="col-md-3 selectpicker" name="housing-type" id="housing-type" multiple>
                         <option value="Group">Group</option>
                         <option value="Rent">Rent</option>
                         <option value="Buy">Buy</option>
@@ -273,7 +291,7 @@
                     <label>Serves:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="housing-serves" id="housing-serves">
+                    <select class="col-md-3 selectpicker" name="housing-serves" id="housing-serves" multiple>
                         <option value="Exploited">Exploited</option>
                         <option value="Addiction">Addiction</option>
                         <option value="Battered">Battered</option>
@@ -306,7 +324,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="legal-type" id="legal-type">
+                    <select class="col-md-3 selectpicker" name="legal-type" id="legal-type" multiple>
                         <option value="Custody">Custody</option>
                         <option value="Divorce">Divorce</option>
                         <option value="Contract">Contract</option>
@@ -335,7 +353,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="life-skills-type" id="life-skills-type">
+                    <select class="col-md-3 selectpicker" name="life-skills-type" id="life-skills-type" multiple>
                         <option value="Financial">Financial</option>
                         <option value="Resume">Resume</option>
                         <option value="Education">Education</option>
@@ -361,7 +379,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="medical-type" id="medical-type">
+                    <select class="col-md-3 selectpicker" name="medical-type" id="medical-type" multiple>
                         <option value="Dental">Dental</option>
                         <option value="Medical">Medical</option>
                         <option value="Gynecologist">Gynecologist</option>
@@ -391,7 +409,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="mental-type" id="mental-type">
+                    <select class="col-md-3 selectpicker" name="mental-type" id="mental-type" multiple>
                         <option value="Counseling">Counseling</option>
                         <option value="Case Management">Case Management</option>
                         <option value="Substance Abuse">Substance Abuse</option>
@@ -419,7 +437,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="mentor-type" id="mentor-type">
+                    <select class="col-md-3 selectpicker" name="mentor-type" id="mentor-type" multiple>
                         <option value="Life Coach">Life Coach</option>
                         <option value="Professional">Professional</option>
                         <option value="Personal">Personal</option>
@@ -454,7 +472,7 @@
                     <label>Members:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="network-members" id="network-members">
+                    <select class="col-md-3 selectpicker" name="network-members" id="network-members" multiple>
                         <option value="Survivors">Survivors</option>
                         <option value="Parents of Survivors">Parents of Survivors</option>
                         <option value="Family of Survivors">Family of Survivors</option>
@@ -467,7 +485,7 @@
                     <label>Subject:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="network-subject" id="network-subject">
+                    <select class="col-md-3 selectpicker" name="network-subject" id="network-subject" multiple>
                         <option value="Clothing">Partner</option>
                         <option value="Children's Things">Sex Trafficing</option>
                         <option value="Hygenic Supplices">Prostitution</option>
@@ -481,7 +499,7 @@
                     <label>Supply Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="supply-type" id="supply-type">
+                    <select class="col-md-3 selectpicker" name="supply-type" id="supply-type" multiple>
                         <option value="Clothing">Clothing</option>
                         <option value="Children's Things">Children's Things</option>
                         <option value="Hygenic Supplices">Hygenic Supplies</option>
@@ -524,7 +542,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="transp-type" id="transp-type">
+                    <select class="col-md-3 selectpicker" name="transp-type" id="transp-type" multiple>
                         <option value="Taxi">Taxi</option>
                         <option value="Subway">Subway</option>
                         <option value="Bus">Bus</option>
@@ -553,7 +571,7 @@
                     <label>Type:</label>
                 </div>
                 <div class="row form-group">
-                    <select class="col-md-3" name="vehicle-type" id="vehicle-type">
+                    <select class="col-md-3 selectpicker" name="vehicle-type" id="vehicle-type" multiple>
                         <option value="Donations">Donations</option>
                         <option value="Rent">Rent</option>
                         <option value="Buy">Buy</option>
