@@ -198,7 +198,7 @@ CREATE TABLE Mental_Health (
 );
 
 
-DROP TABLE IF EXISTS Metal_Type;
+DROP TABLE IF EXISTS Mental_Type;
 
 CREATE TABLE Mental_Type (
   Mental_Type ENUM('Counseling', 'Case Management', 'Substance Abuse', 'Psych Evals',

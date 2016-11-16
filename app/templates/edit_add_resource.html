@@ -2,36 +2,43 @@
 
 {%block content %}
 
-<div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <form class="col-md-8 container vertical-center" method = post>
+<div class="jumbotron container col-sm-8 col-sm-offset-2" style="background-color: #111;">
+    <form class="col-md-10 col-md-offset-1 container vertical-center" id="edit-resource" method = post>
         <label for="resourceName"><h3>Name: </h3></label>
         <div class="form-group row">
-            <input  class = "input-lg col-md-10" id = "resourceName" type="text" name = "resourceName"
+            <input  class = "input-lg col-md-12" id = "resourceName" type="text" name = "resourceName"
                     {% if resource %}
-                        value = "{{ resource[0][1] }}">
+                        value = "{{ resource[0][0] }}">
                     {% else %}
                         placeholder = "Resource Name">
                     {% endif %}
         </div>
-        <label for="resourcePhone">Phone Number: </label>
-        <div class="form-group row">
-            <input  class= "col-md-5" type="text" id="resourcePhone" name = "resourcePhone" placeholder="(000)000-0000">
+        <label>Phone Number: </label>
+        <div class="form-group row phone">
+            {% if phones %}
+                {% for phone in phones %}
+                <input  class= "input-md col-md-5 resourcePhone" type="text" name = "resourcePhone" value="{{phone[0]}}">
+                {% endfor %}
+            {% else %}
+            <input  class= "col-md-5 resourcePhone" type="text" name = "resourcePhone" placeholder="(000)000-0000">
+            {% endif %}
+            <span><a id="addphone" href="#" style="margin-left: 10px;">+Add</a></span>
         </div>
         <label>Address: </label>
         <div class="form-group row">
-            <input id="resourceStreet" class="col-md-10" type="text" name = "resourceStreet"
+            <input id="resourceStreet" class="col-md-12" type="text" name = "resourceStreet"
                    {%if resource %}
                         value = "{{ resource[0][6] }} {{ resource[0][5] }}">
                    {% else %}
                         placeholder="123 E. EnterStreet St.">
                     {% endif %}
-            <input id="resourceCity" class="col-md-5" type="text" name = "resourceCity"
+            <input id="resourceCity" class="col-md-6" type="text" name = "resourceCity"
                     {% if resource %}
                         value = "{{ resource[0][3] }}">
                     {% else %}
                         placeholder = "City">
                     {% endif %}
-            <input type="text" class="col-md-2" id="resourceState" name="resourceState"
+            <input type="text" class="col-md-3" id="resourceState" name="resourceState"
                     {% if resource %}
                         value = "{{ resource[0][2] }}">
                     {% else %}
@@ -44,27 +51,525 @@
                         placeholder="Zip">
                     {% endif %}
         </div>
+        <label>Website:</label>
+        <div class="form-group row">
+            <input type="text" class="col-md-6" id="resourceWebsite" name="resourceWebsite"
+                    {% if resource %}
+                        value = "{{resource[0][7]}}">
+                    {% else %}
+                        placeholder = "Website">
+                    {% endif %}
+        </div>
 
         <label for="resourceDescription">Description: </label>
         <div class="form-group row">
-            <textarea class = "col-md-10" id="resourceDescription" rows = "5" name = "resourceDescription"
+            <textarea class = "col-md-12" id="resourceDescription" rows = "5" name = "resourceDescription"
                       {% if resource %}
-                        >{{ resource[0][11] }}
+                        >{{ resource[0][11] }}</textarea>
                       {% else %}
-                        placeholder="Enter Description">
+                        placeholder="Enter Description"></textarea>
                       {% endif %}
-            </textarea>
         </div>
+        <label class="pink">Categories:<span> (Choose as many as applicable)</span></label>
+        {% for category in categories %}
+        <div class="row form-group checkbox">
+            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+        </div>
+        {% endfor %}
         <div class="form-group row">
-            <button class="btn btn-default col-md-5" name="resourceSubmit" type="submit">Submit</button>
-            <button class="btn btn-default col-md-5" name="cancel" type="button" onclick="goBack()">Cancel</button>
+            <button class="btn btn-default col-md-6" method="get" name="next" id="next" type="button">Next</button>
+            <button class="btn btn-default col-md-6" id="cancel" name="cancel" type="button" onclick="goBack()">Cancel</button>
+        </div>
+        <div class="specific">
+            <h1>{{ checkList }}</h1>
+            <div class="Childcare">
+                <label><h3>Childcare</h3></label>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="childcare-min-age" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="childare-max-age" class="col-md-2" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="childcare-min-cost" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="childcare-max-cost" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="childcare-type" id="childcare-type">
+                        <option value="Mentoring">Mentoring</option>
+                        <option value="Tutoring">Tutoring</option>
+                        <option value="Daycare">Daycare</option>
+                        <option value="Information">Information</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Education">
+                <label><h3>Education</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="education-min-cost" type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="education-max-cost" type="text" class="col-md-2" placeholder="100000">
+                </div>
+                <div class="row">
+                    <label>Prerequisites:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="education-prereqs" class="col-md-5" type="text" placeholder = "Degree, Application...etc">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="education-type" id="education-type">
+                        <option value="GED">GED</option>
+                        <option value="Scholarships">Scholarships</option>
+                        <option value="College">College</option>
+                        <option value="Certifications">Certifications</option>
+                        <option value="Workshops">Workshops</option>
+                        <option value="Computer Skills">Computer Skills</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Employment">
+                <label><h3>Employment</h3></label>
+                <div class="row">
+                    <label>Min Salary:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="employment-min-salary" type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Salary:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="employment-max-salary" type="text" class="col-md-2" placeholder="100000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="emp-type" id="emp-type">
+                        <option value="Food">Food</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Office">Office</option>
+                        <option value="Factory">Factory</option>
+                        <option value="Service">Service</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Skills:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="emp-skills" id="emp-skills">
+                        <option value="Typing">Typing</option>
+                        <option value="People Skills">People Skills</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="checkbox" name="childcare" value="childcare"><label>Childcare Offered</label></input>
+                </div>
+            </div>
+            <div class="For_Children">
+                <label><h3>For Children</h3></label>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="for-children-min-age" type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="for-children-max-age" type="text" class="col-md-2" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="for-children-type" id="for-children-type">
+                        <option value="Sexual Abuse">Sexual Abuse</option>
+                        <option value="Physical Abuse">Physical Abuse</option>
+                        <option value="Therapy">Therapy</option>
+                        <option value="Forensic Evaluations">Forensic Evaluations</option>
+                        <option value="Interviewing">Interviewing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Housing">
+                <label><h3>Housing</h3></label>
+                <div class="row">
+                    <label>Capacity:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="housing-capacity" class="col-md-3" placeholder="Enter an integer">
+                </div>
+                <div class="row">
+                    <label>Gender:</label>
+                </div>
+                <div name="housing-gender" class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="All">All</label>
+                    <label class="radio-inline"><input type="radio" name="Other">Other</label>
+                </div>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="housing-min-age" type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="housing-max-age" type="text" class="col-md-2" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="housing-type" id="housing-type">
+                        <option value="Group">Group</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Buy">Buy</option>
+                        <option value="Shelter">Shelter</option>
+                        <option value="Transitional">Transitional</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Serves:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="housing-serves" id="housing-serves">
+                        <option value="Exploited">Exploited</option>
+                        <option value="Addiction">Addiction</option>
+                        <option value="Battered">Battered</option>
+                        <option value="Homeless">Homeless</option>
+                        <option value="Temporary/Emergency">Temporary/Emergency</option>
+                        <option value="Religious">Religious</option>
+                        <option value="Families">Families</option>
+                        <option value="Children">Children</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="checkbox" name="takesChildren" value="takesChildren"><label>Takes Children</label></input>
+                </div>
+
+            </div>
+            <div class="Job_Readiness">
+                <label><h3>Job Readiness</h3></label>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Training">Training</label>
+                    <label class="radio-inline"><input type="radio" name="Counseing">Counseling</label>
+                </div>
+            </div>
+            <div class="Legal">
+                <label><h3>Legal</h3></label>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="legal-type" id="legal-type">
+                        <option value="Custody">Custody</option>
+                        <option value="Divorce">Divorce</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Police">Police</option>
+                        <option value="Advocacy">Advocacy</option>
+                        <option value="Case Management">Case Management</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Life_Skills">
+                <label><h3>Life Skills</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="life-skills-min-cost" type="text" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input name="life-skills-max-cost" type="text" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="life-skills-type" id="life-skills-type">
+                        <option value="Financial">Financial</option>
+                        <option value="Resume">Resume</option>
+                        <option value="Education">Education</option>
+                        <option value="Health">Health</option>
+                        <option value="Parenting">Parenting</option>
+                        <option value="Cooking">Cooking</option>
+                        <option value="Faith">Faith</option>
+                        <option value="Home Ownership">Home Ownership</option>
+                        <option value="General">General</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Medical">
+                <label><h3>Medical</h3></label>
+                <div class="row">
+                    <label>Insurance:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="medical-insurance" class="col-md-3" placeholder="Insurance Name">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="medical-type" id="medical-type">
+                        <option value="Dental">Dental</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Gynecologist">Gynecologist</option>
+                        <option value="Abortion Clinic">Abortion Clinic</option>
+                        <option value="STI/HIV">STI/HIV</option>
+                        <option value="Pediatrician">Pediatrician</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                        <option value="Check-up">Check-up</option>
+                        <option value="Immunization">Immunization</option>
+                        <option value="Residential">Residential</option>
+                        <option value="Addiction">Addiction</option>
+                        <option value="Vision">Vision</option>
+                        <option value="General">General</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Mental_Health">
+                <label><h3>Mental Health</h3></label>
+                <div class="row">
+                    <label>Insurance:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="mental-health-insurance" class="col-md-3" placeholder="Insurance Name">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="form-group row">
+                    <select class="col-md-3" name="mental-type" id="mental-type">
+                        <option value="Counseling">Counseling</option>
+                        <option value="Case Management">Case Management</option>
+                        <option value="Substance Abuse">Substance Abuse</option>
+                        <option value="Psych Evals">Psych Evals</option>
+                        <option value="Counseling Hotline">Counseling Hotline</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Mentors">
+                <label><h3>Mentors</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="mentors-min-cost" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="mentors-max-cost" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="mentor-type" id="mentor-type">
+                        <option value="Life Coach">Life Coach</option>
+                        <option value="Professional">Professional</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Networks">
+                <label><h3>Networks</h3></label>
+                <div class="row">
+                    <label>Gender:</label>
+                </div>
+                <div class="form-group row">
+                    <label class="radio-inline"><input type="radio" name="Male">Male</label>
+                    <label class="radio-inline"><input type="radio" name="Female">Female</label>
+                    <label class="radio-inline"><input type="radio" name="All">All</label>
+                    <label class="radio-inline"><input type="radio" name="Other">Other</label>
+                </div>
+                <div class="row">
+                    <label>Min Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" name="networks-min-age" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Age:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" name="networks-max-age" placeholder="100">
+                </div>
+                <div class="row">
+                    <label>Members:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="network-members" id="network-members">
+                        <option value="Survivors">Survivors</option>
+                        <option value="Parents of Survivors">Parents of Survivors</option>
+                        <option value="Family of Survivors">Family of Survivors</option>
+                        <option value="Volunteers">Volunteers</option>
+                        <option value="Food">Food</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Subject:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="network-subject" id="network-subject">
+                        <option value="Clothing">Partner</option>
+                        <option value="Children's Things">Sex Trafficing</option>
+                        <option value="Hygenic Supplices">Prostitution</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Supplies">
+                <label><h3>Supplies</h3></label>
+                <div class="row">
+                    <label>Supply Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="supply-type" id="supply-type">
+                        <option value="Clothing">Clothing</option>
+                        <option value="Children's Things">Children's Things</option>
+                        <option value="Hygenic Supplices">Hygenic Supplies</option>
+                        <option value="Laundry">Laundry</option>
+                        <option value="Food">Food</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Food Stamps">Food Stamps</option>
+                        <option value="Financial Aid">Financial Aid</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" name="supply-min-cost" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input class="col-md-2" name="supply-max-cost" placeholder="1000">
+                </div>
+            </div>
+            <div class="Transportation">
+                <label><h3>Transportation</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="transportation-min-cost" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="transportation-max-cost" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="transp-type" id="transp-type">
+                        <option value="Taxi">Taxi</option>
+                        <option value="Subway">Subway</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Plane">Plane</option>
+                        <option value="Train">Train</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Vehicle">
+                <label><h3>Vehicle</h3></label>
+                <div class="row">
+                    <label>Min Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="vehicle-min-cost" class="col-md-2" placeholder="0">
+                </div>
+                <div class="row">
+                    <label>Max Cost:</label>
+                </div>
+                <div class="form-group row">
+                    <input type="text" name="vehicle-max-cost" class="col-md-2" placeholder="1000">
+                </div>
+                <div class="row">
+                    <label>Type:</label>
+                </div>
+                <div class="row form-group">
+                    <select class="col-md-3" name="vehicle-type" id="vehicle-type">
+                        <option value="Donations">Donations</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Buy">Buy</option>
+                        <option value="Classes">Classes</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Register">Register</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <button class="btn btn-default col-md-6" name="submit" type="submit">Submit</button>
+                <button class="btn btn-default col-md-6" name="cancel" type="button" onclick="goBack()">Cancel</button>
+            </div>
         </div>
     </form>
-    <div class="col-md-4 container profile-div">
-        <div class="edit-pic center-block">
-            <a href="#"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-        </div>
-    </div>
 
 </div>
 
