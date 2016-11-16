@@ -279,6 +279,13 @@ def editresource(name):
         cursor2 = conn.cursor()
         cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
         phones = cursor2.fetchall()
+        cursor3 = conn.cursor()
+        cursor3.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
+        resource_categories = cursor3.fetchall()
+        for category in resource_categories:
+            if category == 'Housing':
+                cursor4 = conn.cursor()
+                #cursor4.execute("SELECT * FROM %s WHERE ID = %s;", (category[0], id))
         if request.method == 'POST':
             resourceName = request.form['resourceName']
             resourcePhone = request.form['resourcePhone']
@@ -294,8 +301,8 @@ def editresource(name):
                 cmincost = request.form['childcare-min-cost']
                 cmaxcost = request.form['childcare-max-cost']
                 ctype = request.form['childcare-type']
-                cursor3 = conn.cursor()
-                cursor3.execute("")
+                cursor4 = conn.cursor()
+                cursor4.execute("")
                 conn.commit()
 
             if 'Education' in request.args:
@@ -407,3 +414,10 @@ def addresource():
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
                            categories = categories)
 
+@app.route('/deleteresource<name>', methods=['GET'])
+def deleteresource(name):
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM Resource WHERE Name = %s;", (name,))
+    conn.commit()
+    return redirect(url_for('edit_user'))
