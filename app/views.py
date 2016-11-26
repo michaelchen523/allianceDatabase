@@ -368,11 +368,6 @@ def editresource(name):
                 cursor.execute("INSERT INTO Phone_Numbers (Phone_Number, ID) VALUES (%s, %s);", (phone, id))
                 conn.commit()
 
-            #cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
-            #catCheck = cursor.fetchall()
-            
-            #cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
-            #resource_categories = cursor.fetchall()
 
             for category in resourceCategories:
                 if category not in resource_categories:
@@ -383,9 +378,6 @@ def editresource(name):
                     print("to delete: ", category)
 
 
-
-
-
             if 'Childcare' in request.args:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
@@ -393,35 +385,37 @@ def editresource(name):
                 cmaxcost = request.form['childcare-max-cost']
                 ctype = request.form['childcare-type']
 
-                cursor4 = conn.cursor()
-                cursor4.execute("SELECT * FROM Childcare WHERE ID = %s", (id))
-                chilcareCheck = cursor4.fetchall()
+                cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
+                chilcareCheck = cursor.fetchall()
 
                 if len(childcareCheck) > 0:
                     #update
-                    cursor4.execute("UPDATE Childcare SET AgeMax = %s, AgeMin = %s, CostMax = %s, CostMin = %s WHERE ID = %s;", (cmaxage, cminage, cmaxcost, cmincost, id))
+                    cursor.execute("UPDATE Childcare SET AgeMax = %s, AgeMin = %s, CostMax = %s, CostMin = %s WHERE ID = %s;", (cmaxage, cminage, cmaxcost, cmincost, id,))
                     conn.commit()
 
-                    cursor4.execute("SELECT * FROM Childcare WHERE ID = %s", (id))
-                    child_typecheck = cursor4().fetchall()
+                    cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
+                    child_typecheck = cursor.fetchall()
 
-                    for y in child_typecheck:
-                        if y not in ctype:
-                            cursor4.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (y, id))
+                    for x in child_typecheck:
+                        if x not in ctype:
+                            #delete type
+                            cursor.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (x, id,))
                             conn.commit()
-                    for x in ctype:
-                            if x not in child_typecheck:
-                                cursor4.execute("INSERT INTO Child_Type VALUES (%s, %s)", (x, id))
-                                conn.commit()
+
+                    for y in ctype
+                        if y not in child_typecheck:
+                            #insert type
+                            cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (y, id,))
+                            conn.commit()     
 
   
                 else:
                     #create new
-                    cursor4.execute("INSERT INTO Childcare (AgeMax, AgeMin, CostMax, CostMin, ID) VALUES (%s, %s,  %s, %s, %s);", (cmaxage, cminage, cmaxcost, cmincost, id))
+                    cursor.execute("INSERT INTO Childcare (AgeMax, AgeMin, CostMax, CostMin, ID) VALUES (%s, %s,  %s, %s, %s);", (cmaxage, cminage, cmaxcost, cmincost, id,))
                     conn.commit()
 
                     for x in ctype:
-                        cursor4.execute("INSERT INTO Child_Type VALUES (%s, %s);", (x, id))
+                        cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (x, id,))
                         conn.commit()
 
             if 'Education' in request.args:
@@ -430,34 +424,33 @@ def editresource(name):
                 eprereqs = request.form['education-prereqs']
                 etype = request.form['education-type']
 
-                cursor5 = conn.cursor()
-                cursor5.execute("SELECT * FROM Education WHERE ID = %s", (id))
-                educationCheck = cursor5.fetchall()
+                cursor.execute("SELECT * FROM Education WHERE ID = %s;", (id,))
+                educationCheck = cursor.fetchall()
 
                 if len(educationCheck) > 0:
                     #update
-                    cursor5.execute("UPDATE Education SET CostMax = %s, CostMin = %s, Prerequisites = %s WHERE ID = %s;", (emaxcost, emincost, eprereqs, id))
+                    cursor.execute("UPDATE Education SET CostMax = %s, CostMin = %s, Prerequisites = %s WHERE ID = %s;", (emaxcost, emincost, eprereqs, id,))
                     conn.commit()
 
-                    cursor5.execute("SELECT * FROM Education_Type WHERE ID = %s", (id))
-                    edutypecheck = cursor5().fetchall()
+                    cursor.execute("SELECT Education_Type FROM Education_Type WHERE ID = %s;", (id,))
+                    edutypecheck = cursor.fetchall()
 
-                    for y in edutypecheck:
-                        if y not in etype:
-                            cursor5.execute("DELETE FROM Education_Type WHERE Education_Type = %s AND ID = %s", (y, id))
+                    for x in edutypecheck:
+                        if x not in etype:
+                            cursor.execute("DELETE FROM Education_Type WHERE Education_Type = %s AND ID = %s;", (x, id,))
                             conn.commit()
-                    for x in etype:
-                            if x not in edutypecheck:
-                                cursor5.execute("INSERT INTO Education_Type VALUES (%s, %s)", (x, id))
-                                conn.commit()
+                    for y in etype:
+                        if y not in edutypecheck:
+                            cursor.execute("INSERT INTO Education_Type VALUES (%s, %s);", (y, id,))
+                            conn.commit()
 
                 else:
                     #create new
-                    cursor5.execute("INSERT INTO Education VALUES (%s, %s,  %s, %s);", (emaxcost, emincost, eprereqs, id))
+                    cursor.execute("INSERT INTO Education VALUES (%s, %s,  %s, %s);", (emaxcost, emincost, eprereqs, id,))
                     conn.commit()
 
                     for x in etype:
-                        cursor5.execute("INSERT INTO Education_Type VALUES (%s, %s);", (x, id))
+                        cursor.execute("INSERT INTO Education_Type VALUES (%s, %s);", (x, id,))
                         conn.commit()
 
             if 'Employment' in request.args:
@@ -467,58 +460,85 @@ def editresource(name):
                 empskills = request.form['emp-skills']
                 empchildcare = request.form['childcare']
 
-                cursor6 = conn.cursor()
-                cursor6.execute("SELECT * FROM Employment WHERE ID = %s", (id))
-                employmentcheck = cursor6.fetchall();
+                cursor.execute("SELECT * FROM Employment WHERE ID = %s;", (id,))
+                employmentcheck = cursor.fetchall();
 
                 if len(employmentcheck) > 0:
                     #update
-                    cursor6.execute("UPDATE Employment SET SalaryMax = %s, SalaryMin = %s, Childcare = %s WHERE ID = %s;", (emaxsalary, eminsalary, empchildcare, id))
+                    cursor.execute("UPDATE Employment SET SalaryMax = %s, SalaryMin = %s, Childcare = %s WHERE ID = %s;", (emaxsalary, eminsalary, empchildcare, id,))
                     conn.commit()
 
-                    cursor6.execute("SELECT * FROM Emp_Type WHERE ID = %s", (id))
-                    emptypecheck = cursor6().fetchall();
+                    cursor.execute("SELECT Emp_Type FROM Emp_Type WHERE ID = %s;", (id,))
+                    emptypecheck = cursor.fetchall();
 
-                    for x in emptype:
-                        if x not in emptypecheck:
-                            cursor6.execute("INSERT INTO Emp_Type VALUES (%s, %s)", (x, id))
+                    for x in emptypecheck:
+                        if x not in emptype:
+                            cursor.execute("DELETE FROM Emp_Type WHERE Emp_Type = %s AND ID = %s;", (x, id,))
                             conn.commit()
-                    for y in emptypecheck:
-                        if y not in emptype:
-                            cursor6.execute("DELETE FROM Emp_Type WHERE Emp_Type = %s AND ID = %s", (y, id))
-
-                    cursor6.execute("SELECT * FROM Emp_Skills WHERE ID = %s", (id))
-                    empskillcheck = cursor6().fetchall();
-
-                    for x in empskills:
-                        if x not in empskillcheck:
-                            cursor6.execute("INSERT INTO Emp_Skills VALUES (%s, %s)", (x, id))
+                    for y in emptype:
+                        if y not in emptypecheck:
+                            cursor.execute("INSERT INTO Emp_Type VALUES (%s, %s);", (y, id,))
                             conn.commit()
-                    for y in empskillcheck:
-                        if y not in empskills:
-                            cursor6.execute("DELETE FROM Emp_Skills WHERE Emp_Skills = %s AND ID = %s", (y, id))
+
+                    cursor.execute("SELECT Emp_Skills FROM Emp_Skills WHERE ID = %s;", (id,))
+                    empskillcheck = cursor.fetchall();
+
+                    for x in empskillcheck:
+                        if x not in empskills:
+                            cursor.execute("DELETE FROM Emp_Skills WHERE Emp_Skills = %s AND ID = %s;", (x, id,))
+                            conn.commit()
+                    for y in empskills:
+                        if y not in empskillcheck:
+                            cursor.execute("INSERT INTO Emp_Skills VALUES (%s, %s);", (y, id,))
+                            conn.commit()
+
   
                 else:
                     #create new
-                    cursor6.execute("INSERT INTO Employment VALUES (%s, %s,  %s, %s);", (emaxsalary, eminsalary, empchildcare, id))
+                    cursor.execute("INSERT INTO Employment VALUES (%s, %s, %s, %s);", (emaxsalary, eminsalary, empchildcare, id,))
+                    conn.commit()
 
                     for x in emptype:
-                        cursor6.execute("INSERT INTO Emp_Type VALUES (%s, %s);", (x, id))
+                        cursor.execute("INSERT INTO Emp_Type VALUES (%s, %s);", (x, id,))
+                        conn.commit()
 
                     for y in empskills:
-                        cursor6.execute("INSERT INTO Emp_Skills VALUES (%s, %s);", (y, id))
+                        cursor.execute("INSERT INTO Emp_Skills VALUES (%s, %s);", (y, id,))
+                        conn.commit()
 
-                conn.commit()
 
             if 'For_Children' in request.args:
                 fcminage = request.form['for-children-min-age']
                 fcmaxage = request.form['for-children-max-age']
                 fctype = request.form['for-children-type']
 
-                cursor7 = conn.cursor()
-                cursor7.execute("SELECT * FROM For_Children WHERE ID = %s", (id))
-                For_Child_Check = cursor7.fetchall()
+                cursor.execute("SELECT * FROM For_Children WHERE ID = %s;", (id))
+                For_Child_Check = cursor.fetchall()
 
+                if len(For_Child_Check) > 0:
+                    #update
+                    cursor.execute("UPDATE For_Childrem SET AgeMax = %s, AgeMin = %s WHERE ID = %s;", 
+                        fcmaxage, fcminage, id)
+                    conn.commit()
+
+                    cursor.execute("SELECT For_Child FROM For_Child WHERE ID = %s;", (id,))
+                    for_Child_typecheck = cursor.fetchall()
+
+                    for x in for_Child_typecheck:
+                        if x not in fctype:
+                            cursor.execute("DELETE FROM For_Child WHERE For_Child = %s AND ID = %s;", (x, id,))
+                            conn.commit()
+                    for y in fctype:
+                        if y not in for_Child_typecheck:
+                            cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (y, id,))
+                            conn.commit()
+                else:
+                    #create new
+                    cursor.execute("INSERT INTO For_Children VALUES (%s, %s, %s);", (fcmaxage, fcminage, id,))
+                    conn.commit()
+
+                    for x in fctype:
+                        cursor.execute("INSERT INTO For_Child VALUES (%s, %s);", (x, id,))
 
 
             if 'Housing' in request.args:
