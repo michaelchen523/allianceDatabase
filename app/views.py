@@ -351,14 +351,24 @@ def editresource(name):
             resourceEligibility = request.form['resourceEligibility']
             resourceDescription = request.form['resourceDescription']
             resourceCategories = request.form.getlist('checkedCategory')
-            
+            non_citizens = request.form.getlist('takes_non_citizens')
+            need_id = request.form.getlist('id')
+            if len(non_citizens) > 0:
+                resourceNonCitizen = 1
+            else:
+                resourceNonCitizen = 0
+            if len(need_id) > 0:
+                resourceDocumentation = 1
+            else:
+                resourceDocumentation = 0
+
 
             cursor.execute("""UPDATE Resource
                                 SET Name = %s, Creator_Username = %s, Address_State = %s, Address_City = %s, Address_Zip = %s,
                                  Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
                                  Eligibility = %s, Description = %s
                                 WHERE ID = %s;""", 
-                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, 1, 1, resourceEligibility, resourceDescription, id,))
+                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id,))
             conn.commit()
 
             cursor.execute("DELETE FROM Phone_Numbers WHERE ID = %s;", (id,))
@@ -624,15 +634,21 @@ def addresource():
             resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
             resourcePhone = request.form.getlist('resourcePhone')
-            print(resourcePhone)
             streetsplit = resourceStreet.split(" ");
             streetNum = streetsplit[0]
             streetName = " ".join(map(str,streetsplit[1:]))
-            resourceNonCitizen = 1
-            resourceDocumentation = 1
+            non_citizens = request.form.getlist('takes_non_citizens')
+            need_id = request.form.getlist('id')
+            if len(non_citizens) > 0:
+                resourceNonCitizen = 1
+            else:
+                resourceNonCitizen = 0
+            if len(need_id) > 0:
+                resourceDocumentation = 1
+            else:
+                resourceDocumentation = 0
             resourceEligibility = request.form['resourceEligibility']
             resourceCategories = request.form.getlist('checkedCategory')
-            print(resourceCategories)
             cursor3 = conn.cursor()
             # still need to check that certain fields aren't null
             # still need to fix radio buttons
@@ -654,7 +670,6 @@ def addresource():
                 VALUES (%s, 'Cell', %s)""", (phone, id,))
                 conn.commit()
             for category in resourceCategories:
-                print(category)
                 cursor6.execute("""INSERT INTO Categories
                 VALUES (%s, %s);""", (category, id,))
                 conn.commit()

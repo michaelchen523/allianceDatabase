@@ -60,35 +60,26 @@
                         placeholder = "Website">
                     {% endif %}
         </div>
-        <label>Takes Non-Citizens:</label>
         <div class="form-group row">
             {% if resource %}
             {% if resource[0][8] == 1 %}
-            <label class="radio-inline"><input type="radio" checked="checked" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1" checked><label>Takes Non-Citizens</label></input>
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" checked="checked" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1"><label>Takes Non-Citizens</label></input>
             {% endif %}
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1"><label>Takes Non-Citizens</label></input>
             {% endif %}
-
         </div>
-        <label>Identification Required:</label>
         <div class="form-group row">
             {% if resource %}
             {% if resource[0][9] == 1 %}
-            <label class="radio-inline"><input type="radio" checked="checked" name="Documentation">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+            <input type="checkbox" name="id" value="1" checked><label>Identification Required</label></input>
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
-            <label class="radio-inline"><input type="radio" checked="checked" name="No-Documentation">No</label>
+            <input type="checkbox" name="id" value="1"><label>Identification Required</label></input>
             {% endif %}
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+            <input type="checkbox" name="id" value="1"><label>Identification Required</label></input>
             {% endif %}
         </div>
         <label>Eligibility:</label>
