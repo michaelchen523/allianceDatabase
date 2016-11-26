@@ -102,6 +102,11 @@ $(document).ready(function() {
         } else {
             $(".Vehicle").hide();
         }
+        if ($("#For_Children").is(':checked')) {
+            $(".For_Children").show();
+        } else {
+            $(".For_Children").hide();
+        }
 
     })
 
