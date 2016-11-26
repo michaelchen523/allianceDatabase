@@ -112,7 +112,16 @@
         <label class="pink">Categories:<span> (Choose as many as applicable)</span></label>
         {% for category in categories %}
         <div class="row form-group checkbox">
-            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"
+            {% if checked_categories %}
+                {% if category[0] in checked_categories %}
+                    checked><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+                {% else %}
+                    ><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+                {% endif %}
+            {% else %}
+                ><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+            {% endif %}
         </div>
         {% endfor %}
         <div class="form-group row">

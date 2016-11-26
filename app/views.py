@@ -303,38 +303,39 @@ def editresource(name):
         
         cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
         resource_categories = cursor.fetchall()
+        checked_categories = []
         
         for category in resource_categories:
-            if category == 'Childcare':
-                pass
-            elif category == 'Education':
-                pass
-            elif category == 'Employment':
-                pass
-            elif category == 'For_Children':
-                pass
-            elif category == 'Housing':
-                pass
-            elif category == 'Job_Readiness':
-                pass
-            elif category == 'Legal':
-                pass
-            elif category == 'Life_Skills':
-                pass
-            elif category == 'Medical':
-                pass
-            elif category == 'Mental_Health':
-                pass
-            elif category == 'Mentors':
-                pass
-            elif category == 'Networks':
-                pass
-            elif category == 'Supplies':
-                pass
-            elif category == 'Transportation':
-                pass
-            elif category == 'Vehicle':
-                pass
+            if category[0] == 'Childcare':
+                checked_categories.append('Childcare')
+            elif category[0] == 'Education':
+                checked_categories.append('Education')
+            elif category[0] == 'Employment':
+                checked_categories.append('Employment')
+            elif category[0] == 'For_Children':
+                checked_categories.append('For_Children')
+            elif category[0] == 'Housing':
+                checked_categories.append('Housing')
+            elif category[0] == 'Job_Readiness':
+                checked_categories.append('Job_Readiness')
+            elif category[0] == 'Legal':
+                checked_categories.append('Legal')
+            elif category[0] == 'Life_Skills':
+                checked_categories.append('Life_Skills')
+            elif category[0] == 'Medical':
+                checked_categories.append('Medical')
+            elif category[0] == 'Mental_Health':
+                checked_categories.append('Mental_Health')
+            elif category[0] == 'Mentors':
+                checked_categories.append('Mentors')
+            elif category[0] == 'Networks':
+                checked_categories.append('Networks')
+            elif category[0] == 'Supplies':
+                checked_categories.append('Supplies')
+            elif category[0] == 'Transportation':
+                checked_categories.append('Transportation')
+            elif category[0] == 'Vehicle':
+                checked_categories.append('Vehicle')
 
         if request.method == 'POST':
             resourceName = request.form['resourceName']
@@ -386,7 +387,7 @@ def editresource(name):
                 ctype = request.form['childcare-type']
 
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
-                chilcareCheck = cursor.fetchall()
+                childcareCheck = cursor.fetchall()
 
                 if len(childcareCheck) > 0:
                     #update
@@ -402,7 +403,7 @@ def editresource(name):
                             cursor.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (x, id,))
                             conn.commit()
 
-                    for y in ctype
+                    for y in ctype:
                         if y not in child_typecheck:
                             #insert type
                             cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (y, id,))
@@ -600,15 +601,11 @@ def editresource(name):
                 vehiclecostmax = request.form['vehicle-max-cost']
                 vehicletype = request.form['vehicle-type']
 
-
-
-
-
-
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
+    print(categories[1][0] in checked_categories)
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                           categories = categories, resource = resource, phones = phones)
+                           categories = categories, resource = resource, phones = phones, checked_categories = checked_categories)
 
 @app.route('/addresource', methods = ['GET', 'POST'])
 def addresource():
