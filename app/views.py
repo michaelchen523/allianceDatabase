@@ -24,10 +24,9 @@ def login():
             session['logged_in'] = True
             session['user'] = username
 
-            cursor2 = conn.cursor()
-            cursor2.execute("SELECT * FROM Category_Names;")
+            cursor.execute("SELECT * FROM Category_Names;")
 
-            session['categories'] = cursor2.fetchall()
+            session['categories'] = cursor.fetchall()
 
             return redirect(url_for('home'))
     return render_template("login.html")
@@ -57,13 +56,14 @@ def edit_user():
         return redirect('login')
     else:
         conn = mysql.connection
+        cursor = conn.cursor()
+
         user = session.get('user')
         if request.method == 'POST':
             password = request.form['password']
             email = request.form['email']
 
-            cursor3 = conn.cursor()
-            cursor3.execute(
+            cursor.execute(
             """
             UPDATE User
             SET Email = %s, Password = %s
@@ -74,12 +74,12 @@ def edit_user():
             return redirect('edit_user')
         else:
             categories = session.get('categories')
-            cursor = conn.cursor()
+            #cursor = conn.cursor()
             cursor.execute("SELECT * FROM User WHERE Username='" + user + "';")
             userdata = cursor.fetchall()
-            cursor2 = conn.cursor()
-            cursor2.execute("SELECT Name, ID FROM Resource WHERE Creator_Username='" + user + "';")
-            userresource = cursor2.fetchall()
+            #cursor2 = conn.cursor()
+            cursor.execute("SELECT Name, ID FROM Resource WHERE Creator_Username='" + user + "';")
+            userresource = cursor.fetchall()
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
 
@@ -96,20 +96,20 @@ def searchName(name):
         name = "%" + name + "%"
         cursor.execute("""
         SELECT rev.rating, res.name, res.description, res.Address_State AS State,
-    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
-    res.Address_Number AS Num
-FROM (
-        SELECT *
-        FROM Resource
-        WHERE name LIKE %s
-    ) res
-NATURAL LEFT JOIN (
-        SELECT ID, AVG(Rating) AS rating
-        FROM Reviews
-        GROUP BY ID
-    ) rev
-ORDER BY res.name;
-        """, (name, ))
+            res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+            res.Address_Number AS Num
+        FROM (
+                SELECT *
+                FROM Resource
+                WHERE name LIKE %s
+            ) res
+        NATURAL LEFT JOIN (
+                SELECT ID, AVG(Rating) AS rating
+                FROM Reviews
+                GROUP BY ID
+            ) rev
+        ORDER BY res.name;
+                """, (name, ))
 
         resources = cursor.fetchall()
         print resources
@@ -130,24 +130,24 @@ def search(ctgry):
 
         cursor.execute("""
         SELECT rev.rating, res.name, res.description, res.Address_State AS State,
-    res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
-    res.Address_Number AS Num
-FROM (
-        SELECT *
-        FROM Resource
-        NATURAL JOIN (
-            SELECT ID
-            FROM Categories
-            WHERE Name = %s
-            ) categories
-    ) res
-NATURAL LEFT JOIN (
-        SELECT ID, AVG(Rating) AS rating
-        FROM Reviews
-        GROUP BY ID
-    ) rev
-ORDER BY res.name;
-        """, (ctgry, ))
+            res.Address_City AS City, res.Address_Zip AS Zip, res.Address_Street AS Street,
+            res.Address_Number AS Num
+        FROM (
+                SELECT *
+                FROM Resource
+                NATURAL JOIN (
+                    SELECT ID
+                    FROM Categories
+                    WHERE Name = %s
+                    ) categories
+            ) res
+        NATURAL LEFT JOIN (
+                SELECT ID, AVG(Rating) AS rating
+                FROM Reviews
+                GROUP BY ID
+            ) rev
+        ORDER BY res.name;
+                """, (ctgry, ))
 
         resources = cursor.fetchall()
         print resources
@@ -158,47 +158,59 @@ ORDER BY res.name;
 def resource_detail():
     if not session.get('logged_in'):
         return redirect('login')
+    
     else:
         user = session.get('user')
         resourcename = request.args['resourcename']
+        
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourcename + "';")
         resource = cursor.fetchall()
-        id=resource[0][12]
-        cursor2 = conn.cursor()
-        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
-        cursor3 = conn.cursor()
-        cursor3.execute("SELECT * FROM User_Favorites WHERE Username = %s AND ID = %s;", (user, id, ))
-        phones=cursor2.fetchall()
-        isfav = cursor3.fetchall()
+        
+        id = resource[0][12]
+        
+        cursor.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
+        phones=cursor.fetchall()
+ 
+        cursor.execute("SELECT * FROM User_Favorites WHERE Username = %s AND ID = %s;", (user, id, ))
+        isfav = cursor.fetchall()
+        
         if len(isfav) > 0:
             favorite = True
         else:
             favorite = False
+        
         categories = session.get('categories')
+        
         return render_template('resource_detail.html', title='resource details',
                                user = user, categories = categories, resource = resource, phones = phones, favorite = favorite)
 
 @app.route('/deletefav/<resourceid>', methods=['GET'])
 def deletefav(resourceid):
     user = session.get('user')
+    
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute("""DELETE FROM User_Favorites
-WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
+                    WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
     conn.commit()
+    
     return redirect(url_for('favorites'))
+
 
 @app.route('/addfav/<resourceid>', methods=['GET'])
 def addfav(resourceid):
     user = session.get('user')
+
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO User_Favorites
-    VALUES (%s, %s);""", (user, resourceid, ))
+                        VALUES (%s, %s);""", (user, resourceid, ))
     conn.commit()
+    
     return redirect(url_for('favorites'))
+
 
 @app.route('/favorites')
 def favorites():
@@ -206,28 +218,31 @@ def favorites():
         return redirect('login')
     else:
         user = session.get('user')
+        
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("""SELECT rev.avg_rating AS Rating, res.name AS Name, res.description AS Description, res.Address_State AS State,
-    res.Address_City AS city, res.Address_Zip AS Zip, res.Address_Street AS Street, res.Address_Number AS Num
-FROM (
-    SELECT *
-    FROM (
-        SELECT ID
-        FROM User_Favorites
-        WHERE Username = %s
-        ) favs
-    NATURAL JOIN Resource
-    ) res
-NATURAL LEFT JOIN (
-    SELECT ID, AVG(Rating) AS avg_rating
-    FROM Reviews
-    GROUP BY ID
-    ) rev
-ORDER BY rev.avg_rating DESC;""", (user, ))
+                                res.Address_City AS city, res.Address_Zip AS Zip, res.Address_Street AS Street, res.Address_Number AS Num
+                            FROM (
+                                SELECT *
+                                FROM (
+                                    SELECT ID
+                                    FROM User_Favorites
+                                    WHERE Username = %s
+                                    ) favs
+                                NATURAL JOIN Resource
+                                ) res
+                            NATURAL LEFT JOIN (
+                                SELECT ID, AVG(Rating) AS avg_rating
+                                FROM Reviews
+                                GROUP BY ID
+                                ) rev
+                            ORDER BY rev.avg_rating DESC;""", (user, ))
         resources = cursor.fetchall()
+
         categories = session.get('categories')
         return render_template('search.html', resources=resources, categories=categories, user=user, favorites = True)
+
 
 @app.route('/organizations')
 def organizations():
@@ -236,10 +251,12 @@ def organizations():
     else:
         user = session.get('user')
         categories = session.get('categories')
+
         conn = mysql.connection
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Organization;")
         orgdata = cursor.fetchall()
+
         return render_template('organizations.html', title='Organizations', user = user,
                                orgdata = orgdata, categories = categories)
 
@@ -248,17 +265,19 @@ def user_detail():
     user = session.get('user')
     categories = session.get('categories')
     detailorg = request.args['detailorg']
+
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Organization WHERE Name = '" + detailorg + "';")
     orgdata = cursor.fetchall()
-    cursor2 = conn.cursor()
-    cursor2.execute("SELECT Username FROM User WHERE Organization = '" + detailorg + "';")
-    name = cursor2.fetchall()
+
+    cursor.execute("SELECT Username FROM User WHERE Organization = '" + detailorg + "';")
+    name = cursor.fetchall()
     name = name[0][0]
-    cursor3 = conn.cursor()
-    cursor3.execute("SELECT Name FROM Resource WHERE Creator_Username = '" + name + "';")
-    resources = cursor3.fetchall()
+
+    cursor.execute("SELECT Name FROM Resource WHERE Creator_Username = '" + name + "';")
+    resources = cursor.fetchall()
+
     return render_template('user_detail.html', title='User Details', user = user,
                            orgdata = orgdata, detailorg = detailorg, categories = categories, resources = resources)
 
@@ -270,18 +289,21 @@ def editresource(name):
         return redirect('login')
     else:
         user = session.get('user')
+
         conn = mysql.connection
         resourceName = name
         cursor = conn.cursor()
+
         cursor.execute("SELECT * FROM Resource WHERE Name = '" + resourceName + "';")
         resource = cursor.fetchall()
-        id=resource[0][12]
-        cursor2 = conn.cursor()
-        cursor2.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
-        phones = cursor2.fetchall()
-        cursor3 = conn.cursor()
-        cursor3.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
-        resource_categories = cursor3.fetchall()
+        id = resource[0][12]
+
+        cursor.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s;", (id,))
+        phones = cursor.fetchall()
+        
+        cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
+        resource_categories = cursor.fetchall()
+        
         for category in resource_categories:
             if category == 'Childcare':
                 pass
@@ -328,31 +350,42 @@ def editresource(name):
             resourceEligibility = request.form['resourceEligibility']
             resourceDescription = request.form['resourceDescription']
             resourceCategories = request.form.getlist('checkedCategory')
-            cursory = conn.cursor()
-            cursory.execute("""UPDATE Resource
-SET Name = %s, Creator_Username = %s, Address_State = %s, Address_City = %s, Address_Zip = %s,
- Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
- Eligibility = %s, Description = %s
-WHERE ID = %s;""", (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, 1, 1, resourceEligibility, resourceDescription, id,))
+            
+
+            cursor.execute("""UPDATE Resource
+                                SET Name = %s, Creator_Username = %s, Address_State = %s, Address_City = %s, Address_Zip = %s,
+                                 Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
+                                 Eligibility = %s, Description = %s
+                                WHERE ID = %s;""", 
+                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, 1, 1, resourceEligibility, resourceDescription, id,))
             conn.commit()
-            cursorx = conn.cursor()
-            cursorz = conn.cursor()
+
+            cursor.execute("DELETE FROM Phone_Numbers WHERE ID = %s;", (id,))
+            conn.commit()
+
             for phone in resourcePhone:
-                cursorx.execute("SELECT Phone_Number FROM Phone_Numbers WHERE ID = %s", (id,))
-                phoneCheck = cursorx.fetchall()
-                '''if phone not in phoneCheck:
-                    cursorx.execute(""" UPDATE Phone_Numbers
-                    SET Phone_Number = %s
-                    WHERE ID = %s;""", (phone, id,))
-                    conn.commit()'''
+                #insert edits
+                cursor.execute("INSERT INTO Phone_Numbers (Phone_Number, ID) VALUES (%s, %s);", (phone, id))
+                conn.commit()
+
+            #cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
+            #catCheck = cursor.fetchall()
+            
+            #cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
+            #resource_categories = cursor.fetchall()
+
             for category in resourceCategories:
-                cursorz.execute("SELECT * FROM Categories WHERE ID = %s", (id,))
-                catCheck = cursorz.fetchall()
-                print(len(catCheck))
-                '''if category not in catCheck:
-                    cursorz.execute("""INSERT INTO Categories
-                    VALUES (%s, %s);""", (category, id,))
-                    conn.commit()'''
+                if category not in resource_categories:
+                    print("to insert: ", category)
+
+            for category in resource_categories:
+                if category not in resourceCategories:
+                    print("to delete: ", category)
+
+
+
+
+
             if 'Childcare' in request.args:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
@@ -484,6 +517,7 @@ WHERE ID = %s;""", (resourceName, user, resourceState, resourceCity, resourceZip
 
                 cursor7 = conn.cursor()
                 cursor7.execute("SELECT * FROM For_Children WHERE ID = %s", (id))
+                For_Child_Check = cursor7.fetchall()
 
 
 
@@ -545,6 +579,9 @@ WHERE ID = %s;""", (resourceName, user, resourceState, resourceCity, resourceZip
                 vehiclecostmin = request.form['vehicle-min-cost']
                 vehiclecostmax = request.form['vehicle-max-cost']
                 vehicletype = request.form['vehicle-type']
+
+
+
 
 
 
