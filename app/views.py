@@ -405,10 +405,10 @@ def editresource(name):
 
 
             if 'Childcare' in resourceCategories:
-                cminage = request.form['childcare-min-age']
-                cmaxage = request.form['childcare-max-age']
-                cmincost = request.form['childcare-min-cost']
-                cmaxcost = request.form['childcare-max-cost']
+                cminage = int(request.form['childcare-min-age'])
+                cmaxage = int(request.form['childcare-max-age'])
+                cmincost = int(request.form['childcare-min-cost'])
+                cmaxcost = int(request.form['childcare-max-cost'])
                 ctype = request.form['childcare-type']
                 print(cminage)
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
@@ -428,11 +428,12 @@ def editresource(name):
                             cursor.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (x, id,))
                             conn.commit()
 
-                    for y in ctype:
-                        if y not in child_typecheck:
-                            #insert type
-                            cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (y, id,))
-                            conn.commit()     
+                    print(ctype)
+
+                    if ctype not in child_typecheck:
+                        #insert type
+                        cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (ctype, id,))
+                        conn.commit()
 
   
                 else:
