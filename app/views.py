@@ -313,6 +313,17 @@ def editresource(name):
         
         for category in resource_categories:
             if category[0] == 'Childcare':
+                childcare = {}
+                cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
+                child_type = cursor.fetchall()
+                childcare["child-type"] = child_type[0][0]
+                cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
+                vals = cursor.fetchall()
+                childcare["age-max"] = vals[0][0]
+                childcare["age-min"] = vals[0][1]
+                childcare["cost-max"] = vals[0][2]
+                childcare["cost-min"] = vals[0][3]
+                childcare["capacity"] = vals[0][4]
                 checked_categories.append('Childcare')
             elif category[0] == 'Education':
                 checked_categories.append('Education')
@@ -374,7 +385,7 @@ def editresource(name):
                                  Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
                                  Eligibility = %s, Description = %s
                                 WHERE ID = %s;""",
-                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id,))
+                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id, childcare))
 
             conn.commit()
 

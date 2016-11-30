@@ -126,21 +126,39 @@
                 <div class="row">
                     <label>Min Age:</label>
                 </div>
+                {% if childcare %}
+                <div class="form-group row">
+                    <input type="text" name="childcare-min-age" class="col-md-2" value='{{ childcare["min-age"] }}'>
+                </div>
+                {% else %}
                 <div class="form-group row">
                     <input type="text" name="childcare-min-age" class="col-md-2" placeholder="0">
                 </div>
+                {% endif %}
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
+                {% if childcare %}
+                <div class="form-group row">
+                    <input type="text" name="childcare-max-age" class="col-md-2" value = '{{ childcare["max-age"] }}'>
+                </div>
+                {% else %}
                 <div class="form-group row">
                     <input type="text" name="childcare-max-age" class="col-md-2" placeholder="100">
                 </div>
+                {% endif %}
                 <div class="row">
                     <label>Min Cost:</label>
                 </div>
+                {% if childcare %}
+                <div class="form-group row">
+                    <input type="text" name="childcare-min-cost" class="col-md-2" value = '{{ childcare["min-cost"] }}'>
+                </div>
+                {% else %}
                 <div class="form-group row">
                     <input type="text" name="childcare-min-cost" class="col-md-2" placeholder="0">
                 </div>
+                {% endif %}
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
