@@ -388,20 +388,21 @@ def editresource(name):
 
 
             for category in resourceCategories:
-                if category not in resource_categories:
+                if category not in checked_categories:
                     print("to insert: ", category)
 
-            for category in resource_categories:
-                if category not in resourceCategories:
+            for category in resourceCategories:
+                if category not in checked_categories:
                     print("to delete: ", category)
 
 
-            if 'Childcare' in request.args:
+            if 'Childcare' in resourceCategories:
                 cminage = request.form['childcare-min-age']
                 cmaxage = request.form['childcare-max-age']
                 cmincost = request.form['childcare-min-cost']
                 cmaxcost = request.form['childcare-max-cost']
                 ctype = request.form['childcare-type']
+                print(cminage)
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
                 childcareCheck = cursor.fetchall()
 
