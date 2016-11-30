@@ -77,7 +77,7 @@ def edit_user():
             cursor.execute("SELECT * FROM User WHERE Username='" + user + "';")
             userdata = cursor.fetchall()
             
-            cursor.execute("SELECT Name FROM Resource WHERE Creator_Username='" + user + "';")
+            cursor.execute("SELECT Name, ID FROM Resource WHERE Creator_Username='" + user + "';")
             userresource = cursor.fetchall()
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
