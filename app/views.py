@@ -323,6 +323,7 @@ def editresource(name):
             childcare["child-type"] = []
             cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
             child_type = cursor.fetchall()
+            print(child_type)
             if len (child_type) > 0:
                 for childType in child_type:
                     childcare["child-type"].append(childType[0])
