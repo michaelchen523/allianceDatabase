@@ -126,7 +126,7 @@
                 <div class="row">
                     <label>Min Age:</label>
                 </div>
-                {% if childcare %}
+                {% if childcare and childcare["age-min"] != None %}
                 <div class="form-group row">
                     <input type="text" name="childcare-min-age" class="col-md-2" value='{{ childcare["age-min"] }}'>
                 </div>
@@ -138,7 +138,7 @@
                 <div class="row">
                     <label>Max Age:</label>
                 </div>
-                {% if childcare %}
+                {% if childcare and childcare["age-max"] != None %}
                 <div class="form-group row">
                     <input type="text" name="childcare-max-age" class="col-md-2" value = '{{ childcare["age-max"] }}'>
                 </div>
@@ -150,7 +150,7 @@
                 <div class="row">
                     <label>Min Cost:</label>
                 </div>
-                {% if childcare %}
+                {% if childcare and childcare["cost-min"] != None %}
                 <div class="form-group row">
                     <input type="text" name="childcare-min-cost" class="col-md-2" value = '{{ childcare["cost-min"] }}'>
                 </div>
@@ -162,7 +162,7 @@
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
-                {% if childcare %}
+                {% if childcare and childcare["cost-max"] != None %}
                 <div class="form-group row">
                     <input type="text" name="childcare-max-cost" class="col-md-2" value = '{{ childcare["cost-max"] }}'>
                 </div>
@@ -176,7 +176,7 @@
                 </div>
                 <div class="form-group row">
                     <select class="col-md-3" name="childcare-type" id="childcare-type" multiple>
-                        {% if childcare %}
+                        {% if childcare and childcare["child-type"] != None %}
                         {% if 'Mentoring' in childcare["child-type"] %}
                         <option value="Mentoring" selected>Mentoring</option>
                         {% else %}
