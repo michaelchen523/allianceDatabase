@@ -111,14 +111,12 @@ def searchName(name):
                         ORDER BY rev.rating DESC;
                                 """, (name, ))
         resources = cursor.fetchall()
-        print resources
 
         return render_template('search.html', resources=resources, categories=categories, user=user)
 
 
 @app.route('/search/<ctgry>/', methods=["GET"])
 def search(ctgry):
-    print ctgry
     if not session.get('logged_in'):
         return redirect('login')
     else:
@@ -149,7 +147,6 @@ def search(ctgry):
                         ORDER BY rev.rating DESC;
                                 """, (ctgry, ))
         resources = cursor.fetchall()
-        print resources
 
         return render_template('search.html', resources=resources, categories=categories, user=user)
 
@@ -320,7 +317,6 @@ def editresource(name):
             childcare["child-type"] = []
             cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
             child_type = cursor.fetchall()
-            print(child_type)
             if len (child_type) > 0:
                 for childType in child_type:
                     childcare["child-type"].append(childType[0])
@@ -433,19 +429,19 @@ def editresource(name):
             test = cursor.fetchall()
 
             if 'Childcare' in resourceCategories:
-                if len(request.form['childcare-min-age']) > 0:
+                if len(request.form['childcare-min-age']) > 0 and request.form['childcare-min-age'] != 'None':
                     cminage = int(request.form['childcare-min-age'])
                 else:
                     cminage = None
-                if len(request.form['childcare-max-age']) > 0:
+                if len(request.form['childcare-max-age']) > 0 and request.form['childcare-max-age'] != 'None':
                     cmaxage = int(request.form['childcare-max-age'])
                 else:
                     cmaxage = None
-                if len(request.form['childcare-min-cost']) > 0:
+                if len(request.form['childcare-min-cost']) > 0 and request.form['childcare-min-cost'] != 'None':
                     cmincost = int(request.form['childcare-min-cost'])
                 else:
                     cmincost = None
-                if len(request.form['childcare-max-cost']) > 0:
+                if len(request.form['childcare-max-cost']) > 0 and request.form['childcare-max-cost'] != 'None':
                     cmaxcost = int(request.form['childcare-max-cost'])
                 else:
                     cmaxcost = None
@@ -719,7 +715,6 @@ def editresource(name):
 
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
-    print(categories[1][0] in checked_categories)
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
                            categories = categories, resource = resource, phones = phones, checked_categories = checked_categories, childcare=childcare)
 
