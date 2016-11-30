@@ -314,38 +314,123 @@ def editresource(name):
 
         if 'Childcare' in newCats:
             childcare = {}
-            childcare["child-type"] = []
+            childcare["childcare-type"] = []
             cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
             child_type = cursor.fetchall()
-            if len (child_type) > 0:
+            if len(child_type) > 0:
                 for childType in child_type:
-                    childcare["child-type"].append(childType[0])
+                    childcare["childcare-type"].append(childType[0])
 
             cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
-            vals = cursor.fetchall()
-            childcare["age-max"] = vals[0][0]
-            childcare["age-min"] = vals[0][1]
-            childcare["cost-max"] = vals[0][2]
-            childcare["cost-min"] = vals[0][3]
-            childcare["capacity"] = vals[0][4]
+            childcareVals = cursor.fetchall()
+            childcare["age-max"] = childcareVals[0][0]
+            childcare["age-min"] = childcareVals[0][1]
+            childcare["cost-max"] = childcareVals[0][2]
+            childcare["cost-min"] = childcareVals[0][3]
+            childcare["capacity"] = childcareVals[0][4]
             checked_categories.append('Childcare')
         
         if 'Education' in newCats:
+            education = {}
+            education["education-type"] = []
+            cursor.execute("SELECT Education_Type FROM Education_Type WHERE ID = %s;", (id,))
+            education_type = cursor.fetchall()
+            if len(education_type) > 0:
+                for educationType in education_type:
+                    education["education-type"].append(educationType[0])
+
+            cursor.execute("SELECT CostMax, CostMin, Prerequisites FROM Education WHERE ID = %s;", (id,))
+            eduVals = cursor.fetchall()
+            education["education-min-cost"] = eduVals[0][0]
+            education["education-max-cost"] = eduVals[0][1]
+            education["education-prereqs"] = eduVals[0][2]
+
             checked_categories.append('Education')
-        
+
         if 'Employment' in newCats:
+            employment = {}
+            employment["emp-type"] = []
+            employment["emp-skills"] = []
+            cursor.execute("SELECT Emp_Type FROM Emp_Type WHERE ID = %s;", (id,))
+            employment_type = cursor.fetchall()
+            if len(employment_type) > 0:
+                for eploymentType in employment_type:
+                    employment["employment-type"].append(eploymentType[0])
+            cursor.execute("SELECT Emp_Skills FROM Emp_Skills WHERE ID = %s;", (id,))
+            employment_skills = cursor.fetchall()
+            if len(employment_skills) > 0:
+                for eploymentSkill in employment_skills:
+                    employment["employment-skills"].append(eploymentSkill[0])
+
+            cursor.execute("SELECT SalaryMax, SalaryMin, Childcare FROM Education WHERE ID = %s;", (id,))
+            empVals = cursor.fetchall()
+            employment["employment-max-salary"] = empVals[0][0]
+            employment["employment-min-salary"] = empVals[0][1]
+            employment["childcare"] = empVals[0][2]
+
             checked_categories.append('Employment')
-        
+
         if 'For_Children' in newCats:
+            for_children = {}
+            for_children["for-children-type"] = []
+            cursor.execute("SELECT For_Child FROM For_Child WHERE ID = %s;", (id,))
+            for_child_type = cursor.fetchall()
+            if len(for_child_type) > 0:
+                for forchildType in for_child_type:
+                    for_children["for-children-type"].append(forchildType[0])      
+
+            cursor.execute("SELECT AgeMax, AgeMin FROM For_Children WHERE ID = %s;", (id,))      
+            forchildVals = cursor.fetchall()
+            for_children["for-children-max-age"] = forchildVals[0][0]
+            for_children["for-children-min-age"] = forchildVals[0][1]
+
             checked_categories.append('For_Children')
-        
+
         if 'Housing' in newCats:
+            housing = {}
+            housing["housing-type"] = []
+            housing["housing-serves"] = []
+            cursor.execute("SELECT Housing_Type FROM Housing_Type WHERE ID = %s;", (id,))
+            housing_type = cursor.fetchall()
+            if len(housing_type) > 0:
+                for housingType in housing_type:
+                    housing["housing-type"].append(housingType[0])
+            cursor.execute("SELECT Housing_Serve FROM Housing_Serve WHERE ID = %s;", (id,))
+            housing_serves = cursor.fetchall()
+            if len (housing_serves) > 0:
+                for housingServe in housing_serves:
+                    housing["employment-skills"].append(housingServe[0])
+
+            cursor.execute("SELECT Capacity, Gender, AgeMax, AgeMin, Children FROM Education WHERE ID = %s;", (id,))
+            houseVals = cursor.fetchall()
+            housing["housing-capacity"] = houseVals[0][0]
+            housing["housing-gender"] = houseVals[0][1]
+            housing["housing-max-age"] = empVals[0][2]
+            housing["housing-min-age"] = empVals[0][3]
+            housing["takesChildren"] = empVals[0][4]
+
             checked_categories.append('Housing')
         
         if'Job_Readiness' in newCats:
+            jobRed = {}
+            jobRed["legal-type"] = []
+            cursor.execute("SELECT Job_Readiness_Type FROM Job_Readiness_Type WHERE ID = %s;", (id,))
+            jobRed_type = cursor.fetchall()
+            if len(jobRed_type) > 0:
+                for jobRedType in jobRed_type:
+                    jobRed["legal-type"].append(jobRedType[0])
+
             checked_categories.append('Job_Readiness')
         
         if 'Legal' in newCats:
+            legal = {}
+            legal["legal-type"] = []
+            cursor.execute("SELECT Leg_Type FROM Leg_Type WHERE ID = %s;", (id,))
+            leg_type = cursor.fetchall()
+            if len(leg_type) > 0:
+                for legType in leg_type:
+                    legal["legal-type"].append(legType[0])
+
             checked_categories.append('Legal')
         
         if 'Life_Skills' in newCats:
