@@ -386,14 +386,22 @@ def editresource(name):
                 cursor.execute("INSERT INTO Phone_Numbers (Phone_Number, ID) VALUES (%s, %s);", (phone, id))
                 conn.commit()
 
+            newCats = []
+            for category in resource_categories:
+                newCats.append(category[0])
 
             for category in resourceCategories:
-                if category not in checked_categories:
-                    print("to insert: ", category)
+                if category not in newCats:
+                    cursor.execute("INSERT INTO Categories VALUES (%s, %s);", (category, id))
+                    conn.commit()
 
-            for category in resourceCategories:
-                if category not in checked_categories:
-                    print("to delete: ", category)
+            for category in newCats:
+                if category not in resourceCategories:
+                    cursor.execute("DELETE FROM Categories WHERE NAME = %s AND ID = %s;", (category, id))
+                    conn.commit()
+
+            cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
+            test = cursor.fetchall()
 
 
             if 'Childcare' in resourceCategories:
