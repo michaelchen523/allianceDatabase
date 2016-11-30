@@ -177,27 +177,27 @@
                 <div class="form-group row">
                     <select class="col-md-3" name="childcare-type" id="childcare-type" multiple>
                         {% if childcare %}
-                        {% if childcare["child-type"] == 'Mentoring' %}
+                        {% if 'Mentoring' in childcare["child-type"] %}
                         <option value="Mentoring" selected>Mentoring</option>
                         {% else %}
                         <option value="Mentoring">Mentoring</option>
                         {% endif %}
-                        {% if childcare["child-type"] == 'Tutoring' %}
+                        {% if 'Tutoring' in childcare["child-type"]%}
                         <option value="Tutoring" selected>Tutoring</option>
                         {% else %}
                         <option value="Tutoring">Tutoring</option>
                         {% endif %}
-                        {% if childcare["child-type"] == 'Day Care' %}
-                        <option value="Day Care">Day Care</option>
+                        {% if 'Day Care' in childcare["child-type"]%}
+                        <option value="Day Care" selected>Day Care</option>
                         {% else %}
                         <option value="Day Care">Day Care</option>
                         {% endif %}
-                        {% if childcare["child-type"] == 'Information' %}
+                        {% if 'Information' in childcare["child-type"]%}
                         <option value="Information" selected>Information</option>
                         {% else %}
                         <option value="Information">Information</option>
                         {% endif %}
-                        {% if childcare["child-type"] == 'Other' %}
+                        {% if 'Other' in childcare["child-type"]%}
                         <option value="Other" selected>Other</option>
                         {% else %}
                         <option value="Other">Other</option>
