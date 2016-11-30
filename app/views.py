@@ -310,50 +310,76 @@ def editresource(name):
         resource_categories = cursor.fetchall()
         checked_categories = []
         childcare=False
+
+        cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
+        print("HALLEIOFWJOFJOE: %s", cursor.fetchall())
         
+        newCats = []
         for category in resource_categories:
-            if category[0] == 'Childcare':
-                childcare = {}
-                cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
-                child_type = cursor.fetchall()
-                childcare["child-type"] = child_type[0][0]
-                cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
-                vals = cursor.fetchall()
-                childcare["age-max"] = vals[0][0]
-                childcare["age-min"] = vals[0][1]
-                childcare["cost-max"] = vals[0][2]
-                childcare["cost-min"] = vals[0][3]
-                childcare["capacity"] = vals[0][4]
-                print("childcare %s", (childcare,))
-                checked_categories.append('Childcare')
-            elif category[0] == 'Education':
-                checked_categories.append('Education')
-            elif category[0] == 'Employment':
-                checked_categories.append('Employment')
-            elif category[0] == 'For_Children':
-                checked_categories.append('For_Children')
-            elif category[0] == 'Housing':
-                checked_categories.append('Housing')
-            elif category[0] == 'Job_Readiness':
-                checked_categories.append('Job_Readiness')
-            elif category[0] == 'Legal':
-                checked_categories.append('Legal')
-            elif category[0] == 'Life_Skills':
-                checked_categories.append('Life_Skills')
-            elif category[0] == 'Medical':
-                checked_categories.append('Medical')
-            elif category[0] == 'Mental_Health':
-                checked_categories.append('Mental_Health')
-            elif category[0] == 'Mentors':
-                checked_categories.append('Mentors')
-            elif category[0] == 'Networks':
-                checked_categories.append('Networks')
-            elif category[0] == 'Supplies':
-                checked_categories.append('Supplies')
-            elif category[0] == 'Transportation':
-                checked_categories.append('Transportation')
-            elif category[0] == 'Vehicle':
-                checked_categories.append('Vehicle')
+            newCats.append(category[0])
+
+        if 'Childcare' in newCats:
+            childcare = {}
+            childcare["child-type"] = []
+            cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
+            child_type = cursor.fetchall()
+            if len (child_type) > 0:
+                for childType in child_type:
+                    childcare["child-type"].append(childType[0])
+
+            cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
+            vals = cursor.fetchall()
+#aweliufhuihfipwaehfoi;waeh
+#a;dfa;fjaewo;rij
+#lakjerehgaehno
+            childcare["age-max"] = vals[0][0]
+            childcare["age-min"] = vals[0][1]
+            childcare["cost-max"] = vals[0][2]
+            childcare["cost-min"] = vals[0][3]
+            childcare["capacity"] = vals[0][4]
+            checked_categories.append('Childcare')
+        
+        if 'Education' in newCats:
+            checked_categories.append('Education')
+        
+        if 'Employment' in newCats:
+            checked_categories.append('Employment')
+        
+        if 'For_Children' in newCats:
+            checked_categories.append('For_Children')
+        
+        if 'Housing' in newCats:
+            checked_categories.append('Housing')
+        
+        if'Job_Readiness' in newCats:
+            checked_categories.append('Job_Readiness')
+        
+        if 'Legal' in newCats:
+            checked_categories.append('Legal')
+        
+        if 'Life_Skills' in newCats:
+            checked_categories.append('Life_Skills')
+        
+        if 'Medical' in newCats:
+            checked_categories.append('Medical')
+        
+        if 'Mental_Health' in newCats:
+            checked_categories.append('Mental_Health')
+        
+        if 'Mentors' in newCats:
+            checked_categories.append('Mentors')
+        
+        if 'Networks' in newCats:
+            checked_categories.append('Networks')
+        
+        if 'Supplies' in newCats:
+            checked_categories.append('Supplies')
+        
+        if 'Transportation' in newCats:
+            checked_categories.append('Transportation')
+        
+        if 'Vehicle' in newCats:
+            checked_categories.append('Vehicle')
 
         if request.method == 'POST':
             resourceName = request.form['resourceName']
@@ -398,10 +424,6 @@ def editresource(name):
                 cursor.execute("INSERT INTO Phone_Numbers (Phone_Number, ID) VALUES (%s, %s);", (phone, id))
                 conn.commit()
 
-            newCats = []
-            for category in resource_categories:
-                newCats.append(category[0])
-
             for category in resourceCategories:
                 if category not in newCats:
                     cursor.execute("INSERT INTO Categories VALUES (%s, %s);", (category, id))
@@ -420,7 +442,7 @@ def editresource(name):
                 cmaxage = int(request.form['childcare-max-age'])
                 cmincost = int(request.form['childcare-min-cost'])
                 cmaxcost = int(request.form['childcare-max-cost'])
-                ctype = request.form['childcare-type']
+                ctype = request.form.getlist('childcare-type')
                 print(cminage)
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
                 childcareCheck = cursor.fetchall()
@@ -430,27 +452,27 @@ def editresource(name):
                     cursor.execute("UPDATE Childcare SET AgeMax = %s, AgeMin = %s, CostMax = %s, CostMin = %s WHERE ID = %s;", (cmaxage, cminage, cmaxcost, cmincost, id,))
                     conn.commit()
 
-                    cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
-                    child_typecheck = cursor.fetchall()
-
-                print("ctype: %s", ctype)
-                print("child_typecheck: %s", child_typecheck)
+                cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
+                child_typecheck = cursor.fetchall()
 
 
-                if len(child_type) > 0:
-                    for x in child_typecheck:
-                        if x[0] not in ctype:
+                if len(child_typecheck) > 0:
+                    dbTypes = []
+                    for z in child_typecheck:
+                        dbTypes.append(z[0])
+
+                    for x in dbTypes:
+                        if x not in ctype:
                             #delete type
                             cursor.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (x, id,))
                             conn.commit()
 
+                    for y in ctype:
+                        if y not in dbTypes:
+                            #insert type
+                            cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (y, id,))
+                            conn.commit()
 
-                    if ctype not in child_typecheck[0]:
-                        #insert type
-                        cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (ctype, id,))
-                        conn.commit()
-
-  
                 else:
                     #create new
                     cursor.execute("INSERT INTO Childcare (AgeMax, AgeMin, CostMax, CostMin, ID) VALUES (%s, %s,  %s, %s, %s);", (cmaxage, cminage, cmaxcost, cmincost, id,))
