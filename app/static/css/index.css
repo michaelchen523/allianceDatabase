@@ -1,6 +1,7 @@
 /* Created by Michael Chen */
 body {
     background-color: #111;
+    font-family: 'PT Sans', sans-serif;
 }
 
 .jumbotron {
@@ -44,11 +45,15 @@ h1, h3, h4, li {
 }
 
 .category {
-    background-image: url(../images/randompic-fade.jpg);
+    ..background-image: url(../images/randompic-fade.jpg);
     background-position: 500px 300px;
-    height: 300px;
+    height: 200px;
+    ..background-color: #8B81B2;
+    background-color: #AAA;
     border-style: solid;
-    border-width: 5px;
+    border-width: 2px;
+    ..border-color: #343042;
+    ..border-color: #FFC9C5
     border-color: #111;
 
 }

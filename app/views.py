@@ -63,11 +63,13 @@ def edit_user():
         if request.method == 'POST':
             password = request.form['password']
             email = request.form['email']
-
-            cursor.execute("""UPDATE User
-                                SET Email = %s, Password = %s
-                                WHERE Username = %s;
-                                """, (email, password, user))
+            cursor.execute(
+            """
+            UPDATE User
+            SET Email = %s, Password = %s
+            WHERE Username = %s;
+            """, (email, password, user)
+            )
             conn.commit()
             return redirect('edit_user')
         else:
@@ -77,7 +79,6 @@ def edit_user():
             
             cursor.execute("SELECT Name FROM Resource WHERE Creator_Username='" + user + "';")
             userresource = cursor.fetchall()
-
             return render_template('edit_user.html', title = 'edit profile', user = user,
                                    categories = categories, userdata = userdata, userresource = userresource)
 
@@ -109,7 +110,6 @@ def searchName(name):
                             ) rev
                         ORDER BY rev.rating DESC;
                                 """, (name, ))
-
         resources = cursor.fetchall()
         print resources
 
@@ -148,7 +148,6 @@ def search(ctgry):
                             ) rev
                         ORDER BY rev.rating DESC;
                                 """, (ctgry, ))
-
         resources = cursor.fetchall()
         print resources
 
@@ -159,6 +158,7 @@ def search(ctgry):
 def resource_detail():
     if not session.get('logged_in'):
         return redirect('login')
+    
     else:
         user = session.get('user')
         resourcename = request.args['resourcename']
@@ -181,7 +181,9 @@ def resource_detail():
             favorite = True
         else:
             favorite = False
+        
         categories = session.get('categories')
+        
         return render_template('resource_detail.html', title='resource details',
                                user = user, categories = categories, resource = resource, phones = phones, favorite = favorite)
 
@@ -189,12 +191,11 @@ def resource_detail():
 @app.route('/deletefav/<resourceid>', methods=['GET'])
 def deletefav(resourceid):
     user = session.get('user')
-
     conn = mysql.connection
     cursor = conn.cursor()
 
     cursor.execute("""DELETE FROM User_Favorites
-                        WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
+                    WHERE Username = %s AND ID = %s;""", (user, resourceid, ))
     conn.commit()
     
     return redirect(url_for('favorites'))
@@ -210,7 +211,6 @@ def addfav(resourceid):
     cursor.execute("""INSERT INTO User_Favorites
                         VALUES (%s, %s);""", (user, resourceid, ))
     conn.commit()
-
     return redirect(url_for('favorites'))
 
 
@@ -220,7 +220,6 @@ def favorites():
         return redirect('login')
     else:
         user = session.get('user')
-
         conn = mysql.connection
         cursor = conn.cursor()
 
@@ -309,38 +308,40 @@ def editresource(name):
         
         cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
         resource_categories = cursor.fetchall()
+        checked_categories = []
+
         
         for category in resource_categories:
-            if category == 'Childcare':
-                pass
-            elif category == 'Education':
-                pass
-            elif category == 'Employment':
-                pass
-            elif category == 'For_Children':
-                pass
-            elif category == 'Housing':
-                pass
-            elif category == 'Job_Readiness':
-                pass
-            elif category == 'Legal':
-                pass
-            elif category == 'Life_Skills':
-                pass
-            elif category == 'Medical':
-                pass
-            elif category == 'Mental_Health':
-                pass
-            elif category == 'Mentors':
-                pass
-            elif category == 'Networks':
-                pass
-            elif category == 'Supplies':
-                pass
-            elif category == 'Transportation':
-                pass
-            elif category == 'Vehicle':
-                pass
+            if category[0] == 'Childcare':
+                checked_categories.append('Childcare')
+            elif category[0] == 'Education':
+                checked_categories.append('Education')
+            elif category[0] == 'Employment':
+                checked_categories.append('Employment')
+            elif category[0] == 'For_Children':
+                checked_categories.append('For_Children')
+            elif category[0] == 'Housing':
+                checked_categories.append('Housing')
+            elif category[0] == 'Job_Readiness':
+                checked_categories.append('Job_Readiness')
+            elif category[0] == 'Legal':
+                checked_categories.append('Legal')
+            elif category[0] == 'Life_Skills':
+                checked_categories.append('Life_Skills')
+            elif category[0] == 'Medical':
+                checked_categories.append('Medical')
+            elif category[0] == 'Mental_Health':
+                checked_categories.append('Mental_Health')
+            elif category[0] == 'Mentors':
+                checked_categories.append('Mentors')
+            elif category[0] == 'Networks':
+                checked_categories.append('Networks')
+            elif category[0] == 'Supplies':
+                checked_categories.append('Supplies')
+            elif category[0] == 'Transportation':
+                checked_categories.append('Transportation')
+            elif category[0] == 'Vehicle':
+                checked_categories.append('Vehicle')
 
         if request.method == 'POST':
             resourceName = request.form['resourceName']
@@ -356,14 +357,25 @@ def editresource(name):
             resourceEligibility = request.form['resourceEligibility']
             resourceDescription = request.form['resourceDescription']
             resourceCategories = request.form.getlist('checkedCategory')
-            
+
+            non_citizens = request.form.getlist('takes_non_citizens')
+            need_id = request.form.getlist('id')
+            if len(non_citizens) > 0:
+                resourceNonCitizen = 1
+            else:
+                resourceNonCitizen = 0
+            if len(need_id) > 0:
+                resourceDocumentation = 1
+            else:
+                resourceDocumentation = 0
 
             cursor.execute("""UPDATE Resource
                                 SET Name = %s, Creator_Username = %s, Address_State = %s, Address_City = %s, Address_Zip = %s,
                                  Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
                                  Eligibility = %s, Description = %s
-                                WHERE ID = %s;""", 
-                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, 1, 1, resourceEligibility, resourceDescription, id,))
+                                WHERE ID = %s;""",
+                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id,))
+
             conn.commit()
 
             cursor.execute("DELETE FROM Phone_Numbers WHERE ID = %s;", (id,))
@@ -390,9 +402,8 @@ def editresource(name):
                 cmincost = request.form['childcare-min-cost']
                 cmaxcost = request.form['childcare-max-cost']
                 ctype = request.form['childcare-type']
-
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
-                chilcareCheck = cursor.fetchall()
+                childcareCheck = cursor.fetchall()
 
                 if len(childcareCheck) > 0:
                     #update
@@ -497,6 +508,7 @@ def editresource(name):
                         if y not in empskillcheck:
                             cursor.execute("INSERT INTO Emp_Skills VALUES (%s, %s);", (y, id,))
                             conn.commit()
+
   
                 else:
                     #create new
@@ -651,12 +663,11 @@ def editresource(name):
                 vehiclecostmax = request.form['vehicle-max-cost']
                 vehicletype = request.form['vehicle-type']
 
-
-
             return redirect(url_for('edit_user'))
     categories = session.get('categories')
+    print(categories[1][0] in checked_categories)
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                           categories = categories, resource = resource, phones = phones)
+                           categories = categories, resource = resource, phones = phones, checked_categories = checked_categories)
 
 @app.route('/addresource', methods = ['GET', 'POST'])
 def addresource():
@@ -674,34 +685,58 @@ def addresource():
             resourceStreet = request.form['resourceStreet']
             resourceWebsite = request.form['resourceWebsite']
             resourceDescription = request.form['resourceDescription']
-            resourcePhone = request.form['resourcePhone']
-            resourceStreetNumber = 0
-            resourceNonCitizen = 1
-            resourceDocumentation = 1
+            resourcePhone = request.form.getlist('resourcePhone')
+            streetsplit = resourceStreet.split(" ");
+            streetNum = streetsplit[0]
+            streetName = " ".join(map(str,streetsplit[1:]))
+            non_citizens = request.form.getlist('takes_non_citizens')
+            need_id = request.form.getlist('id')
+            if len(non_citizens) > 0:
+                resourceNonCitizen = 1
+            else:
+                resourceNonCitizen = 0
+            if len(need_id) > 0:
+                resourceDocumentation = 1
+            else:
+                resourceDocumentation = 0
             resourceEligibility = request.form['resourceEligibility']
+
+            resourceCategories = request.form.getlist('checkedCategory')
+            cursor3 = conn.cursor()
             # still need to check that certain fields aren't null
             # still need to fix radio buttons
             # still need to do sub categories
             cursor.execute("""INSERT INTO Resource (Name, Creator_Username, Address_State, Address_City,
                 Address_Zip, Address_Street, Address_Number, Website, Non_Citizen, Documentation, Eligibility,
                 Description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""", 
-                (resourceName, user, resourceState, resourceCity, resourceZip, resourceStreet, resourceStreetNumber, 
-                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription))
+                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum,
+                    resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription,))
             conn.commit()
-
+            cursor5 = conn.cursor()
+            cursor5.execute("SELECT ID FROM Resource WHERE Name='" + resourceName + "';")
+            ids = cursor5.fetchall()
+            id = ids[0][0]
+            cursor4 = conn.cursor()
+            cursor6 = conn.cursor()
+            for phone in resourcePhone:
+                cursor4.execute(""" INSERT INTO Phone_Numbers
+                VALUES (%s, 'Cell', %s)""", (phone, id,))
+                conn.commit()
+            for category in resourceCategories:
+                cursor6.execute("""INSERT INTO Categories
+                VALUES (%s, %s);""", (category, id,))
+                conn.commit()
             return redirect(url_for('edit_user'))
 
     categories = session.get('categories')
     return render_template('edit_add_resource.html', title = "Add Resource", user = user,
                            categories = categories)
 
-
-@app.route('/deleteresource<name>', methods=['GET'])
-def deleteresource(name):
-
+@app.route('/deleteresource<id>', methods=['GET'])
+def deleteresource(id):
     conn = mysql.connection
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM Resource WHERE Name = %s;", (name,))
+    cursor.execute("DELETE FROM Resource WHERE ID = %s;", (id,))
     conn.commit()
 
     return redirect(url_for('edit_user'))

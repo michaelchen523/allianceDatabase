@@ -60,26 +60,27 @@
                         placeholder = "Website">
                     {% endif %}
         </div>
-        <label>Takes Non-Citizens:</label>
         <div class="form-group row">
             {% if resource %}
             {% if resource[0][8] == 1 %}
-            <label class="radio-inline"><input type="radio" checked="checked" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1" checked><label>Takes Non-Citizens</label></input>
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" checked="checked" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1"><label>Takes Non-Citizens</label></input>
             {% endif %}
             {% else %}
-            <label class="radio-inline"><input type="radio" name="Non-Citizens">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Non-Citizens">No</label>
+            <input type="checkbox" name="takes_non_citizens" value="1"><label>Takes Non-Citizens</label></input>
             {% endif %}
-
         </div>
-        <label>Identification Required:</label>
         <div class="form-group row">
-            <label class="radio-inline"><input type="radio" name="Documentation">Yes</label>
-            <label class="radio-inline"><input type="radio" name="No-Documentation">No</label>
+            {% if resource %}
+            {% if resource[0][9] == 1 %}
+            <input type="checkbox" name="id" value="1" checked><label>Identification Required</label></input>
+            {% else %}
+            <input type="checkbox" name="id" value="1"><label>Identification Required</label></input>
+            {% endif %}
+            {% else %}
+            <input type="checkbox" name="id" value="1"><label>Identification Required</label></input>
+            {% endif %}
         </div>
         <label>Eligibility:</label>
         <div class="form-group row">
@@ -102,11 +103,20 @@
         <label class="pink">Categories:<span> (Choose as many as applicable)</span></label>
         {% for category in categories %}
         <div class="row form-group checkbox">
-            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+            <input type="checkbox" name="checkedCategory" id = "{{ category[0] }}" value="{{ category[0] }}"
+            {% if checked_categories %}
+                {% if category[0] in checked_categories %}
+                    checked><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+                {% else %}
+                    ><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+                {% endif %}
+            {% else %}
+                ><label class="pink">{{ category[0] }}: {{ category[1] }}</label></input>
+            {% endif %}
         </div>
         {% endfor %}
         <div class="form-group row">
-            <button class="btn btn-default col-md-6" method="get" name="next" id="next" type="button">Next</button>
+            <button class="btn btn-default col-md-6" name="next" id="next" type="button">Next</button>
             <button class="btn btn-default col-md-6" id="cancel" name="cancel" type="button" onclick="goBack()">Cancel</button>
         </div>
         <div class="specific">

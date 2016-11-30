@@ -12,7 +12,6 @@
             <a href="{{ url_for('addfav', resourceid = resource[0][12] ) }}"><img src="{{url_for('static', filename='images/emptystar.png')}}", width="50px"></a>
             {% endif %}
         </div>
-        <h2 class="pink">Rating</h2>
         {% for phone in phones %}
             <h4>{{phone[0]}}</h4>
         {% endfor %}
@@ -22,6 +21,20 @@
         <a href="http://{{ resource[0][7] }}"><h5>{{ resource[0][7] }}</h5></a>
         {% endif %}
         <p class="word-wrap pink">{{ resource[0][11] }}</p>
+        <h4>Eligibility: </h4>
+        {% if (resource[0][10] != None) %}
+        <h5 class="word-wrap pink">{{ resource[0][10] }}</h5>
+        {% endif %}
+        {% if resource[0][8] == 1 %}
+        <h5 class="pink">Takes Non-Citizens</h5>
+        {% else %}
+        <h5 class="pink">Non-Citizens Not Allowed</h5>
+        {% endif %}
+        {% if resource[0][9] == 1 %}
+        <h5 class="pink">Needs Documentation</h5>
+        {% else %}
+        <h5 class="pink">No Documentation Required</h5>
+        {% endif %}
         <div class="row">
             <button class="btn btn-default col-md-4 col-md-offset-4" name="back" type="button" onclick = "goBack()">Back</button>
         </div>

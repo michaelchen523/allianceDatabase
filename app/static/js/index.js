@@ -25,6 +25,7 @@ $(document).ready(function() {
         var newDiv = $(".resourcePhone")[0].outerHTML;
         $(".phone").append(newDiv);
         $(".resourcePhone:last").attr("placeholder", "(000)000-0000");
+        $(".resourcePhone:last").attr("name", "resourcePhone");
         $(".resourcePhone:last").removeAttr("value");
     });
 
@@ -100,6 +101,11 @@ $(document).ready(function() {
             $(".Vehicle").show();
         } else {
             $(".Vehicle").hide();
+        }
+        if ($("#For_Children").is(':checked')) {
+            $(".For_Children").show();
+        } else {
+            $(".For_Children").hide();
         }
 
     })

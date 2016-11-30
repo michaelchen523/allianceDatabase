@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="jumbotron container col-sm-8 col-sm-offset-2">
-    <form class="col-md-10 col-md-offset-1 container vertical-center" method="post">
+    <form class="col-md-10 col-md-offset-1 container" method="post">
         <h3>Organization Name: {{ userdata[0][3] }}</h3>
         <label for="password">Password: </label>
         <div class="form-group row">
@@ -16,16 +16,16 @@
                     value= {{userdata[0][1]}}>
         </div>
         <div class="form-group row">
-            <h2 class="pink">My Resources</h2>
+            <h2 class="text-center pink">My Resources</h2>
         </div>
         <div class="form-group row">
             <ul class="list-unstyled">
                 {% for resource in userresource %}
                 <li>
-                    <div class="col-md-12 row">
-                        <a class="col-md-4 vertical-center text-center" href="{{ url_for('resource_detail', resourcename = resource[0]) }}"><h4>{{ resource[0] }}</h4></a>
-                        <a href="{{ url_for('editresource', name = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
-                        <a href="{{ url_for('deleteresource', name = resource[0]) }}"><img class="img-thumbnail" width="30" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
+                    <div class="col-md-12 row" style="border-bottom: 0.5px solid #444;">
+                        <a class="col-md-10" style="margin-bottom: 10px;" href="{{ url_for('resource_detail', resourcename = resource[0]) }}"><h4>{{ resource[0] }}</h4></a>
+                        <a href="{{ url_for('editresource', name = resource[0]) }}" ><img class="img-thumbnail" style="float:right; margin-top: 10px ! important;" width="5%" src="{{url_for('static', filename='images/edit-ic.png')}}"></a>
+                        <a href="{{ url_for('deleteresource', id = resource[1]) }}"><img class="img-thumbnail" style="float:right; margin-top: 10px ! important;" width="5%" src="{{url_for('static', filename='images/delete-ic.png')}}"></a>
                     </div>
                 </li>
                 {% endfor %}
