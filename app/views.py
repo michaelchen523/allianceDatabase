@@ -309,11 +309,8 @@ def editresource(name):
         cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
         resource_categories = cursor.fetchall()
         checked_categories = []
-        childcare=False
+        childcare = False
 
-        cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
-        print("HALLEIOFWJOFJOE: %s", cursor.fetchall())
-        
         newCats = []
         for category in resource_categories:
             newCats.append(category[0])
@@ -329,9 +326,6 @@ def editresource(name):
 
             cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
             vals = cursor.fetchall()
-#aweliufhuihfipwaehfoi;waeh
-#a;dfa;fjaewo;rij
-#lakjerehgaehno
             childcare["age-max"] = vals[0][0]
             childcare["age-min"] = vals[0][1]
             childcare["cost-max"] = vals[0][2]
@@ -438,12 +432,24 @@ def editresource(name):
             test = cursor.fetchall()
 
             if 'Childcare' in resourceCategories:
-                cminage = int(request.form['childcare-min-age'])
-                cmaxage = int(request.form['childcare-max-age'])
-                cmincost = int(request.form['childcare-min-cost'])
-                cmaxcost = int(request.form['childcare-max-cost'])
+                if len(request.form['childcare-min-age']) > 0:
+                    cminage = int(request.form['childcare-min-age'])
+                else:
+                    cminage = None
+                if len(request.form['childcare-max-age']) > 0:
+                    cmaxage = int(request.form['childcare-max-age'])
+                else:
+                    cmaxage = None
+                if len(request.form['childcare-min-cost']) > 0:
+                    cmincost = int(request.form['childcare-min-cost'])
+                else:
+                    cmincost = None
+                if len(request.form['childcare-max-cost']) > 0:
+                    cmaxcost = int(request.form['childcare-max-cost'])
+                else:
+                    cmaxcost = None
                 ctype = request.form.getlist('childcare-type')
-                print(cminage)
+
                 cursor.execute("SELECT * FROM Childcare WHERE ID = %s;", (id,))
                 childcareCheck = cursor.fetchall()
 
