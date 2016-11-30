@@ -329,9 +329,7 @@ def editresource(name):
 
             cursor.execute("SELECT AgeMax, AgeMin, CostMax, CostMin, Capacity FROM Childcare WHERE ID = %s;", (id,))
             vals = cursor.fetchall()
-#aweliufhuihfipwaehfoi;waeh
-#a;dfa;fjaewo;rij
-#lakjerehgaehno
+
             childcare["age-max"] = vals[0][0]
             childcare["age-min"] = vals[0][1]
             childcare["cost-max"] = vals[0][2]
