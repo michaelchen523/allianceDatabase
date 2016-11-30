@@ -128,7 +128,7 @@
                 </div>
                 {% if childcare %}
                 <div class="form-group row">
-                    <input type="text" name="childcare-min-age" class="col-md-2" value='{{ childcare["min-age"] }}'>
+                    <input type="text" name="childcare-min-age" class="col-md-2" value='{{ childcare["age-min"] }}'>
                 </div>
                 {% else %}
                 <div class="form-group row">
@@ -140,7 +140,7 @@
                 </div>
                 {% if childcare %}
                 <div class="form-group row">
-                    <input type="text" name="childcare-max-age" class="col-md-2" value = '{{ childcare["max-age"] }}'>
+                    <input type="text" name="childcare-max-age" class="col-md-2" value = '{{ childcare["age-max"] }}'>
                 </div>
                 {% else %}
                 <div class="form-group row">
@@ -152,7 +152,7 @@
                 </div>
                 {% if childcare %}
                 <div class="form-group row">
-                    <input type="text" name="childcare-min-cost" class="col-md-2" value = '{{ childcare["min-cost"] }}'>
+                    <input type="text" name="childcare-min-cost" class="col-md-2" value = '{{ childcare["cost-min"] }}'>
                 </div>
                 {% else %}
                 <div class="form-group row">
@@ -162,19 +162,53 @@
                 <div class="row">
                     <label>Max Cost:</label>
                 </div>
+                {% if childcare %}
+                <div class="form-group row">
+                    <input type="text" name="childcare-max-cost" class="col-md-2" value = '{{ childcare["cost-max"] }}'>
+                </div>
+                {% else %}
                 <div class="form-group row">
                     <input type="text" name="childcare-max-cost" class="col-md-2" placeholder="1000">
                 </div>
+                {% endif %}
                 <div class="row">
                     <label>Type:</label>
                 </div>
                 <div class="form-group row">
-                    <select class="col-md-3" name="childcare-type" id="childcare-type">
+                    <select class="col-md-3" name="childcare-type" id="childcare-type" multiple>
+                        {% if childcare %}
+                        {% if childcare["child-type"] == 'Mentoring' %}
+                        <option value="Mentoring" selected>Mentoring</option>
+                        {% else %}
+                        <option value="Mentoring">Mentoring</option>
+                        {% endif %}
+                        {% if childcare["child-type"] == 'Tutoring' %}
+                        <option value="Tutoring" selected>Tutoring</option>
+                        {% else %}
+                        <option value="Tutoring">Tutoring</option>
+                        {% endif %}
+                        {% if childcare["child-type"] == 'Day Care' %}
+                        <option value="Day Care">Day Care</option>
+                        {% else %}
+                        <option value="Day Care">Day Care</option>
+                        {% endif %}
+                        {% if childcare["child-type"] == 'Information' %}
+                        <option value="Information" selected>Information</option>
+                        {% else %}
+                        <option value="Information">Information</option>
+                        {% endif %}
+                        {% if childcare["child-type"] == 'Other' %}
+                        <option value="Other" selected>Other</option>
+                        {% else %}
+                        <option value="Other">Other</option>
+                        {% endif %}
+                        {% else %}
                         <option value="Mentoring">Mentoring</option>
                         <option value="Tutoring">Tutoring</option>
                         <option value="Day Care">Day Care</option>
                         <option value="Information">Information</option>
                         <option value="Other">Other</option>
+                        {% endif %}
                     </select>
                 </div>
             </div>

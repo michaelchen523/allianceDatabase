@@ -309,7 +309,7 @@ def editresource(name):
         cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
         resource_categories = cursor.fetchall()
         checked_categories = []
-
+        childcare=False
         
         for category in resource_categories:
             if category[0] == 'Childcare':
@@ -324,6 +324,7 @@ def editresource(name):
                 childcare["cost-max"] = vals[0][2]
                 childcare["cost-min"] = vals[0][3]
                 childcare["capacity"] = vals[0][4]
+                print("childcare %s", (childcare,))
                 checked_categories.append('Childcare')
             elif category[0] == 'Education':
                 checked_categories.append('Education')
@@ -385,7 +386,7 @@ def editresource(name):
                                  Address_Street = %s, Address_Number = %s, Website = %s, Non_Citizen = %s, Documentation = %s,
                                  Eligibility = %s, Description = %s
                                 WHERE ID = %s;""",
-                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id, childcare))
+                                (resourceName, user, resourceState, resourceCity, resourceZip, streetName, streetNum, resourceWebsite, resourceNonCitizen, resourceDocumentation, resourceEligibility, resourceDescription, id,))
 
             conn.commit()
 
@@ -414,7 +415,6 @@ def editresource(name):
             cursor.execute("SELECT Name FROM Categories WHERE ID = %s;", (id,))
             test = cursor.fetchall()
 
-
             if 'Childcare' in resourceCategories:
                 cminage = int(request.form['childcare-min-age'])
                 cmaxage = int(request.form['childcare-max-age'])
@@ -433,15 +433,19 @@ def editresource(name):
                     cursor.execute("SELECT Child_Type FROM Child_Type WHERE ID = %s;", (id,))
                     child_typecheck = cursor.fetchall()
 
+                print("ctype: %s", ctype)
+                print("child_typecheck: %s", child_typecheck)
+
+
+                if len(child_type) > 0:
                     for x in child_typecheck:
-                        if x not in ctype:
+                        if x[0] not in ctype:
                             #delete type
                             cursor.execute("DELETE FROM Child_Type WHERE Child_Type = %s AND ID = %s", (x, id,))
                             conn.commit()
 
-                    print(ctype)
 
-                    if ctype not in child_typecheck:
+                    if ctype not in child_typecheck[0]:
                         #insert type
                         cursor.execute("INSERT INTO Child_Type VALUES (%s, %s);", (ctype, id,))
                         conn.commit()
@@ -688,7 +692,7 @@ def editresource(name):
     categories = session.get('categories')
     print(categories[1][0] in checked_categories)
     return render_template('edit_add_resource.html', title = "Edit Resource", user = user,
-                           categories = categories, resource = resource, phones = phones, checked_categories = checked_categories)
+                           categories = categories, resource = resource, phones = phones, checked_categories = checked_categories, childcare=childcare)
 
 @app.route('/addresource', methods = ['GET', 'POST'])
 def addresource():
